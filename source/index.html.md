@@ -6,7 +6,6 @@ language_tabs: # must be one of https://github.com/rouge-ruby/rouge/wiki/List-of
 
 toc_footers:
   - <a href='#'>主页</a>
-  - <a href='https://github.com/slatedocs/slate'>Powered by Slate</a>
 
 #includes:
 #  - errors
@@ -42,10 +41,6 @@ void main() {
 
 <aside class="warning">
 这是一个 <code>Warning</code> 示例。
-</aside>
-
-<aside class="error">
-这是一个 <code>Error</code> 示例。
 </aside>
 
 
