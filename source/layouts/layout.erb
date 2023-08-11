@@ -72,7 +72,10 @@ under the License.
       </span>
     </a>
     <div class="toc-wrapper">
+      <% if false %>
       <%= image_tag "logo.png", class: 'logo' %>
+      <% end %>
+      <div style="color: white; font-size: 2rem; text-align: center; padding-top: 1rem;">Write <span style="color: #0384fc;">Dart</span></div>
       <% if language_tabs.any? %>
         <div class="lang-selector">
           <% language_tabs.each do |lang| %>
