@@ -323,6 +323,14 @@
                   </li>
               </ul>
           </li>
+          <li>
+            <a href="#utils" class="toc-h1 toc-link" data-title="Utils">Utils</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#a-simple-logger" class="toc-h2 toc-link" data-title="A simple logger">A simple logger</a>
+                  </li>
+              </ul>
+          </li>
       </ul>
         <ul class="toc-footer">
             <li><a href='#'>主页</a></li>
@@ -380,6 +388,17 @@
 <span class="c1">//   Got error: error from two</span>
 <span class="c1">//   The value is 42</span>
 
+</code></pre></div><h1 id='utils'>Utils</h1><h2 id='a-simple-logger'>A simple logger</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="c1">/// A simple logger</span>
+<span class="kd">class</span> <span class="nc">Logger</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="kt">List</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">_log</span> <span class="o">=</span> <span class="p">[];</span>
+
+  <span class="kt">List</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="kd">get</span> <span class="n">log</span> <span class="o">=</span><span class="p">&gt;</span> <span class="kt">List</span><span class="o">.</span><span class="na">from</span><span class="p">(</span><span class="n">_log</span><span class="p">);</span>
+  <span class="kt">void</span> <span class="n">clear</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">_log</span><span class="o">.</span><span class="na">clear</span><span class="p">();</span>
+  <span class="kt">void</span> <span class="n">print</span><span class="p">(</span><span class="kt">Object</span> <span class="n">o</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">_log</span><span class="o">.</span><span class="na">add</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="na">toString</span><span class="p">());</span>
+
+  <span class="nd">@override</span>
+  <span class="kt">String</span> <span class="n">toString</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">_log</span><span class="o">.</span><span class="na">join</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
       </div>
       <div class="dark-box">
