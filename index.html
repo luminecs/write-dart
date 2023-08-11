@@ -315,6 +315,14 @@
           <li>
             <a href="#45fa4e00db" class="toc-h1 toc-link" data-title="介绍">介绍</a>
           </li>
+          <li>
+            <a href="#future" class="toc-h1 toc-link" data-title="Future">Future</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#long-chain" class="toc-h2 toc-link" data-title="Long chain">Long chain</a>
+                  </li>
+              </ul>
+          </li>
       </ul>
         <ul class="toc-footer">
             <li><a href='#'>主页</a></li>
@@ -325,8 +333,10 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='45fa4e00db'>介绍</h1>
+<p>此页面用以记录 Dart 学习过程中的代码片段和概念。</p>
+
 <blockquote>
-<p>一段 dart 代码。</p>
+<p>Dart 打印 <code>Hello world!</code>。</p>
 </blockquote>
 <div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
   <span class="n">print</span><span class="p">(</span><span class="s">'Hello world!'</span><span class="p">);</span>
@@ -347,7 +357,30 @@
 <aside class="error">
 这是一个 <code>Error</code> 示例。
 </aside>
+<h1 id='future'>Future</h1><h2 id='long-chain'>Long chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">two</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">error</span><span class="p">(</span><span class="s">'error from two'</span><span class="p">);</span>
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">three</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from three'</span><span class="p">);</span>
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">four</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from four'</span><span class="p">);</span>
 
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">one</span><span class="p">()</span> <span class="c1">// Future completes with "from one".</span>
+      <span class="o">.</span><span class="na">then</span><span class="p">((</span><span class="n">_</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">two</span><span class="p">())</span> <span class="c1">// Future completes with two()'s error.</span>
+      <span class="o">.</span><span class="na">then</span><span class="p">((</span><span class="n">_</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">three</span><span class="p">())</span> <span class="c1">// Future completes with two()'s error.</span>
+      <span class="o">.</span><span class="na">then</span><span class="p">((</span><span class="n">_</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">four</span><span class="p">())</span> <span class="c1">// Future completes with two()'s error.</span>
+      <span class="o">.</span><span class="na">then</span><span class="p">((</span><span class="n">value</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">value</span><span class="o">.</span><span class="na">length</span><span class="p">)</span> <span class="c1">// Future completes with two()'s error.</span>
+      <span class="o">.</span><span class="na">catchError</span><span class="p">((</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'Got error: </span><span class="si">$e</span><span class="s">'</span><span class="p">);</span> <span class="c1">// Finally, callback fires.</span>
+    <span class="k">return</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// Future completes with 42.</span>
+  <span class="p">})</span><span class="o">.</span><span class="na">then</span><span class="p">((</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'The value is </span><span class="si">$value</span><span class="s">'</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="c1">// Output of this program:</span>
+<span class="c1">//   Got error: error from two</span>
+<span class="c1">//   The value is 42</span>
+
+</code></pre></div>
       </div>
       <div class="dark-box">
           <div class="lang-selector">
