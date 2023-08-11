@@ -36,7 +36,7 @@ void main() {
 </aside>
 
 <aside class="success">
-这是一个 <code>Notice</code> 示例。
+这是一个 <code>Success</code> 示例。
 </aside>
 
 <aside class="warning">
