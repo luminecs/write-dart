@@ -94,8 +94,25 @@ class Logger {
 ```
 
 
+# async
 
+> 以下三个函数有何区别？
 
+```dart
+String processValue(dynamic value) {
+  return 'value';
+}
+
+Future<String> processValue1(dynamic value) async {
+  return Future.value('value');
+}
+
+Future<String> processValue2(dynamic value) {
+  return Future.value('value');
+}
+```
+
+函数 `processValue` 和 `processValue2` 相同，它们都是同步操作，`Future` 可有可无。函数 `processValue1` 因为使用了 `async`，所以是异步操作，必须返回 `Future`。
 
 
 
