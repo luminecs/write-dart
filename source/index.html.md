@@ -70,6 +70,36 @@ class MockVehicle implements Vehicle {
 }
 ```
 
+## base class
+
+```dart
+base class Vehicle {
+  void moveForward(int meters) {}
+}
+
+// Can be constructed
+Vehicle myVehicle = Vehicle();
+
+// Can be extended
+base class Car extends Vehicle {
+  int passengers = 4;
+}
+
+base class MockVehicle implements Vehicle {
+  @override
+  void moveForward(int meters) {
+  }
+}
+
+// ERROR: Cannot be implemented
+base class MockVehicle2 implements Vehicle {
+  @override
+  void moveForward() {
+    // ...
+  }
+}
+```
+
 
 # Future
 
