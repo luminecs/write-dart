@@ -365,6 +365,27 @@
                   <li>
                     <a href="#guard" class="toc-h2 toc-link" data-title="guard">guard</a>
                   </li>
+                  <li>
+                    <a href="#loop-collection" class="toc-h2 toc-link" data-title="loop collection">loop collection</a>
+                  </li>
+                  <li>
+                    <a href="#loop-collection-for-pattern" class="toc-h2 toc-link" data-title="loop collection-for-pattern">loop collection-for-pattern</a>
+                  </li>
+                  <li>
+                    <a href="#while" class="toc-h2 toc-link" data-title="while">while</a>
+                  </li>
+                  <li>
+                    <a href="#do-while" class="toc-h2 toc-link" data-title="do-while">do-while</a>
+                  </li>
+                  <li>
+                    <a href="#while-break" class="toc-h2 toc-link" data-title="while-break">while-break</a>
+                  </li>
+                  <li>
+                    <a href="#for-continue" class="toc-h2 toc-link" data-title="for-continue">for-continue</a>
+                  </li>
+                  <li>
+                    <a href="#where" class="toc-h2 toc-link" data-title="where">where</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -706,6 +727,86 @@
     <span class="k">case</span> <span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span><span class="o">:</span>
       <span class="n">print</span><span class="p">(</span><span class="s">'First element not greater'</span><span class="p">);</span>
   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='loop-collection'>loop collection</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">final</span> <span class="kd">class</span> <span class="nc">Candidate</span> <span class="p">{</span>
+  <span class="kt">String</span> <span class="n">name</span> <span class="o">=</span> <span class="s">''</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">yearsExperience</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="kt">void</span> <span class="n">interview</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="kd">final</span> <span class="n">candidates</span> <span class="o">=</span> <span class="p">&lt;</span><span class="n">Candidate</span><span class="p">&gt;[];</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">final</span> <span class="n">candidate</span> <span class="k">in</span> <span class="n">candidates</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">candidate</span><span class="o">.</span><span class="na">interview</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='loop-collection-for-pattern'>loop collection-for-pattern</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">final</span> <span class="kd">class</span> <span class="nc">Candidate</span> <span class="p">{</span>
+  <span class="kt">String</span> <span class="n">name</span> <span class="o">=</span> <span class="s">''</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">yearsExperience</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="kt">void</span> <span class="n">interview</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="kd">final</span> <span class="n">candidates</span> <span class="o">=</span> <span class="p">&lt;</span><span class="n">Candidate</span><span class="p">&gt;[];</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">final</span> <span class="n">Candidate</span><span class="p">(</span><span class="o">:</span><span class="n">name</span><span class="p">,</span> <span class="o">:</span><span class="n">yearsExperience</span><span class="p">)</span> <span class="k">in</span> <span class="n">candidates</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'</span><span class="si">$name</span><span class="s"> has </span><span class="si">$yearsExperience</span><span class="s"> of experience.'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='while'>while</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">bool</span> <span class="n">isDone</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">doSomething</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">isDone</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">doSomething</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='do-while'>do-while</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">bool</span> <span class="n">atEndOfPage</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">printLine</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="k">do</span> <span class="p">{</span>
+    <span class="n">printLine</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">atEndOfPage</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='while-break'>while-break</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">bool</span> <span class="n">shutDownRequested</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">processIncomingRequests</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">shutDownRequested</span><span class="p">())</span> <span class="k">break</span><span class="p">;</span>
+    <span class="n">processIncomingRequests</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='for-continue'>for-continue</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">final</span> <span class="kd">class</span> <span class="nc">Candidate</span> <span class="p">{</span>
+  <span class="kt">String</span> <span class="n">name</span> <span class="o">=</span> <span class="s">''</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">yearsExperience</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="kt">void</span> <span class="n">interview</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">candidates</span> <span class="o">=</span> <span class="p">&lt;</span><span class="n">Candidate</span><span class="p">&gt;[];</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">candidates</span><span class="o">.</span><span class="na">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="n">candidate</span> <span class="o">=</span> <span class="n">candidates</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">candidate</span><span class="o">.</span><span class="na">yearsExperience</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">continue</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">candidate</span><span class="o">.</span><span class="na">interview</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='where'>where</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">final</span> <span class="kd">class</span> <span class="nc">Candidate</span> <span class="p">{</span>
+  <span class="kt">String</span> <span class="n">name</span> <span class="o">=</span> <span class="s">''</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">yearsExperience</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="kt">void</span> <span class="n">interview</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">candidates</span> <span class="o">=</span> <span class="p">&lt;</span><span class="n">Candidate</span><span class="p">&gt;[];</span>
+  <span class="n">candidates</span>
+      <span class="o">.</span><span class="na">where</span><span class="p">((</span><span class="n">c</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">c</span><span class="o">.</span><span class="na">yearsExperience</span> <span class="p">&gt;</span><span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+      <span class="o">.</span><span class="na">forEach</span><span class="p">((</span><span class="n">c</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">c</span><span class="o">.</span><span class="na">interview</span><span class="p">());</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">two</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">error</span><span class="p">(</span><span class="s">'error from two'</span><span class="p">);</span>
