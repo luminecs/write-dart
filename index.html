@@ -339,6 +339,12 @@
                   <li>
                     <a href="#26b238cb1d" class="toc-h2 toc-link" data-title="注意事项">注意事项</a>
                   </li>
+                  <li>
+                    <a href="#auth-response" class="toc-h2 toc-link" data-title="auth-response">auth-response</a>
+                  </li>
+                  <li>
+                    <a href="#early-error-handler" class="toc-h2 toc-link" data-title="early error handler">early error handler</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -516,7 +522,11 @@
     <span class="k">return</span> <span class="n">error</span> <span class="k">is</span> <span class="kt">int</span> <span class="o">&amp;&amp;</span> <span class="n">error</span> <span class="p">&gt;</span><span class="o">=</span> <span class="mi">400</span><span class="p">;</span>
   <span class="p">});</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='26b238cb1d'>注意事项</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</code></pre></div><h2 id='26b238cb1d'>注意事项</h2>
+<p>以下代码会抛出异常 <code>ArgumentError</code>：<code>Invalid argument(s) (onError): The error handler of Future.catchError must return a value of the future&#39;s type</code>，因为编译器推断 <code>then()</code> 的返回值类型是 <code>Future&lt;Never&gt;</code> 或 <code>Future&lt;Null&gt;</code>，然而真正的返回类型并不如此。</p>
+
+<p>修改方法：<code>then()</code> 添加返回类型 <code>void</code>，告诉编译器无返回值。</p>
+<div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
   <span class="c1">// error</span>
   <span class="n">Future</span><span class="p">(()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="na">then</span><span class="p">((</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s">'1'</span><span class="p">);</span>
@@ -540,10 +550,6 @@
   <span class="p">});</span>
 <span class="p">}</span>
 </code></pre></div>
-<p>以下代码会抛出异常 <code>ArgumentError</code>：<code>Invalid argument(s) (onError): The error handler of Future.catchError must return a value of the future&#39;s type</code>，因为编译器推断 <code>then()</code> 的返回值类型是 <code>Future&lt;Never&gt;</code> 或 <code>Future&lt;Null&gt;</code>，然而真正的返回类型并不如此。</p>
-
-<p>修改方法：<code>then()</code> 添加返回类型 <code>void</code>，告诉编译器无返回值。</p>
-
 <p>另外也可是使用 <code>try-catch</code>。</p>
 <div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
   <span class="k">try</span> <span class="p">{</span>
@@ -551,6 +557,53 @@
   <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">print</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='auth-response'>auth-response</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'dart:async'</span><span class="o">;</span>
+
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">Object</span><span class="p">&gt;</span> <span class="n">handleAuthResponse</span><span class="p">(</span><span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kd">dynamic</span><span class="p">&gt;</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'Response'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">handleFormatException</span><span class="p">(</span><span class="kt">Object</span> <span class="n">exception</span><span class="p">)</span> <span class="p">{}</span>
+
+<span class="kt">void</span> <span class="nf">handleAuthorizationException</span><span class="p">(</span><span class="kt">Object</span> <span class="n">exception</span><span class="p">)</span> <span class="p">{}</span>
+
+<span class="kd">class</span> <span class="nc">AuthorizationException</span> <span class="kd">implements</span> <span class="n">Exception</span> <span class="p">{}</span>
+
+<span class="kt">Never</span> <span class="n">ellipsis</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="k">throw</span> <span class="n">AuthorizationException</span><span class="p">();</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">handleAuthResponse</span><span class="p">(</span><span class="kd">const</span> <span class="p">{</span><span class="s">'username'</span><span class="o">:</span> <span class="s">'dash'</span><span class="p">,</span> <span class="s">'age'</span><span class="o">:</span> <span class="mi">3</span><span class="p">})</span>
+      <span class="o">.</span><span class="na">then</span><span class="p">&lt;</span><span class="kt">void</span><span class="p">&gt;((</span><span class="n">_</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">ellipsis</span><span class="p">())</span>
+      <span class="o">.</span><span class="na">catchError</span><span class="p">(</span><span class="n">handleFormatException</span><span class="p">,</span> <span class="nl">test:</span> <span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">e</span> <span class="k">is</span> <span class="n">FormatException</span><span class="p">)</span>
+      <span class="o">.</span><span class="na">catchError</span><span class="p">(</span><span class="n">handleAuthorizationException</span><span class="p">,</span> <span class="c1">// go to this branch</span>
+          <span class="nl">test:</span> <span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">e</span> <span class="k">is</span> <span class="n">AuthorizationException</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='early-error-handler'>early error handler</h2>
+<p>以下代码，捕获异常比抛出异常推迟 500 ms，所以不能捕获异常。</p>
+<div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Future</span><span class="p">&lt;</span><span class="kt">Object</span><span class="p">&gt;</span> <span class="n">asyncErrorFunction</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s">'1'</span><span class="p">);</span>
+
+  <span class="n">Future</span><span class="p">&lt;</span><span class="kt">Object</span><span class="p">&gt;</span> <span class="n">future</span> <span class="o">=</span> <span class="n">asyncErrorFunction</span><span class="p">();</span> <span class="c1">// 已经抛出</span>
+
+  <span class="c1">// BAD: Too late to handle asyncErrorFunction() exception.</span>
+  <span class="n">Future</span><span class="o">.</span><span class="na">delayed</span><span class="p">(</span><span class="kd">const</span> <span class="n">Duration</span><span class="p">(</span><span class="nl">milliseconds:</span> <span class="mi">500</span><span class="p">),</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="n">future</span><span class="o">.</span><span class="na">then</span><span class="p">((</span><span class="n">_</span><span class="p">)</span> <span class="p">{})</span><span class="o">.</span><span class="na">catchError</span><span class="p">((</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">print</span><span class="p">(</span><span class="s">'e'</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>正确做法是，<code>Future().then().catchError()</code> 写在一起。</p>
+<div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Future</span><span class="p">&lt;</span><span class="kt">Object</span><span class="p">&gt;</span> <span class="n">asyncErrorFunction</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s">'Threw an exception'</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">Future</span><span class="o">.</span><span class="na">delayed</span><span class="p">(</span><span class="kd">const</span> <span class="n">Duration</span><span class="p">(</span><span class="nl">milliseconds:</span> <span class="mi">500</span><span class="p">),</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="n">asyncErrorFunction</span><span class="p">()</span><span class="o">.</span><span class="na">then</span><span class="p">((</span><span class="n">_</span><span class="p">)</span> <span class="p">{})</span><span class="o">.</span><span class="na">catchError</span><span class="p">((</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">print</span><span class="p">(</span><span class="s">'e'</span><span class="p">);</span> <span class="c1">// ok</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='utils'>Utils</h1><h2 id='a-simple-logger'>A simple logger</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="c1">/// A simple logger</span>
 <span class="kd">class</span> <span class="nc">Logger</span> <span class="p">{</span>
