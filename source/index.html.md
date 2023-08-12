@@ -199,6 +199,10 @@ void main() {
 
 ## 注意事项
 
+以下代码会抛出异常 `ArgumentError`：`Invalid argument(s) (onError): The error handler of Future.catchError must return a value of the future's type`，因为编译器推断 `then()` 的返回值类型是 `Future<Never>` 或 `Future<Null>`，然而真正的返回类型并不如此。
+
+修改方法：`then()` 添加返回类型 `void`，告诉编译器无返回值。
+
 ```dart
 void main() {
   // error
@@ -225,10 +229,6 @@ void main() {
 }
 ```
 
-以下代码会抛出异常 `ArgumentError`：`Invalid argument(s) (onError): The error handler of Future.catchError must return a value of the future's type`，因为编译器推断 `then()` 的返回值类型是 `Future<Never>` 或 `Future<Null>`，然而真正的返回类型并不如此。
-
-修改方法：`then()` 添加返回类型 `void`，告诉编译器无返回值。
-
 另外也可是使用 `try-catch`。
 
 ```dart
@@ -241,6 +241,65 @@ void main() {
 }
 ```
 
+## auth-response
+
+```dart
+import 'dart:async';
+
+Future<Object> handleAuthResponse(Map<String, dynamic> data) {
+  return Future.value('Response');
+}
+
+void handleFormatException(Object exception) {}
+
+void handleAuthorizationException(Object exception) {}
+
+class AuthorizationException implements Exception {}
+
+Never ellipsis<T>() => throw AuthorizationException();
+
+void main() {
+  handleAuthResponse(const {'username': 'dash', 'age': 3})
+      .then<void>((_) => ellipsis())
+      .catchError(handleFormatException, test: (e) => e is FormatException)
+      .catchError(handleAuthorizationException, // go to this branch
+          test: (e) => e is AuthorizationException);
+}
+```
+
+## early error handler
+
+以下代码，捕获异常比抛出异常推迟 500 ms，所以不能捕获异常。
+
+```dart
+void main() {
+  Future<Object> asyncErrorFunction() => throw Exception('1');
+
+  Future<Object> future = asyncErrorFunction(); // 已经抛出
+
+  // BAD: Too late to handle asyncErrorFunction() exception.
+  Future.delayed(const Duration(milliseconds: 500), () {
+    future.then((_) {}).catchError((e) {
+      print('e');
+    });
+  });
+}
+```
+
+正确做法是，`Future().then().catchError()` 写在一起。
+
+```dart
+void main() {
+  Future<Object> asyncErrorFunction() async {
+    throw Exception('Threw an exception');
+  }
+  Future.delayed(const Duration(milliseconds: 500), () {
+    asyncErrorFunction().then((_) {}).catchError((e) {
+      print('e'); // ok
+    });
+  });
+}
+```
 
 
 
