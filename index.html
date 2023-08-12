@@ -319,7 +319,7 @@
             <a href="#future" class="toc-h1 toc-link" data-title="Future">Future</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#long-chain" class="toc-h2 toc-link" data-title="Long chain">Long chain</a>
+                    <a href="#long-chain" class="toc-h2 toc-link" data-title="long-chain">long-chain</a>
                   </li>
                   <li>
                     <a href="#then-catch" class="toc-h2 toc-link" data-title="then-catch">then-catch</a>
@@ -332,6 +332,9 @@
                   </li>
                   <li>
                     <a href="#connect-server" class="toc-h2 toc-link" data-title="connect-server">connect-server</a>
+                  </li>
+                  <li>
+                    <a href="#future-then-amp-future-catch-error" class="toc-h2 toc-link" data-title="future-then &amp; future-catch-error">future-then &amp; future-catch-error</a>
                   </li>
               </ul>
           </li>
@@ -391,7 +394,7 @@
 <aside class="warning">
 这是一个 <code>Warning</code> 示例。
 </aside>
-<h1 id='future'>Future</h1><h2 id='long-chain'>Long chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
+<h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">two</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">error</span><span class="p">(</span><span class="s">'error from two'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">three</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from three'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">four</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from four'</span><span class="p">);</span>
@@ -466,7 +469,7 @@
 
 <span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
   <span class="n">asyncErrorFunction</span><span class="p">()</span><span class="o">.</span><span class="na">then</span><span class="p">(</span><span class="n">successCallback</span><span class="p">,</span> <span class="nl">onError:</span> <span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">handleError</span><span class="p">(</span><span class="n">e</span><span class="p">);</span> <span class="c1">// Original error.</span>
+    <span class="n">handleError</span><span class="p">(</span><span class="n">e</span><span class="p">);</span> <span class="c1">// Original error. 显示捕获异常，不然后面的 catchError 不会再捕获</span>
     <span class="n">anotherAsyncErrorFunction</span><span class="p">();</span> <span class="c1">// Oops, new error.</span>
   <span class="p">})</span><span class="o">.</span><span class="na">catchError</span><span class="p">(</span><span class="n">handleError</span><span class="p">);</span> <span class="c1">// Error from within then() handled.</span>
 <span class="p">}</span>
@@ -488,6 +491,27 @@
       <span class="o">.</span><span class="na">then</span><span class="p">(</span><span class="n">handleResponse</span><span class="p">)</span>
       <span class="o">.</span><span class="na">catchError</span><span class="p">(</span><span class="n">handleError</span><span class="p">)</span>
       <span class="o">.</span><span class="na">whenComplete</span><span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="na">close</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='future-then-amp-future-catch-error'>future-then &amp; future-catch-error</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">FakeFuture</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">{</span>
+  <span class="n">Future</span><span class="p">&lt;</span><span class="n">R</span><span class="p">&gt;</span> <span class="n">then</span><span class="p">&lt;</span><span class="n">R</span><span class="p">&gt;(</span><span class="n">FutureOr</span><span class="p">&lt;</span><span class="n">R</span><span class="p">&gt;</span> <span class="kt">Function</span><span class="p">(</span><span class="n">T</span> <span class="n">value</span><span class="p">)</span> <span class="n">onValue</span><span class="p">,</span> <span class="p">{</span><span class="kt">Function</span><span class="o">?</span> <span class="n">onError</span><span class="p">});</span>
+
+  <span class="n">Future</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">catchError</span><span class="p">(</span><span class="kt">Function</span> <span class="n">onError</span><span class="p">,</span> <span class="p">{</span><span class="kt">bool</span> <span class="kt">Function</span><span class="p">(</span><span class="kt">Object</span> <span class="n">error</span><span class="p">)</span><span class="o">?</span> <span class="n">test</span><span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>test 返回值为 true，onError 才会执行：</p>
+</blockquote>
+<div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Future</span><span class="o">.</span><span class="na">delayed</span><span class="p">(</span>
+    <span class="kd">const</span> <span class="n">Duration</span><span class="p">(</span><span class="nl">seconds:</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="k">throw</span> <span class="mi">401</span><span class="p">,</span>
+  <span class="p">)</span><span class="o">.</span><span class="na">then</span><span class="p">((</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="s">'Unreachable'</span><span class="p">;</span>
+  <span class="p">})</span><span class="o">.</span><span class="na">catchError</span><span class="p">((</span><span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'Error: </span><span class="si">$err</span><span class="s">'</span><span class="p">);</span> <span class="c1">// Prints 401.</span>
+  <span class="p">},</span> <span class="nl">test:</span> <span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">error</span> <span class="k">is</span> <span class="kt">int</span> <span class="o">&amp;&amp;</span> <span class="n">error</span> <span class="p">&gt;</span><span class="o">=</span> <span class="mi">400</span><span class="p">;</span>
+  <span class="p">});</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='utils'>Utils</h1><h2 id='a-simple-logger'>A simple logger</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="c1">/// A simple logger</span>
 <span class="kd">class</span> <span class="nc">Logger</span> <span class="p">{</span>
