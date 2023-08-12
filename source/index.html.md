@@ -301,7 +301,85 @@ void main() {
 }
 ```
 
+## when complete
 
+### with-error
+
+```dart
+void main() {
+  Future<Object> asyncErrorFunction() async {
+    throw Exception('Threw an exception');
+  }
+
+  Future<String> handleError(dynamic error) {
+    return Future.value('value');
+  }
+
+  asyncErrorFunction()
+      // Future completes with an error:
+      .then((_) => print("Won't reach here"))
+      // Future completes with the same error:
+      .whenComplete(() => print('Reaches here'))
+      // Future completes with the same error:
+      .then((_) => print("Won't reach here"))
+      // Error is handled here:
+      .catchError(handleError);
+}
+```
+
+### with-object
+
+```dart
+Never ellipsis<T>() => throw Exception('!');
+final Never someObject = ellipsis();
+
+void main() {
+  Future<Object> asyncErrorFunction() async {
+    throw Exception('Threw an exception');
+  }
+
+  Future<String> handleError(dynamic error) {
+    return Future.value('value');
+  }
+
+  void printErrorMessage() {}
+
+  asyncErrorFunction()
+      // Future completes with an error:
+      .then((_) {})
+      .catchError((e) {
+    handleError(e);
+    printErrorMessage();
+    // Future completes with someObject
+    return someObject;
+  }).catchError((e) {
+    print(e);
+  }).whenComplete(() => print('Done!'));
+  // Future completes with someObject
+}
+```
+
+### when-complete-error
+
+```dart
+void main() {
+  Future<Object> asyncErrorFunction() async {
+    throw Exception('Threw an exception');
+  }
+
+  Future<String> handleError(dynamic error) {
+    return Future.value('value');
+  }
+
+  asyncErrorFunction()
+      // Future completes with a value:
+      .catchError(handleError)
+      // Future completes with an error:
+      .whenComplete(() => throw Exception('New error'))
+      // Error is handled:
+      .catchError(handleError);
+}
+```
 
 # Utils
 
