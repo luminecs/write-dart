@@ -47,7 +47,7 @@ void main() {
 
 # Future
 
-## Long chain
+## long-chain
 
 ```dart
 Future<String> one() => Future.value('from one');
@@ -140,7 +140,7 @@ Future<String> handleError(dynamic error) {
 
 void main() {
   asyncErrorFunction().then(successCallback, onError: (e) {
-    handleError(e); // Original error.
+    handleError(e); // Original error. 显示捕获异常，不然后面的 catchError 不会再捕获
     anotherAsyncErrorFunction(); // Oops, new error.
   }).catchError(handleError); // Error from within then() handled.
 }
@@ -169,6 +169,35 @@ void main() {
       .whenComplete(server.close);
 }
 ```
+
+## future-then & future-catch-error
+
+```dart
+abstract class FakeFuture<T> {
+  Future<R> then<R>(FutureOr<R> Function(T value) onValue, {Function? onError});
+
+  Future<T> catchError(Function onError, {bool Function(Object error)? test});
+}
+```
+
+> test 返回值为 true，onError 才会执行：
+
+```dart
+void main() {
+  Future.delayed(
+    const Duration(seconds: 1),
+    () => throw 401,
+  ).then((value) {
+    throw 'Unreachable';
+  }).catchError((err) {
+    print('Error: $err'); // Prints 401.
+  }, test: (error) {
+    return error is int && error >= 400;
+  });
+}
+```
+
+
 
 # Utils
 
