@@ -172,6 +172,42 @@ String getVehicleSound(Vehicle vehicle) {
 }
 ```
 
+# Control Flow
+
+## if-else
+
+```dart
+void main() {
+  bool isRaining() => true;
+  bool isSnowing() => true;
+  dynamic car, you;
+  if (isRaining()) {
+    you.bringRainCoat();
+  } else if (isSnowing()) {
+    you.wearJacket();
+  } else {
+    car.putTopDown();
+  }
+}
+```
+
+## if-case
+
+```dart
+class Point {
+  final int x;
+  final int y;
+
+  Point(this.x, this.y);
+}
+
+Point main() {
+  var pair = [1, 2];
+  if (pair case [int x, int y]) return Point(x, y);
+  return Point(1, 1);
+}
+```
+
 # Future
 
 ## long-chain
