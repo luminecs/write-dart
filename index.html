@@ -331,6 +331,9 @@
                   </li>
               </ul>
           </li>
+          <li>
+            <a href="#async" class="toc-h1 toc-link" data-title="async">async</a>
+          </li>
       </ul>
         <ul class="toc-footer">
             <li><a href='#'>主页</a></li>
@@ -394,7 +397,24 @@
   <span class="nd">@override</span>
   <span class="kt">String</span> <span class="n">toString</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">_log</span><span class="o">.</span><span class="na">join</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">);</span>
 <span class="p">}</span>
+</code></pre></div><h1 id='async'>async</h1>
+<blockquote>
+<p>以下三个函数有何区别？</p>
+</blockquote>
+<div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">String</span> <span class="nf">processValue</span><span class="p">(</span><span class="kd">dynamic</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="s">'value'</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">processValue1</span><span class="p">(</span><span class="kd">dynamic</span> <span class="n">value</span><span class="p">)</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'value'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">processValue2</span><span class="p">(</span><span class="kd">dynamic</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'value'</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
+<p>函数 <code>processValue</code> 和 <code>processValue2</code> 相同，它们都是同步操作，<code>Future</code> 可有可无。函数 <code>processValue1</code> 因为使用了 <code>async</code>，所以是异步操作，必须返回 <code>Future</code>。</p>
+
       </div>
       <div class="dark-box">
           <div class="lang-selector">
