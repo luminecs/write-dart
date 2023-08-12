@@ -197,6 +197,37 @@ void main() {
 }
 ```
 
+## 注意事项
+
+```dart
+void main() {
+  // error
+  Future(() => 1).then((value) {
+    throw Exception('1');
+  }).catchError((error, stackTrace) {
+    print('$error, $stackTrace');
+  });
+  // error
+  File("foo.txt").readAsString().catchError((e) {
+    print(e);
+  });
+
+  // ok
+  Future(() => 1).then<void>((value) {
+    throw Exception('1');
+  }).catchError((error, stackTrace) {
+    print('$error, $stackTrace');
+  });
+  // ok
+  File("foo.txt").readAsString().then<void>((value) {}).catchError((e) {
+    print(e);
+  });
+}
+```
+
+以下代码会抛出异常 `ArgumentError`：`Invalid argument(s) (onError): The error handler of Future.catchError must return a value of the future's type`，因为编译器推断 `then()` 的返回值类型是 `Future<Never>` 或 `Future<Null>`，然而真正的返回类型并不如此。
+
+修改方法：`then()` 添加返回类型 `void`，告诉编译器无返回值。
 
 
 # Utils
