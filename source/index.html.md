@@ -111,11 +111,41 @@ Never ellipsis<T>() => throw Exception('!');
 void main() {
   myFunc().then((value) {
     doSomethingWith(value);
-    ellipsis();
+    ellipsis(); // 抛出异常
     // 下面代码不会被执行
     throw Exception('Some arbitrary error');
   }).catchError(handleError);
 }
+```
+
+## throws-then-catch
+
+```dart
+Future<Object> asyncErrorFunction() async {
+  throw Exception('Threw an exception');
+}
+
+Future<Object> anotherAsyncErrorFunction() {
+  throw Exception('Also threw an exception');
+}
+
+Object successCallback(dynamic value) async {
+  return '';
+}
+
+Future<String> handleError(dynamic error) {
+  print(error);
+  return Future.value('value');
+}
+
+void main() {
+  asyncErrorFunction().then(successCallback, onError: (e) {
+    handleError(e); // Original error.
+    anotherAsyncErrorFunction(); // Oops, new error.
+  }).catchError(handleError); // Error from within then() handled.
+}
+// Exception: Threw an exception
+// Exception: Also threw an exception
 ```
 
 # Utils
