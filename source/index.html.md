@@ -85,6 +85,7 @@ base class Car extends Vehicle {
   int passengers = 4;
 }
 
+// 没有报错
 base class MockVehicle implements Vehicle {
   @override
   void moveForward(int meters) {
@@ -97,6 +98,28 @@ base class MockVehicle2 implements Vehicle {
   void moveForward() {
     // ...
   }
+}
+```
+
+## interface class
+
+```dart
+interface class Vehicle {
+  void moveForward(int meters) {}
+}
+
+// Can be constructed
+Vehicle myVehicle = Vehicle();
+
+// ERROR: Cannot be inherited - 没有报错
+class Car extends Vehicle {
+  int passengers = 4;
+}
+
+// Can be implemented
+class MockVehicle implements Vehicle {
+  @override
+  void moveForward(int meters) {}
 }
 ```
 
