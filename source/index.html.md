@@ -366,6 +366,120 @@ void main() {
 }
 ```
 
+## loop collection
+
+```dart
+final class Candidate {
+  String name = '';
+  int yearsExperience = 0;
+
+  void interview() {}
+}
+
+final candidates = <Candidate>[];
+
+void main() {
+  for (final candidate in candidates) {
+    candidate.interview();
+  }
+}
+```
+
+## loop collection-for-pattern
+
+```dart
+final class Candidate {
+  String name = '';
+  int yearsExperience = 0;
+
+  void interview() {}
+}
+
+final candidates = <Candidate>[];
+
+void main() {
+  for (final Candidate(:name, :yearsExperience) in candidates) {
+    print('$name has $yearsExperience of experience.');
+  }
+}
+```
+
+## while
+
+```dart
+void main() {
+  bool isDone() => true;
+  bool doSomething() => true;
+  while (!isDone()) {
+    doSomething();
+  }
+}
+```
+
+## do-while
+
+```dart
+void main() {
+  bool atEndOfPage() => true;
+  bool printLine() => true;
+  do {
+    printLine();
+  } while (!atEndOfPage());
+}
+```
+
+## while-break
+
+```dart
+void main() {
+  bool shutDownRequested() => true;
+  bool processIncomingRequests() => true;
+  while (true) {
+    if (shutDownRequested()) break;
+    processIncomingRequests();
+  }
+}
+```
+
+## for-continue
+
+```dart
+final class Candidate {
+  String name = '';
+  int yearsExperience = 0;
+
+  void interview() {}
+}
+
+void main() {
+  final candidates = <Candidate>[];
+  for (int i = 0; i < candidates.length; i++) {
+    var candidate = candidates[i];
+    if (candidate.yearsExperience < 5) {
+      continue;
+    }
+    candidate.interview();
+  }
+}
+```
+
+## where
+
+```dart
+final class Candidate {
+  String name = '';
+  int yearsExperience = 0;
+
+  void interview() {}
+}
+
+void main() {
+  final candidates = <Candidate>[];
+  candidates
+      .where((c) => c.yearsExperience >= 5)
+      .forEach((c) => c.interview());
+}
+```
 
 # Future
 
