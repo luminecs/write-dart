@@ -43,6 +43,32 @@ void main() {
 这是一个 <code>Warning</code> 示例。
 </aside>
 
+# Class Modifiers
+
+## abstract class
+
+```dart
+abstract class Vehicle {
+  void moveForward(int meters);
+}
+
+// Error: Cannot be constructed
+Vehicle myVehicle = Vehicle();
+
+// Can be extended
+class Car extends Vehicle {
+  int passengers = 4;
+
+  @override
+  void moveForward(int meters) {}
+}
+
+// Can be implemented
+class MockVehicle implements Vehicle {
+  @override
+  void moveForward(int meters) {}
+}
+```
 
 
 # Future
