@@ -208,6 +208,165 @@ Point main() {
 }
 ```
 
+## if-case-else
+
+```dart
+void main() {
+  var pair = [1, 2];
+  if (pair case [int x, int y]) {
+    print('Was coordinate array $x,$y');
+  } else {
+    throw FormatException('Invalid coordinates.');
+  }
+}
+```
+
+## switch
+
+```dart
+void executeClosed() {}
+void executePending() {}
+void executeApproved() {}
+void executeDenied() {}
+void executeOpen() {}
+void executeUnknown() {}
+void executeNowClosed() {}
+
+void main() {
+  var command = 'OPEN';
+  switch (command) {
+    case 'CLOSED':
+      executeClosed();
+    case 'PENDING':
+      executePending();
+    case 'APPROVED':
+      executeApproved();
+    case 'DENIED':
+      executeDenied();
+    case 'OPEN':
+      executeOpen();
+    default:
+      executeUnknown();
+  }
+}
+```
+
+## switch-empty
+
+```dart
+void executeClosed() {}
+void executeOpen() {}
+void executeNowClosed() {}
+
+void main() {
+  var command = 'OPEN';
+  switch (command) {
+    case 'OPEN':
+      executeOpen();
+      continue newCase; // Continues executing at the newCase label.
+
+    case 'DENIED': // Empty case falls through.
+    case 'CLOSED':
+      executeClosed(); // Runs for both DENIED and CLOSED,
+
+    newCase:
+    case 'PENDING':
+      executeNowClosed(); // Runs for both OPEN and PENDING.
+  }
+}
+```
+
+## switch-stmt
+
+```dart
+dynamic charCode;
+const slash = '/';
+const star = '*';
+const plus = '+';
+const minus = '-';
+const comma = ',';
+const semicolon = ',';
+const int digit0 = 0;
+const int digit9 = 9;
+Object? token;
+
+dynamic operator(dynamic x) {}
+dynamic punctuation(dynamic x) {}
+dynamic number() {}
+
+void main() {
+  // Where slash, star, comma, semicolon, etc., are constant variables...
+  switch (charCode) {
+    case slash || star || plus || minus: // Logical-or pattern
+      token = operator(charCode);
+    case comma || semicolon: // Logical-or pattern
+      token = punctuation(charCode);
+    case >= digit0 && <= digit9: // Relational and logical-and patterns
+      token = number();
+    default:
+      throw FormatException('Invalid');
+  }
+}
+```
+
+## switch-exp
+
+```dart
+dynamic charCode;
+const slash = '/';
+const star = '*';
+const plus = '+';
+const minus = '-';
+const comma = ',';
+const semicolon = ',';
+const int digit0 = 0;
+const int digit9 = 9;
+Object? token;
+
+dynamic operator(dynamic x) {}
+dynamic punctuation(dynamic x) {}
+dynamic number() {}
+
+void main() {
+  token = switch (charCode) {
+    slash || star || plus || minus => operator(charCode),
+    comma || semicolon => punctuation(charCode),
+    >= digit0 && <= digit9 => number(),
+    _ => throw FormatException('Invalid')
+  };
+}
+```
+
+## exh-bool
+
+```dart
+void main() {
+  bool? nullableBool = false;
+  // Non-exhaustive switch on bool?, missing case to match null possibility:
+  switch (nullableBool) {
+    case true:
+      print('yes');
+    case false:
+      print('no');
+  }
+}
+```
+
+## guard
+
+```dart
+void main() {
+  var pair = [1, 2];
+  switch (pair) {
+    case (int a, int b) when a > b:
+      print('First element greater');
+    case (int a, int b):
+      print('First element not greater');
+  }
+}
+```
+
+
 # Future
 
 ## long-chain
