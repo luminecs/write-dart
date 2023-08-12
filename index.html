@@ -324,6 +324,9 @@
                   <li>
                     <a href="#base-class" class="toc-h2 toc-link" data-title="base class">base class</a>
                   </li>
+                  <li>
+                    <a href="#interface-class" class="toc-h2 toc-link" data-title="interface class">interface class</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -449,6 +452,7 @@
   <span class="kt">int</span> <span class="n">passengers</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
 <span class="p">}</span>
 
+<span class="c1">// 没有报错</span>
 <span class="n">base</span> <span class="kd">class</span> <span class="nc">MockVehicle</span> <span class="kd">implements</span> <span class="n">Vehicle</span> <span class="p">{</span>
   <span class="nd">@override</span>
   <span class="kt">void</span> <span class="n">moveForward</span><span class="p">(</span><span class="kt">int</span> <span class="n">meters</span><span class="p">)</span> <span class="p">{</span>
@@ -461,6 +465,23 @@
   <span class="kt">void</span> <span class="n">moveForward</span><span class="p">()</span> <span class="p">{</span>
     <span class="c1">// ...</span>
   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='interface-class'>interface class</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">interface</span> <span class="nc">class</span> <span class="n">Vehicle</span> <span class="p">{</span>
+  <span class="kt">void</span> <span class="n">moveForward</span><span class="p">(</span><span class="kt">int</span> <span class="n">meters</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="c1">// Can be constructed</span>
+<span class="n">Vehicle</span> <span class="n">myVehicle</span> <span class="o">=</span> <span class="n">Vehicle</span><span class="p">();</span>
+
+<span class="c1">// ERROR: Cannot be inherited - 没有报错</span>
+<span class="kd">class</span> <span class="nc">Car</span> <span class="kd">extends</span> <span class="n">Vehicle</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">passengers</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Can be implemented</span>
+<span class="kd">class</span> <span class="nc">MockVehicle</span> <span class="kd">implements</span> <span class="n">Vehicle</span> <span class="p">{</span>
+  <span class="nd">@override</span>
+  <span class="kt">void</span> <span class="n">moveForward</span><span class="p">(</span><span class="kt">int</span> <span class="n">meters</span><span class="p">)</span> <span class="p">{}</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">two</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">error</span><span class="p">(</span><span class="s">'error from two'</span><span class="p">);</span>
