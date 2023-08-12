@@ -75,7 +75,7 @@ void main() {
 
 ```
 
-## then catch
+## then-catch
 
 ```dart
 Future<Object> myFunc() => Future.value('42');
@@ -90,6 +90,31 @@ Future<String> handleError(dynamic error) {
 
 void main() {
   myFunc().then(processValue).catchError(handleError);
+}
+```
+
+## comprehensive-errors
+
+```dart
+Future<Object> myFunc() => Future.value('42');
+
+String doSomethingWith(dynamic value) {
+  return 'value';
+}
+
+Future<String> handleError(dynamic error) {
+  return Future.value('value');
+}
+
+Never ellipsis<T>() => throw Exception('!');
+
+void main() {
+  myFunc().then((value) {
+    doSomethingWith(value);
+    ellipsis();
+    // 下面代码不会被执行
+    throw Exception('Some arbitrary error');
+  }).catchError(handleError);
 }
 ```
 
