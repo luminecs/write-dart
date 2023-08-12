@@ -322,7 +322,13 @@
                     <a href="#long-chain" class="toc-h2 toc-link" data-title="Long chain">Long chain</a>
                   </li>
                   <li>
-                    <a href="#then-catch" class="toc-h2 toc-link" data-title="then catch">then catch</a>
+                    <a href="#then-catch" class="toc-h2 toc-link" data-title="then-catch">then-catch</a>
+                  </li>
+                  <li>
+                    <a href="#comprehensive-errors" class="toc-h2 toc-link" data-title="comprehensive-errors">comprehensive-errors</a>
+                  </li>
+                  <li>
+                    <a href="#throws-then-catch" class="toc-h2 toc-link" data-title="throws-then-catch">throws-then-catch</a>
                   </li>
               </ul>
           </li>
@@ -347,6 +353,9 @@
               <ul class="toc-list-h2">
                   <li>
                     <a href="#never" class="toc-h2 toc-link" data-title="Never 是什么？">Never 是什么？</a>
+                  </li>
+                  <li>
+                    <a href="#dart-dynamic-object" class="toc-h2 toc-link" data-title="Dart 中 dynamic 和 Object 有何区别？">Dart 中 dynamic 和 Object 有何区别？</a>
                   </li>
               </ul>
           </li>
@@ -402,7 +411,7 @@
 <span class="c1">//   Got error: error from two</span>
 <span class="c1">//   The value is 42</span>
 
-</code></pre></div><h2 id='then-catch'>then catch</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">Object</span><span class="p">&gt;</span> <span class="n">myFunc</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'42'</span><span class="p">);</span>
+</code></pre></div><h2 id='then-catch'>then-catch</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">Object</span><span class="p">&gt;</span> <span class="n">myFunc</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'42'</span><span class="p">);</span>
 
 <span class="kt">String</span> <span class="nf">processValue</span><span class="p">(</span><span class="kd">dynamic</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">return</span> <span class="s">'value'</span><span class="p">;</span>
@@ -415,6 +424,51 @@
 <span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
   <span class="n">myFunc</span><span class="p">()</span><span class="o">.</span><span class="na">then</span><span class="p">(</span><span class="n">processValue</span><span class="p">)</span><span class="o">.</span><span class="na">catchError</span><span class="p">(</span><span class="n">handleError</span><span class="p">);</span>
 <span class="p">}</span>
+</code></pre></div><h2 id='comprehensive-errors'>comprehensive-errors</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">Object</span><span class="p">&gt;</span> <span class="n">myFunc</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'42'</span><span class="p">);</span>
+
+<span class="kt">String</span> <span class="nf">doSomethingWith</span><span class="p">(</span><span class="kd">dynamic</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="s">'value'</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">handleError</span><span class="p">(</span><span class="kd">dynamic</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'value'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">Never</span> <span class="n">ellipsis</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s">'!'</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">myFunc</span><span class="p">()</span><span class="o">.</span><span class="na">then</span><span class="p">((</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">doSomethingWith</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+    <span class="n">ellipsis</span><span class="p">();</span> <span class="c1">// 抛出异常</span>
+    <span class="c1">// 下面代码不会被执行</span>
+    <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s">'Some arbitrary error'</span><span class="p">);</span>
+  <span class="p">})</span><span class="o">.</span><span class="na">catchError</span><span class="p">(</span><span class="n">handleError</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='throws-then-catch'>throws-then-catch</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">Object</span><span class="p">&gt;</span> <span class="n">asyncErrorFunction</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s">'Threw an exception'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">Object</span><span class="p">&gt;</span> <span class="n">anotherAsyncErrorFunction</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s">'Also threw an exception'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">Object</span> <span class="nf">successCallback</span><span class="p">(</span><span class="kd">dynamic</span> <span class="n">value</span><span class="p">)</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="s">''</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">handleError</span><span class="p">(</span><span class="kd">dynamic</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">error</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'value'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">asyncErrorFunction</span><span class="p">()</span><span class="o">.</span><span class="na">then</span><span class="p">(</span><span class="n">successCallback</span><span class="p">,</span> <span class="nl">onError:</span> <span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">handleError</span><span class="p">(</span><span class="n">e</span><span class="p">);</span> <span class="c1">// Original error.</span>
+    <span class="n">anotherAsyncErrorFunction</span><span class="p">();</span> <span class="c1">// Oops, new error.</span>
+  <span class="p">})</span><span class="o">.</span><span class="na">catchError</span><span class="p">(</span><span class="n">handleError</span><span class="p">);</span> <span class="c1">// Error from within then() handled.</span>
+<span class="p">}</span>
+<span class="c1">// Exception: Threw an exception</span>
+<span class="c1">// Exception: Also threw an exception</span>
 </code></pre></div><h1 id='utils'>Utils</h1><h2 id='a-simple-logger'>A simple logger</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="c1">/// A simple logger</span>
 <span class="kd">class</span> <span class="nc">Logger</span> <span class="p">{</span>
   <span class="kd">final</span> <span class="kt">List</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">_log</span> <span class="o">=</span> <span class="p">[];</span>
@@ -442,7 +496,19 @@
 <h1 id='questions'>Questions</h1><h2 id='never'>Never 是什么？</h2>
 <p>Never 是 Dart 中的一个类型，表示没有值。它通常用于表示不可能返回的函数的返回类型。比如函数中途一定会抛出异常的函数。</p>
 <div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">Never</span> <span class="n">ellipsis</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s">'!'</span><span class="p">);</span>
+</code></pre></div><h2 id='dart-dynamic-object'>Dart 中 dynamic 和 Object 有何区别？</h2>
+<p>在 Dart 中，<code>dynamic</code> 和 <code>Object</code> 都是类型。<code>dynamic</code> 类型是动态类型，这意味着它可以存储任何类型的值。<code>Object</code> 类型是静态类型，这意味着它只能存储 <code>Object</code> 及其子类的值。</p>
+
+<p><code>dynamic</code> 类型通常用于在编译时不知道值类型的场合。例如，以下代码将 <code>dynamic</code> 类型变量 <code>x</code> 初始化为一个字符串：</p>
+<div class="highlight"><pre class="highlight plaintext"><code>dynamic x = 'Hello World!';
 </code></pre></div>
+<p><code>Object</code> 类型通常用于在编译时知道值类型的场合。例如，以下代码将 <code>Object</code> 类型变量 <code>y</code> 初始化为一个字符串：</p>
+<div class="highlight"><pre class="highlight plaintext"><code>Object y = 'Hello World!';
+</code></pre></div>
+<p><code>dynamic</code> 类型比 <code>Object</code> 类型更灵活，但也更不安全。使用 <code>dynamic</code> 类型时，编译器无法检查类型错误，这可能会导致错误。使用 <code>Object</code> 类型时，编译器可以检查类型错误，这有助于确保程序的安全性。</p>
+
+<p>一般来说，在 Dart 中使用 <code>Object</code> 类型而不是 <code>dynamic</code> 类型是更好的做法。但是，在编译时不知道值类型的场合，使用 <code>dynamic</code> 类型是有意义的。</p>
+
       </div>
       <div class="dark-box">
           <div class="lang-selector">
