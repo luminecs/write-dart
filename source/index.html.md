@@ -75,6 +75,24 @@ void main() {
 
 ```
 
+## then catch
+
+```dart
+Future<Object> myFunc() => Future.value('42');
+
+String processValue(dynamic value) {
+  return 'value';
+}
+
+Future<String> handleError(dynamic error) {
+  return Future.value('value');
+}
+
+void main() {
+  myFunc().then(processValue).catchError(handleError);
+}
+```
+
 # Utils
 
 ## A simple logger
@@ -119,7 +137,15 @@ Future<String> processValue2(dynamic value) {
 
 
 
+# Questions
 
+## Never 是什么？
+
+Never 是 Dart 中的一个类型，表示没有值。它通常用于表示不可能返回的函数的返回类型。比如函数中途一定会抛出异常的函数。
+
+```dart
+Never ellipsis<T>() => throw Exception('!');
+```
 
 
 
