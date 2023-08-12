@@ -229,6 +229,20 @@ void main() {
 
 修改方法：`then()` 添加返回类型 `void`，告诉编译器无返回值。
 
+另外也可是使用 `try-catch`。
+
+```dart
+void main() {
+  try {
+    File("foo.txt").readAsString();
+  } catch (e) {
+    print(e);
+  }
+}
+```
+
+
+
 
 # Utils
 
