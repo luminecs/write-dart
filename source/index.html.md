@@ -148,6 +148,28 @@ void main() {
 // Exception: Also threw an exception
 ```
 
+## connect-server
+
+```dart
+Future<Object> handleResponse() => Future.value('Response');
+
+Future<String> handleError(dynamic error) {
+  return Future.value('value');
+}
+
+void main() {
+  dynamic connectToServer() {}
+  const myUrl = 'https://dart.dev';
+
+  final server = connectToServer();
+  server
+      .post(myUrl, fields: const {'name': 'Dash', 'profession': 'mascot'})
+      .then(handleResponse)
+      .catchError(handleError)
+      .whenComplete(server.close);
+}
+```
+
 # Utils
 
 ## A simple logger
