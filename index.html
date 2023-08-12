@@ -316,6 +316,17 @@
             <a href="#45fa4e00db" class="toc-h1 toc-link" data-title="介绍">介绍</a>
           </li>
           <li>
+            <a href="#class-modifiers" class="toc-h1 toc-link" data-title="Class Modifiers">Class Modifiers</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#abstract-class" class="toc-h2 toc-link" data-title="abstract class">abstract class</a>
+                  </li>
+                  <li>
+                    <a href="#base-class" class="toc-h2 toc-link" data-title="base class">base class</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#future" class="toc-h1 toc-link" data-title="Future">Future</a>
               <ul class="toc-list-h2">
                   <li>
@@ -406,7 +417,52 @@
 <aside class="warning">
 这是一个 <code>Warning</code> 示例。
 </aside>
-<h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
+<h1 id='class-modifiers'>Class Modifiers</h1><h2 id='abstract-class'>abstract class</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Vehicle</span> <span class="p">{</span>
+  <span class="kt">void</span> <span class="n">moveForward</span><span class="p">(</span><span class="kt">int</span> <span class="n">meters</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Error: Cannot be constructed</span>
+<span class="n">Vehicle</span> <span class="n">myVehicle</span> <span class="o">=</span> <span class="n">Vehicle</span><span class="p">();</span>
+
+<span class="c1">// Can be extended</span>
+<span class="kd">class</span> <span class="nc">Car</span> <span class="kd">extends</span> <span class="n">Vehicle</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">passengers</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+
+  <span class="nd">@override</span>
+  <span class="kt">void</span> <span class="n">moveForward</span><span class="p">(</span><span class="kt">int</span> <span class="n">meters</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="c1">// Can be implemented</span>
+<span class="kd">class</span> <span class="nc">MockVehicle</span> <span class="kd">implements</span> <span class="n">Vehicle</span> <span class="p">{</span>
+  <span class="nd">@override</span>
+  <span class="kt">void</span> <span class="n">moveForward</span><span class="p">(</span><span class="kt">int</span> <span class="n">meters</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='base-class'>base class</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">base</span> <span class="kd">class</span> <span class="nc">Vehicle</span> <span class="p">{</span>
+  <span class="kt">void</span> <span class="n">moveForward</span><span class="p">(</span><span class="kt">int</span> <span class="n">meters</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="c1">// Can be constructed</span>
+<span class="n">Vehicle</span> <span class="n">myVehicle</span> <span class="o">=</span> <span class="n">Vehicle</span><span class="p">();</span>
+
+<span class="c1">// Can be extended</span>
+<span class="n">base</span> <span class="kd">class</span> <span class="nc">Car</span> <span class="kd">extends</span> <span class="n">Vehicle</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">passengers</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">base</span> <span class="kd">class</span> <span class="nc">MockVehicle</span> <span class="kd">implements</span> <span class="n">Vehicle</span> <span class="p">{</span>
+  <span class="nd">@override</span>
+  <span class="kt">void</span> <span class="n">moveForward</span><span class="p">(</span><span class="kt">int</span> <span class="n">meters</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// ERROR: Cannot be implemented</span>
+<span class="n">base</span> <span class="kd">class</span> <span class="nc">MockVehicle2</span> <span class="kd">implements</span> <span class="n">Vehicle</span> <span class="p">{</span>
+  <span class="nd">@override</span>
+  <span class="kt">void</span> <span class="n">moveForward</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">two</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">error</span><span class="p">(</span><span class="s">'error from two'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">three</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from three'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">four</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from four'</span><span class="p">);</span>
