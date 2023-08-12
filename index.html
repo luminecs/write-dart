@@ -412,6 +412,33 @@
                   <li>
                     <a href="#destructure-class-instances" class="toc-h2 toc-link" data-title="destructure-class-instances">destructure-class-instances</a>
                   </li>
+                  <li>
+                    <a href="#for-in-pattern-amp-for-in-pattern" class="toc-h2 toc-link" data-title="for-in-pattern &amp; for-in-pattern">for-in-pattern &amp; for-in-pattern</a>
+                  </li>
+                  <li>
+                    <a href="#json" class="toc-h2 toc-link" data-title="json">json</a>
+                  </li>
+                  <li>
+                    <a href="#pattern_types-cast" class="toc-h2 toc-link" data-title="pattern_types cast">pattern_types cast</a>
+                  </li>
+                  <li>
+                    <a href="#pattern_types-constant" class="toc-h2 toc-link" data-title="pattern_types constant">pattern_types constant</a>
+                  </li>
+                  <li>
+                    <a href="#pattern_types-complex-constant" class="toc-h2 toc-link" data-title="pattern_types complex-constant">pattern_types complex-constant</a>
+                  </li>
+                  <li>
+                    <a href="#pattern_types-match-context" class="toc-h2 toc-link" data-title="pattern_types match-context">pattern_types match-context</a>
+                  </li>
+                  <li>
+                    <a href="#pattern_types-rest" class="toc-h2 toc-link" data-title="pattern_types rest">pattern_types rest</a>
+                  </li>
+                  <li>
+                    <a href="#pattern_types-rest-sub" class="toc-h2 toc-link" data-title="pattern_types rest-sub">pattern_types rest-sub</a>
+                  </li>
+                  <li>
+                    <a href="#pattern_types-logical-and" class="toc-h2 toc-link" data-title="pattern_types logical-and">pattern_types logical-and</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -898,6 +925,86 @@
   <span class="kd">final</span> <span class="n">Foo</span> <span class="n">myFoo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">(</span><span class="nl">one:</span> <span class="s">'one'</span><span class="p">,</span> <span class="nl">two:</span> <span class="mi">2</span><span class="p">);</span>
   <span class="kd">var</span> <span class="n">Foo</span><span class="p">(</span><span class="o">:</span><span class="n">one</span><span class="p">,</span><span class="o">:</span><span class="n">two</span><span class="p">)</span> <span class="o">=</span> <span class="n">myFoo</span><span class="p">;</span>
   <span class="n">print</span><span class="p">(</span><span class="s">'one </span><span class="si">$one</span><span class="s">, two </span><span class="si">$two</span><span class="s">'</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='for-in-pattern-amp-for-in-pattern'>for-in-pattern &amp; for-in-pattern</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">int</span><span class="p">&gt;</span> <span class="n">hist</span> <span class="o">=</span> <span class="p">{</span><span class="s">'a'</span><span class="o">:</span> <span class="mi">23</span><span class="p">,</span> <span class="s">'b'</span><span class="o">:</span> <span class="mi">100</span><span class="p">};</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="n">MapEntry</span><span class="p">(</span><span class="nl">key:</span> <span class="n">key</span><span class="p">,</span> <span class="nl">value:</span> <span class="n">count</span><span class="p">)</span> <span class="k">in</span> <span class="n">hist</span><span class="o">.</span><span class="na">entries</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'</span><span class="si">$key</span><span class="s"> occurred </span><span class="si">$count</span><span class="s"> times'</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="n">MapEntry</span><span class="p">(</span><span class="o">:</span><span class="n">key</span><span class="p">,</span> <span class="nl">value:</span> <span class="n">count</span><span class="p">)</span> <span class="k">in</span> <span class="n">hist</span><span class="o">.</span><span class="na">entries</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'</span><span class="si">$key</span><span class="s"> occurred </span><span class="si">$count</span><span class="s"> times'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='json'>json</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">json</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'user'</span><span class="o">:</span> <span class="p">[</span><span class="s">'Lily'</span><span class="p">,</span> <span class="mi">13</span><span class="p">]</span>
+  <span class="p">};</span>
+  <span class="kd">var</span> <span class="p">{</span><span class="s">'user'</span><span class="o">:</span> <span class="p">[</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">]}</span> <span class="o">=</span> <span class="n">json</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">json</span> <span class="k">is</span> <span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">Object</span><span class="o">?</span><span class="p">&gt;</span> <span class="o">&amp;&amp;</span>
+      <span class="n">json</span><span class="o">.</span><span class="na">length</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span>
+      <span class="n">json</span><span class="o">.</span><span class="na">containsKey</span><span class="p">(</span><span class="s">'user'</span><span class="p">))</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="n">user</span> <span class="o">=</span> <span class="n">json</span><span class="p">[</span><span class="s">'user'</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">user</span> <span class="k">is</span> <span class="kt">List</span><span class="p">&lt;</span><span class="kt">Object</span><span class="p">&gt;</span> <span class="o">&amp;&amp;</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">length</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">&amp;&amp;</span>
+        <span class="n">user</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">is</span> <span class="kt">String</span> <span class="o">&amp;&amp;</span>
+        <span class="n">user</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">is</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="n">name</span> <span class="o">=</span> <span class="n">user</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">as</span> <span class="kt">String</span><span class="p">;</span>
+      <span class="kd">var</span> <span class="n">age</span> <span class="o">=</span> <span class="n">user</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">as</span> <span class="kt">int</span><span class="p">;</span>
+      <span class="n">print</span><span class="p">(</span><span class="s">'User </span><span class="si">$name</span><span class="s"> is </span><span class="si">$age</span><span class="s"> years old.'</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">json</span> <span class="k">case</span> <span class="p">{</span><span class="s">'user'</span><span class="o">:</span> <span class="p">[</span><span class="kt">String</span> <span class="n">name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">age</span><span class="p">]})</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'User </span><span class="si">$name</span><span class="s"> is </span><span class="si">$age</span><span class="s"> years old.'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-cast'>pattern_types cast</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">(</span><span class="kt">num</span><span class="p">,</span> <span class="kt">Object</span><span class="p">)</span> <span class="n">record</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">'s'</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="p">(</span><span class="n">i</span> <span class="k">as</span> <span class="kt">int</span><span class="p">,</span> <span class="n">s</span> <span class="k">as</span> <span class="kt">String</span><span class="p">)</span> <span class="o">=</span> <span class="n">record</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-constant'>pattern_types constant</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">number</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Matches if 1 == number.</span>
+    <span class="k">case</span> <span class="mi">1</span><span class="o">:</span> <span class="c1">// ...</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-complex-constant'>pattern_types complex-constant</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="k">switch</span> <span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="p">{</span>
+    <span class="c1">// List or map pattern:</span>
+    <span class="k">case</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span><span class="o">:</span> <span class="c1">// ...</span>
+
+    <span class="c1">// List or map literal:</span>
+    <span class="k">case</span> <span class="kd">const</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span><span class="o">:</span> <span class="c1">// ...</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-match-context'>pattern_types match-context</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="nl">c:</span>
+      <span class="n">print</span><span class="p">(</span><span class="s">'match </span><span class="si">$c</span><span class="s">'</span><span class="p">);</span>
+    <span class="k">default</span><span class="o">:</span>
+      <span class="n">print</span><span class="p">(</span><span class="s">'no match'</span><span class="p">);</span> <span class="c1">// Prints "no match".</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-rest'>pattern_types rest</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="p">...,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">];</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'</span><span class="si">$a</span><span class="s"> </span><span class="si">$b</span><span class="s"> </span><span class="si">$c</span><span class="s"> </span><span class="si">$d</span><span class="s">'</span><span class="p">);</span> <span class="c1">// Prints "1 2 6 7".</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-rest-sub'>pattern_types rest-sub</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="p">..</span><span class="o">.</span><span class="na">rest</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">];</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'</span><span class="si">$a</span><span class="s"> </span><span class="si">$b</span><span class="s"> </span><span class="si">$rest</span><span class="s"> </span><span class="si">$c</span><span class="s"> </span><span class="si">$d</span><span class="s">'</span><span class="p">);</span> <span class="c1">// Prints "1 2 [3, 4, 5] 6 7".</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-logical-and'>pattern_types logical-and</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">switch</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="p">{</span>
+    <span class="c1">// Error, both subpatterns attempt to bind 'b'.</span>
+    <span class="k">case</span> <span class="p">(</span><span class="kd">var</span> <span class="n">a</span><span class="p">,</span> <span class="kd">var</span> <span class="n">b</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="kd">var</span> <span class="n">b</span><span class="p">,</span> <span class="kd">var</span> <span class="n">c</span><span class="p">)</span><span class="o">:</span> <span class="c1">// ...</span>
+  <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">two</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">error</span><span class="p">(</span><span class="s">'error from two'</span><span class="p">);</span>
