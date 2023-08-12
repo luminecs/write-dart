@@ -202,13 +202,25 @@ Never 是 Dart 中的一个类型，表示没有值。它通常用于表示不�
 Never ellipsis<T>() => throw Exception('!');
 ```
 
+## Dart 中 dynamic 和 Object 有何区别？
 
+在 Dart 中，`dynamic` 和 `Object` 都是类型。`dynamic` 类型是动态类型，这意味着它可以存储任何类型的值。`Object` 类型是静态类型，这意味着它只能存储 `Object` 及其子类的值。
 
+`dynamic` 类型通常用于在编译时不知道值类型的场合。例如，以下代码将 `dynamic` 类型变量 `x` 初始化为一个字符串：
 
+```
+dynamic x = 'Hello World!';
+```
 
+`Object` 类型通常用于在编译时知道值类型的场合。例如，以下代码将 `Object` 类型变量 `y` 初始化为一个字符串：
 
+```
+Object y = 'Hello World!';
+```
 
+`dynamic` 类型比 `Object` 类型更灵活，但也更不安全。使用 `dynamic` 类型时，编译器无法检查类型错误，这可能会导致错误。使用 `Object` 类型时，编译器可以检查类型错误，这有助于确保程序的安全性。
 
+一般来说，在 Dart 中使用 `Object` 类型而不是 `dynamic` 类型是更好的做法。但是，在编译时不知道值类型的场合，使用 `dynamic` 类型是有意义的。
 
 
 
