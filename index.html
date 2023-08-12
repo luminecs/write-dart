@@ -543,7 +543,16 @@
 <p>以下代码会抛出异常 <code>ArgumentError</code>：<code>Invalid argument(s) (onError): The error handler of Future.catchError must return a value of the future&#39;s type</code>，因为编译器推断 <code>then()</code> 的返回值类型是 <code>Future&lt;Never&gt;</code> 或 <code>Future&lt;Null&gt;</code>，然而真正的返回类型并不如此。</p>
 
 <p>修改方法：<code>then()</code> 添加返回类型 <code>void</code>，告诉编译器无返回值。</p>
-<h1 id='utils'>Utils</h1><h2 id='a-simple-logger'>A simple logger</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="c1">/// A simple logger</span>
+
+<p>另外也可是使用 <code>try-catch</code>。</p>
+<div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="n">File</span><span class="p">(</span><span class="s">"foo.txt"</span><span class="p">)</span><span class="o">.</span><span class="na">readAsString</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h1 id='utils'>Utils</h1><h2 id='a-simple-logger'>A simple logger</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="c1">/// A simple logger</span>
 <span class="kd">class</span> <span class="nc">Logger</span> <span class="p">{</span>
   <span class="kd">final</span> <span class="kt">List</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">_log</span> <span class="o">=</span> <span class="p">[];</span>
 
