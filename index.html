@@ -389,6 +389,32 @@
               </ul>
           </li>
           <li>
+            <a href="#patterns" class="toc-h1 toc-link" data-title="Patterns">Patterns</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#algebraic_datatypes" class="toc-h2 toc-link" data-title="algebraic_datatypes">algebraic_datatypes</a>
+                  </li>
+                  <li>
+                    <a href="#destructuring-list-pattern" class="toc-h2 toc-link" data-title="destructuring list-pattern">destructuring list-pattern</a>
+                  </li>
+                  <li>
+                    <a href="#destructuring-nested-pattern" class="toc-h2 toc-link" data-title="destructuring nested-pattern">destructuring nested-pattern</a>
+                  </li>
+                  <li>
+                    <a href="#destructuring-variable-declaration" class="toc-h2 toc-link" data-title="destructuring variable-declaration">destructuring variable-declaration</a>
+                  </li>
+                  <li>
+                    <a href="#destructuring-variable-assignment" class="toc-h2 toc-link" data-title="destructuring variable-assignment">destructuring variable-assignment</a>
+                  </li>
+                  <li>
+                    <a href="#destructure-multiple-returns" class="toc-h2 toc-link" data-title="destructure-multiple-returns">destructure-multiple-returns</a>
+                  </li>
+                  <li>
+                    <a href="#destructure-class-instances" class="toc-h2 toc-link" data-title="destructure-class-instances">destructure-class-instances</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#future" class="toc-h1 toc-link" data-title="Future">Future</a>
               <ul class="toc-list-h2">
                   <li>
@@ -807,6 +833,71 @@
   <span class="n">candidates</span>
       <span class="o">.</span><span class="na">where</span><span class="p">((</span><span class="n">c</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">c</span><span class="o">.</span><span class="na">yearsExperience</span> <span class="p">&gt;</span><span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
       <span class="o">.</span><span class="na">forEach</span><span class="p">((</span><span class="n">c</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">c</span><span class="o">.</span><span class="na">interview</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div><h1 id='patterns'>Patterns</h1><h2 id='algebraic_datatypes'>algebraic_datatypes</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'dart:math'</span> <span class="k">as</span> <span class="n">math</span><span class="o">;</span>
+
+<span class="n">sealed</span> <span class="kd">class</span> <span class="nc">Shape</span> <span class="p">{}</span>
+
+<span class="kd">class</span> <span class="nc">Square</span> <span class="kd">implements</span> <span class="n">Shape</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="kt">double</span> <span class="n">length</span><span class="p">;</span>
+  <span class="n">Square</span><span class="p">(</span><span class="k">this</span><span class="o">.</span><span class="na">length</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">Circle</span> <span class="kd">implements</span> <span class="n">Shape</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="kt">double</span> <span class="n">radius</span><span class="p">;</span>
+  <span class="n">Circle</span><span class="p">(</span><span class="k">this</span><span class="o">.</span><span class="na">radius</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">double</span> <span class="nf">calculateArea</span><span class="p">(</span><span class="n">Shape</span> <span class="n">shape</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="k">switch</span> <span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Square</span><span class="p">(</span><span class="nl">length:</span> <span class="kd">var</span> <span class="n">l</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">l</span> <span class="o">*</span> <span class="n">l</span><span class="p">,</span>
+  <span class="n">Circle</span><span class="p">(</span><span class="nl">radius:</span> <span class="kd">var</span> <span class="n">r</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">math</span><span class="o">.</span><span class="na">pi</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">r</span>
+<span class="p">};</span>
+</code></pre></div><h2 id='destructuring-list-pattern'>destructuring list-pattern</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">numList</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+  <span class="c1">// List pattern [a, b, c] destructures the three elements from numList...</span>
+  <span class="kd">var</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">numList</span><span class="p">;</span>
+  <span class="c1">// ...and assigns them to new variables.</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span><span class="p">);</span> <span class="c1">// 6</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='destructuring-nested-pattern'>destructuring nested-pattern</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">];</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="p">[</span><span class="s">'a'</span> <span class="o">||</span> <span class="s">'b'</span><span class="p">,</span> <span class="kd">var</span> <span class="n">c</span><span class="p">]</span><span class="o">:</span>
+      <span class="n">print</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='destructuring-variable-declaration'>destructuring variable-declaration</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Declares new variables a, b, and c.</span>
+  <span class="kd">var</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">])</span> <span class="o">=</span> <span class="p">(</span><span class="s">'str'</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='destructuring-variable-assignment'>destructuring variable-assignment</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="s">'left'</span><span class="p">,</span> <span class="s">'right'</span><span class="p">);</span>
+  <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span> <span class="c1">// Swap.</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'</span><span class="si">$a</span><span class="s"> </span><span class="si">$b</span><span class="s">'</span><span class="p">);</span> <span class="c1">// Prints "right left".</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='destructure-multiple-returns'>destructure-multiple-returns</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="p">(</span><span class="kt">String</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span> <span class="n">userInfo</span><span class="p">(</span><span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kd">dynamic</span><span class="p">&gt;</span> <span class="n">json</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span><span class="s">'doug'</span><span class="p">,</span> <span class="mi">25</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="n">json</span> <span class="o">=</span> <span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kd">dynamic</span><span class="p">&gt;{};</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">info</span> <span class="o">=</span> <span class="n">userInfo</span><span class="p">(</span><span class="n">json</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="n">name</span> <span class="o">=</span> <span class="n">info</span><span class="p">.</span><span class="err">$</span><span class="mi">1</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="n">age</span> <span class="o">=</span> <span class="n">info</span><span class="p">.</span><span class="err">$</span><span class="mi">2</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="p">(</span><span class="n">name1</span><span class="p">,</span> <span class="n">age1</span><span class="p">)</span> <span class="o">=</span> <span class="n">userInfo</span><span class="p">(</span><span class="n">json</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='destructure-class-instances'>destructure-class-instances</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Foo</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="kt">String</span> <span class="n">one</span><span class="p">;</span>
+  <span class="kd">final</span> <span class="kt">int</span> <span class="n">two</span><span class="p">;</span>
+
+  <span class="n">Foo</span><span class="p">({</span><span class="kd">required</span> <span class="k">this</span><span class="o">.</span><span class="na">one</span><span class="p">,</span> <span class="kd">required</span> <span class="k">this</span><span class="o">.</span><span class="na">two</span><span class="p">});</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">Foo</span> <span class="n">myFoo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">(</span><span class="nl">one:</span> <span class="s">'one'</span><span class="p">,</span> <span class="nl">two:</span> <span class="mi">2</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="n">Foo</span><span class="p">(</span><span class="o">:</span><span class="n">one</span><span class="p">,</span><span class="o">:</span><span class="n">two</span><span class="p">)</span> <span class="o">=</span> <span class="n">myFoo</span><span class="p">;</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'one </span><span class="si">$one</span><span class="s">, two </span><span class="si">$two</span><span class="s">'</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">two</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">error</span><span class="p">(</span><span class="s">'error from two'</span><span class="p">);</span>
