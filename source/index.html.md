@@ -481,6 +481,108 @@ void main() {
 }
 ```
 
+# Patterns
+
+## algebraic_datatypes
+
+```dart
+import 'dart:math' as math;
+
+sealed class Shape {}
+
+class Square implements Shape {
+  final double length;
+  Square(this.length);
+}
+
+class Circle implements Shape {
+  final double radius;
+  Circle(this.radius);
+}
+
+double calculateArea(Shape shape) => switch (shape) {
+  Square(length: var l) => l * l,
+  Circle(radius: var r) => math.pi * r * r
+};
+```
+
+## destructuring list-pattern
+
+```dart
+void main() {
+  var numList = [1, 2, 3];
+  // List pattern [a, b, c] destructures the three elements from numList...
+  var [a, b, c] = numList;
+  // ...and assigns them to new variables.
+  print(a + b + c); // 6
+}
+```
+
+## destructuring nested-pattern
+
+```dart
+void main() {
+  var list = ['b', 'c'];
+  switch (list) {
+    case ['a' || 'b', var c]:
+      print(c);
+  }
+}
+```
+
+## destructuring variable-declaration
+
+```dart
+void main() {
+  // Declares new variables a, b, and c.
+  var (a, [b, c]) = ('str', [1, 2]);
+}
+```
+
+## destructuring variable-assignment
+
+```dart
+void main() {
+  var (a, b) = ('left', 'right');
+  (b, a) = (a, b); // Swap.
+  print('$a $b'); // Prints "right left".
+}
+```
+
+## destructure-multiple-returns
+
+```dart
+(String, int) userInfo(Map<String, dynamic> json) {
+  return ('doug', 25);
+}
+
+var json = <String, dynamic>{};
+
+void main() {
+  var info = userInfo(json);
+  var name = info.$1;
+  var age = info.$2;
+  var (name1, age1) = userInfo(json);
+}
+```
+
+## destructure-class-instances
+
+```dart
+class Foo {
+  final String one;
+  final int two;
+
+  Foo({required this.one, required this.two});
+}
+
+void main() {
+  final Foo myFoo = Foo(one: 'one', two: 2);
+  var Foo(:one,:two) = myFoo;
+  print('one $one, two $two');
+}
+```
+
 # Future
 
 ## long-chain
