@@ -345,6 +345,9 @@
                   <li>
                     <a href="#early-error-handler" class="toc-h2 toc-link" data-title="early error handler">early error handler</a>
                   </li>
+                  <li>
+                    <a href="#when-complete" class="toc-h2 toc-link" data-title="when complete">when complete</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -604,6 +607,69 @@
       <span class="n">print</span><span class="p">(</span><span class="s">'e'</span><span class="p">);</span> <span class="c1">// ok</span>
     <span class="p">});</span>
   <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='when-complete'>when complete</h2><h3 id='with-error'>with-error</h3><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Future</span><span class="p">&lt;</span><span class="kt">Object</span><span class="p">&gt;</span> <span class="n">asyncErrorFunction</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s">'Threw an exception'</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">handleError</span><span class="p">(</span><span class="kd">dynamic</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'value'</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">asyncErrorFunction</span><span class="p">()</span>
+      <span class="c1">// Future completes with an error:</span>
+      <span class="o">.</span><span class="na">then</span><span class="p">((</span><span class="n">_</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">print</span><span class="p">(</span><span class="s">"Won't reach here"</span><span class="p">))</span>
+      <span class="c1">// Future completes with the same error:</span>
+      <span class="o">.</span><span class="na">whenComplete</span><span class="p">(()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">print</span><span class="p">(</span><span class="s">'Reaches here'</span><span class="p">))</span>
+      <span class="c1">// Future completes with the same error:</span>
+      <span class="o">.</span><span class="na">then</span><span class="p">((</span><span class="n">_</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">print</span><span class="p">(</span><span class="s">"Won't reach here"</span><span class="p">))</span>
+      <span class="c1">// Error is handled here:</span>
+      <span class="o">.</span><span class="na">catchError</span><span class="p">(</span><span class="n">handleError</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h3 id='with-object'>with-object</h3><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">Never</span> <span class="n">ellipsis</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s">'!'</span><span class="p">);</span>
+<span class="kd">final</span> <span class="kt">Never</span> <span class="n">someObject</span> <span class="o">=</span> <span class="n">ellipsis</span><span class="p">();</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Future</span><span class="p">&lt;</span><span class="kt">Object</span><span class="p">&gt;</span> <span class="n">asyncErrorFunction</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s">'Threw an exception'</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">handleError</span><span class="p">(</span><span class="kd">dynamic</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'value'</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">printErrorMessage</span><span class="p">()</span> <span class="p">{}</span>
+
+  <span class="n">asyncErrorFunction</span><span class="p">()</span>
+      <span class="c1">// Future completes with an error:</span>
+      <span class="o">.</span><span class="na">then</span><span class="p">((</span><span class="n">_</span><span class="p">)</span> <span class="p">{})</span>
+      <span class="o">.</span><span class="na">catchError</span><span class="p">((</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">handleError</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+    <span class="n">printErrorMessage</span><span class="p">();</span>
+    <span class="c1">// Future completes with someObject</span>
+    <span class="k">return</span> <span class="n">someObject</span><span class="p">;</span>
+  <span class="p">})</span><span class="o">.</span><span class="na">catchError</span><span class="p">((</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+  <span class="p">})</span><span class="o">.</span><span class="na">whenComplete</span><span class="p">(()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">print</span><span class="p">(</span><span class="s">'Done!'</span><span class="p">));</span>
+  <span class="c1">// Future completes with someObject</span>
+<span class="p">}</span>
+</code></pre></div><h3 id='when-complete-error'>when-complete-error</h3><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Future</span><span class="p">&lt;</span><span class="kt">Object</span><span class="p">&gt;</span> <span class="n">asyncErrorFunction</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s">'Threw an exception'</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">handleError</span><span class="p">(</span><span class="kd">dynamic</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'value'</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">asyncErrorFunction</span><span class="p">()</span>
+      <span class="c1">// Future completes with a value:</span>
+      <span class="o">.</span><span class="na">catchError</span><span class="p">(</span><span class="n">handleError</span><span class="p">)</span>
+      <span class="c1">// Future completes with an error:</span>
+      <span class="o">.</span><span class="na">whenComplete</span><span class="p">(()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s">'New error'</span><span class="p">))</span>
+      <span class="c1">// Error is handled:</span>
+      <span class="o">.</span><span class="na">catchError</span><span class="p">(</span><span class="n">handleError</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='utils'>Utils</h1><h2 id='a-simple-logger'>A simple logger</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="c1">/// A simple logger</span>
 <span class="kd">class</span> <span class="nc">Logger</span> <span class="p">{</span>
