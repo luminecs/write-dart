@@ -330,6 +330,9 @@
                   <li>
                     <a href="#throws-then-catch" class="toc-h2 toc-link" data-title="throws-then-catch">throws-then-catch</a>
                   </li>
+                  <li>
+                    <a href="#connect-server" class="toc-h2 toc-link" data-title="connect-server">connect-server</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -469,6 +472,23 @@
 <span class="p">}</span>
 <span class="c1">// Exception: Threw an exception</span>
 <span class="c1">// Exception: Also threw an exception</span>
+</code></pre></div><h2 id='connect-server'>connect-server</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">Object</span><span class="p">&gt;</span> <span class="n">handleResponse</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'Response'</span><span class="p">);</span>
+
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">handleError</span><span class="p">(</span><span class="kd">dynamic</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'value'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">dynamic</span> <span class="n">connectToServer</span><span class="p">()</span> <span class="p">{}</span>
+  <span class="kd">const</span> <span class="n">myUrl</span> <span class="o">=</span> <span class="s">'https://dart.dev'</span><span class="p">;</span>
+
+  <span class="kd">final</span> <span class="n">server</span> <span class="o">=</span> <span class="n">connectToServer</span><span class="p">();</span>
+  <span class="n">server</span>
+      <span class="o">.</span><span class="na">post</span><span class="p">(</span><span class="n">myUrl</span><span class="p">,</span> <span class="nl">fields:</span> <span class="kd">const</span> <span class="p">{</span><span class="s">'name'</span><span class="o">:</span> <span class="s">'Dash'</span><span class="p">,</span> <span class="s">'profession'</span><span class="o">:</span> <span class="s">'mascot'</span><span class="p">})</span>
+      <span class="o">.</span><span class="na">then</span><span class="p">(</span><span class="n">handleResponse</span><span class="p">)</span>
+      <span class="o">.</span><span class="na">catchError</span><span class="p">(</span><span class="n">handleError</span><span class="p">)</span>
+      <span class="o">.</span><span class="na">whenComplete</span><span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="na">close</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div><h1 id='utils'>Utils</h1><h2 id='a-simple-logger'>A simple logger</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="c1">/// A simple logger</span>
 <span class="kd">class</span> <span class="nc">Logger</span> <span class="p">{</span>
   <span class="kd">final</span> <span class="kt">List</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">_log</span> <span class="o">=</span> <span class="p">[];</span>
