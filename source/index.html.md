@@ -628,6 +628,103 @@ void main() {
 }
 ```
 
+## pattern_types cast
+
+```dart
+void main() {
+  (num, Object) record = (1, 's');
+  var (i as int, s as String) = record;
+}
+```
+
+## pattern_types constant
+
+```dart
+void main() {
+  var number = 1;
+  switch (number) {
+    // Matches if 1 == number.
+    case 1: // ...
+  }
+}
+```
+
+## pattern_types complex-constant
+
+```dart
+void main() {
+  const a = 1;
+  const b = 2;
+  switch ([1, 2]) {
+    // List or map pattern:
+    case [a, b]: // ...
+
+    // List or map literal:
+    case const [a, b]: // ...
+  }
+}
+```
+
+## pattern_types match-context
+
+```dart
+void main() {
+  const c = 1;
+  switch (2) {
+    case c:
+      print('match $c');
+    default:
+      print('no match'); // Prints "no match".
+  }
+}
+```
+
+## pattern_types rest
+
+```dart
+void main() {
+  var [a, b, ..., c, d] = [1, 2, 3, 4, 5, 6, 7];
+  print('$a $b $c $d'); // Prints "1 2 6 7".
+}
+```
+
+## pattern_types rest-sub
+
+```dart
+void main() {
+  var [a, b, ...rest, c, d] = [1, 2, 3, 4, 5, 6, 7];
+  print('$a $b $rest $c $d'); // Prints "1 2 [3, 4, 5] 6 7".
+}
+```
+
+## pattern_types logical-and
+
+```dart
+void main() {
+  switch ((1, 2)) {
+    // Error, both subpatterns attempt to bind 'b'.
+    case (var a, var b) && (var b, var c): // ...
+  }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
