@@ -518,6 +518,9 @@
                   <li>
                     <a href="#extension-list" class="toc-h2 toc-link" data-title="extension list">extension list</a>
                   </li>
+                  <li>
+                    <a href="#extension-string-parse" class="toc-h2 toc-link" data-title="extension String parse">extension String parse</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1382,6 +1385,32 @@
 
   <span class="kd">final</span> <span class="n">list2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
   <span class="n">print</span><span class="p">(</span><span class="n">list2</span><span class="o">.</span><span class="na">tripleLength</span><span class="p">);</span> <span class="c1">// 9</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='extension-string-parse'>extension String parse</h2>
+<p><code>未完成</code></p>
+<div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">extension</span> <span class="n">NumberParsing</span> <span class="kd">on</span> <span class="kt">String</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">parseInt</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kt">int</span><span class="o">.</span><span class="na">parse</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kt">double</span> <span class="n">parseDouble</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kt">double</span><span class="o">.</span><span class="na">parse</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">extension</span> <span class="n">HexParsing</span> <span class="kd">on</span> <span class="kt">String</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">parseHexInt</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kt">int</span><span class="o">.</span><span class="na">parse</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nl">radix:</span> <span class="mi">16</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="s">'1'</span><span class="o">.</span><span class="na">parseInt</span><span class="p">();</span>
+  <span class="kt">double</span> <span class="n">d</span> <span class="o">=</span> <span class="s">'1'</span><span class="o">.</span><span class="na">parseDouble</span><span class="p">();</span>
+  <span class="kt">int</span> <span class="n">h</span> <span class="o">=</span> <span class="s">'1'</span><span class="o">.</span><span class="na">parseHexInt</span><span class="p">();</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> <span class="c1">// 1</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">d</span><span class="p">);</span> <span class="c1">// 1.0</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">h</span><span class="p">);</span> <span class="c1">// 1</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">two</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">error</span><span class="p">(</span><span class="s">'error from two'</span><span class="p">);</span>
