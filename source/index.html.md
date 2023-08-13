@@ -718,12 +718,12 @@ class Color {
 }
 
 void main() {
-  var color = Color();
+  var color = Color.red;
   var isPrimary = switch (color) {
     Color.red || Color.yellow || Color.blue => true,
     _ => false
   };
-  print('$isPrimary'); // false
+  print('$isPrimary'); // true
 }
 ```
 
@@ -948,6 +948,61 @@ void main() {
   };
 }
 ```
+
+## switch constant-pattern
+
+```dart
+void main() {
+  var number = 1;
+  switch (number) {
+    // Constant pattern matches if 1 == number.
+    case 1:
+      print('one');
+  }
+}
+```
+
+## switch list-pattern
+
+```dart
+void main() {
+  var obj = ['a', 'b'];
+  const a = 'a';
+  const b = 'b';
+  switch (obj) {
+    // List pattern [a, b] matches obj first if obj is a list with two fields,
+    // then if its fields match the constant subpatterns 'a' and 'b'.
+    case [a, b]:
+      print('$a, $b'); // a, b
+  }
+}
+```
+
+## switch-statement
+
+```dart
+void main() {
+  var obj = 0;
+  const first = 0;
+  const last = 10;
+  switch (obj) {
+    // Matches if 1 == obj.
+    case 1:
+      print('one');
+
+    // Matches if the value of obj is between the constant values of 'first' and 'last'.
+    case >= first && <= last:
+      print('in range');
+
+    // Matches if obj is a record with two fields, then assigns the fields to 'a' and 'b'.
+    case (var a, var b):
+      print('a = $a, b = $b');
+
+    default:
+  }
+}
+```
+
 
 
 
