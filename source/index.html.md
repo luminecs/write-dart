@@ -1003,7 +1003,7 @@ void main() {
 }
 ```
 
-# concurrency
+# Concurrency
 
 ## sync read json file
 
@@ -1096,6 +1096,32 @@ void main() async {
   final jsonData = await Isolate.run(_readAndParseJson);
   // Use that data.
   print('Number of JSON keys: ${jsonData.length}');
+}
+```
+
+# Extension Methods
+
+## extension list
+
+```dart
+extension MyFancyList<T> on List<T> {
+  int get doubleLength => length * 2;
+  List<T> operator -() => reversed.toList();
+  List<List<T>> split(int at) => [sublist(0, at), sublist(at)];
+}
+
+extension MyIntList on List<int> {
+  int get tripleLength => length * 3;
+}
+
+void main() {
+  final list1 = ['a', 'b', 'c'];
+  print(list1.doubleLength); // 6
+  print(-list1); // [c, b, a]
+  print(list1.split(1)); // [[a], [b, c]]
+
+  final list2 = [1, 2, 3];
+  print(list2.tripleLength); // 9
 }
 ```
 
