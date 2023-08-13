@@ -439,6 +439,60 @@
                   <li>
                     <a href="#pattern_types-logical-and" class="toc-h2 toc-link" data-title="pattern_types logical-and">pattern_types logical-and</a>
                   </li>
+                  <li>
+                    <a href="#pattern_types-logical-or" class="toc-h2 toc-link" data-title="pattern_types logical-or">pattern_types logical-or</a>
+                  </li>
+                  <li>
+                    <a href="#pattern_types-share-guard" class="toc-h2 toc-link" data-title="pattern_types share-guard">pattern_types share-guard</a>
+                  </li>
+                  <li>
+                    <a href="#pattern_types-null-assert-match" class="toc-h2 toc-link" data-title="pattern_types null-assert-match">pattern_types null-assert-match</a>
+                  </li>
+                  <li>
+                    <a href="#pattern_types-null-assert-dec" class="toc-h2 toc-link" data-title="pattern_types null-assert-dec">pattern_types null-assert-dec</a>
+                  </li>
+                  <li>
+                    <a href="#pattern_types-null-check" class="toc-h2 toc-link" data-title="pattern_types null-check">pattern_types null-check</a>
+                  </li>
+                  <li>
+                    <a href="#pattern_types-object" class="toc-h2 toc-link" data-title="pattern_types object">pattern_types object</a>
+                  </li>
+                  <li>
+                    <a href="#pattern_types-object-getter" class="toc-h2 toc-link" data-title="pattern_types object-getter">pattern_types object-getter</a>
+                  </li>
+                  <li>
+                    <a href="#pattern_types-record" class="toc-h2 toc-link" data-title="pattern_types record">pattern_types record</a>
+                  </li>
+                  <li>
+                    <a href="#pattern_types-record-getter" class="toc-h2 toc-link" data-title="pattern_types record-getter">pattern_types record-getter</a>
+                  </li>
+                  <li>
+                    <a href="#pattern_types-relational" class="toc-h2 toc-link" data-title="pattern_types relational">pattern_types relational</a>
+                  </li>
+                  <li>
+                    <a href="#pattern_types-variable" class="toc-h2 toc-link" data-title="pattern_types variable">pattern_types variable</a>
+                  </li>
+                  <li>
+                    <a href="#pattern_types-variable-typed" class="toc-h2 toc-link" data-title="pattern_types variable-typed">pattern_types variable-typed</a>
+                  </li>
+                  <li>
+                    <a href="#pattern_types-wildcard" class="toc-h2 toc-link" data-title="pattern_types wildcard">pattern_types wildcard</a>
+                  </li>
+                  <li>
+                    <a href="#pattern_types-wildcard-typed" class="toc-h2 toc-link" data-title="pattern_types wildcard-typed">pattern_types wildcard-typed</a>
+                  </li>
+                  <li>
+                    <a href="#pattern_types-parens" class="toc-h2 toc-link" data-title="pattern_types parens">pattern_types parens</a>
+                  </li>
+                  <li>
+                    <a href="#switch-constant-pattern" class="toc-h2 toc-link" data-title="switch constant-pattern">switch constant-pattern</a>
+                  </li>
+                  <li>
+                    <a href="#switch-list-pattern" class="toc-h2 toc-link" data-title="switch list-pattern">switch list-pattern</a>
+                  </li>
+                  <li>
+                    <a href="#switch-statement" class="toc-h2 toc-link" data-title="switch-statement">switch-statement</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1004,6 +1058,211 @@
   <span class="k">switch</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="p">{</span>
     <span class="c1">// Error, both subpatterns attempt to bind 'b'.</span>
     <span class="k">case</span> <span class="p">(</span><span class="kd">var</span> <span class="n">a</span><span class="p">,</span> <span class="kd">var</span> <span class="n">b</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="kd">var</span> <span class="n">b</span><span class="p">,</span> <span class="kd">var</span> <span class="n">c</span><span class="p">)</span><span class="o">:</span> <span class="c1">// ...</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-logical-or'>pattern_types logical-or</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Color</span> <span class="p">{</span>
+  <span class="kd">static</span> <span class="kd">const</span> <span class="n">red</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="kd">static</span> <span class="kd">const</span> <span class="n">yellow</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="kd">static</span> <span class="kd">const</span> <span class="n">blue</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">color</span> <span class="o">=</span> <span class="n">Color</span><span class="o">.</span><span class="na">red</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="n">isPrimary</span> <span class="o">=</span> <span class="k">switch</span> <span class="p">(</span><span class="n">color</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Color</span><span class="o">.</span><span class="na">red</span> <span class="o">||</span> <span class="n">Color</span><span class="o">.</span><span class="na">yellow</span> <span class="o">||</span> <span class="n">Color</span><span class="o">.</span><span class="na">blue</span> <span class="o">=</span><span class="p">&gt;</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="n">_</span> <span class="o">=</span><span class="p">&gt;</span> <span class="kc">false</span>
+  <span class="p">};</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'</span><span class="si">$isPrimary</span><span class="s">'</span><span class="p">);</span> <span class="c1">// true</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-share-guard'>pattern_types share-guard</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">sealed</span> <span class="kd">class</span> <span class="nc">Shape</span> <span class="p">{}</span>
+
+<span class="kd">class</span> <span class="nc">Square</span> <span class="kd">implements</span> <span class="n">Shape</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="kt">double</span> <span class="n">size</span><span class="p">;</span>
+  <span class="n">Square</span><span class="p">(</span><span class="k">this</span><span class="o">.</span><span class="na">size</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">Circle</span> <span class="kd">implements</span> <span class="n">Shape</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="kt">double</span> <span class="n">size</span><span class="p">;</span>
+  <span class="n">Circle</span><span class="p">(</span><span class="k">this</span><span class="o">.</span><span class="na">size</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">shape</span> <span class="o">=</span> <span class="n">Square</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">Square</span><span class="p">(</span><span class="nl">size:</span> <span class="kd">var</span> <span class="n">s</span><span class="p">)</span> <span class="o">||</span> <span class="n">Circle</span><span class="p">(</span><span class="nl">size:</span> <span class="kd">var</span> <span class="n">s</span><span class="p">)</span> <span class="n">when</span> <span class="n">s</span> <span class="p">&gt;</span> <span class="mi">0</span><span class="o">:</span>
+      <span class="n">print</span><span class="p">(</span><span class="s">'Non-empty symmetric shape'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-null-assert-match'>pattern_types null-assert-match</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">List</span><span class="p">&lt;</span><span class="kt">String</span><span class="o">?</span><span class="p">&gt;</span> <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="s">'user'</span><span class="p">,</span> <span class="kc">null</span><span class="p">];</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="p">[</span><span class="s">'user'</span><span class="p">,</span> <span class="kd">var</span> <span class="n">name</span><span class="o">!</span><span class="p">]</span><span class="o">:</span>
+    <span class="c1">// 'name' is a non-nullable string here.</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-null-assert-dec'>pattern_types null-assert-dec</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">(</span><span class="kt">int</span><span class="o">?</span><span class="p">,</span> <span class="kt">int</span><span class="o">?</span><span class="p">)</span> <span class="n">position</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="p">(</span><span class="n">x</span><span class="o">!</span><span class="p">,</span> <span class="n">y</span><span class="o">!</span><span class="p">)</span> <span class="o">=</span> <span class="n">position</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-null-check'>pattern_types null-check</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">String</span><span class="o">?</span> <span class="n">maybeString</span> <span class="o">=</span> <span class="s">'nullable with base type String'</span><span class="p">;</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">maybeString</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="kd">var</span> <span class="n">s</span><span class="o">?:</span>
+    <span class="c1">// 's' has type non-nullable String here.</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-object'>pattern_types object</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">sealed</span> <span class="kd">class</span> <span class="nc">Shape</span> <span class="p">{}</span>
+
+<span class="kd">class</span> <span class="nc">Square</span> <span class="kd">implements</span> <span class="n">Shape</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="kt">double</span> <span class="n">size</span><span class="p">;</span>
+  <span class="n">Square</span><span class="p">(</span><span class="k">this</span><span class="o">.</span><span class="na">size</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">Circle</span> <span class="kd">implements</span> <span class="n">Shape</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="kt">double</span> <span class="n">size</span><span class="p">;</span>
+  <span class="n">Circle</span><span class="p">(</span><span class="k">this</span><span class="o">.</span><span class="na">size</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">Rect</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="kt">int</span> <span class="n">width</span><span class="p">;</span>
+  <span class="kd">final</span> <span class="kt">int</span> <span class="n">height</span><span class="p">;</span>
+  <span class="n">Rect</span><span class="p">({</span><span class="kd">required</span> <span class="k">this</span><span class="o">.</span><span class="na">width</span><span class="p">,</span> <span class="kd">required</span> <span class="k">this</span><span class="o">.</span><span class="na">height</span><span class="p">});</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">shape</span> <span class="o">=</span> <span class="n">Square</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Matches if shape is of type Rect,</span>
+    <span class="c1">// and then against the properties of Rect.</span>
+    <span class="k">case</span> <span class="n">Rect</span><span class="p">(</span><span class="nl">width:</span> <span class="kd">var</span> <span class="n">w</span><span class="p">,</span> <span class="nl">height:</span> <span class="kd">var</span> <span class="n">h</span><span class="p">)</span><span class="o">:</span> <span class="c1">// ...</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-object-getter'>pattern_types object-getter</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Point</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="kt">int</span><span class="o">?</span> <span class="n">x</span><span class="p">;</span>
+  <span class="kd">final</span> <span class="kt">int</span><span class="o">?</span> <span class="n">y</span><span class="p">;</span>
+  <span class="n">Point</span><span class="p">(</span><span class="k">this</span><span class="o">.</span><span class="na">x</span><span class="p">,</span> <span class="k">this</span><span class="o">.</span><span class="na">y</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Binds new variables x and y to the</span>
+  <span class="c1">// values of Point's x and y properties.</span>
+  <span class="kd">var</span> <span class="n">Point</span><span class="p">(</span><span class="o">:</span><span class="n">x</span><span class="p">,</span> <span class="o">:</span><span class="n">y</span><span class="p">)</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-record'>pattern_types record</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="p">(</span><span class="nl">myString:</span> <span class="n">foo</span><span class="p">,</span> <span class="nl">myNumber:</span> <span class="n">bar</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="nl">myString:</span> <span class="s">'string'</span><span class="p">,</span> <span class="nl">myNumber:</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-record-getter'>pattern_types record-getter</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">record</span> <span class="o">=</span> <span class="p">(</span><span class="nl">untyped:</span> <span class="s">'1'</span><span class="p">,</span> <span class="nl">typed:</span> <span class="mi">2</span><span class="p">);</span>
+  <span class="c1">// Record pattern with variable subpatterns:</span>
+  <span class="kd">var</span> <span class="p">(</span><span class="nl">untyped:</span> <span class="n">untyped</span><span class="p">,</span> <span class="nl">typed:</span> <span class="kt">int</span> <span class="n">typed</span><span class="p">)</span> <span class="o">=</span> <span class="n">record</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="p">(</span><span class="o">:</span><span class="n">untyped1</span><span class="p">,</span> <span class="o">:</span><span class="kt">int</span> <span class="n">typed1</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="nl">untyped1:</span> <span class="s">'1'</span><span class="p">,</span> <span class="nl">typed1:</span> <span class="mi">2</span><span class="p">);</span>
+
+  <span class="k">switch</span> <span class="p">(</span><span class="n">record</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="p">(</span><span class="nl">untyped:</span> <span class="kd">var</span> <span class="n">untyped</span><span class="p">,</span> <span class="nl">typed:</span> <span class="kt">int</span> <span class="n">typed</span><span class="p">)</span><span class="o">:</span> <span class="c1">// ...</span>
+    <span class="k">case</span> <span class="p">(</span><span class="o">:</span><span class="kd">var</span> <span class="n">untyped</span><span class="p">,</span> <span class="o">:</span><span class="kt">int</span> <span class="n">typed</span><span class="p">)</span><span class="o">:</span> <span class="c1">// ...</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Record pattern with null-check and null-assert subpatterns:</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">record</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="p">(</span><span class="nl">checked:</span> <span class="kd">var</span> <span class="n">checked</span><span class="o">?</span><span class="p">,</span> <span class="nl">asserted:</span> <span class="kd">var</span> <span class="n">asserted</span><span class="o">!</span><span class="p">)</span><span class="o">:</span> <span class="c1">// ...</span>
+    <span class="k">case</span> <span class="p">(</span><span class="o">:</span><span class="kd">var</span> <span class="n">checked</span><span class="o">?</span><span class="p">,</span> <span class="o">:</span><span class="kd">var</span> <span class="n">asserted</span><span class="o">!</span><span class="p">)</span><span class="o">:</span> <span class="c1">// ...</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Record pattern wih cast subpattern:</span>
+  <span class="kd">var</span> <span class="p">(</span><span class="nl">untyped:</span> <span class="n">untyped2</span> <span class="k">as</span> <span class="kt">int</span><span class="p">,</span> <span class="nl">typed:</span> <span class="n">typed2</span> <span class="k">as</span> <span class="kt">String</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="nl">untyped:</span> <span class="s">'1'</span><span class="p">,</span> <span class="nl">typed:</span> <span class="mi">2</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="p">(</span><span class="o">:</span><span class="n">untyped3</span> <span class="k">as</span> <span class="kt">int</span><span class="p">,</span> <span class="o">:</span><span class="n">typed3</span> <span class="k">as</span> <span class="kt">String</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="nl">untyped3:</span> <span class="s">'1'</span><span class="p">,</span> <span class="nl">typed3:</span> <span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-relational'>pattern_types relational</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">String</span> <span class="n">asciiCharType</span><span class="p">(</span><span class="kt">int</span> <span class="n">char</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="n">space</span> <span class="o">=</span> <span class="mi">32</span><span class="p">;</span>
+    <span class="kd">const</span> <span class="n">zero</span> <span class="o">=</span> <span class="mi">48</span><span class="p">;</span>
+    <span class="kd">const</span> <span class="n">nine</span> <span class="o">=</span> <span class="mi">57</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="k">switch</span> <span class="p">(</span><span class="n">char</span><span class="p">)</span> <span class="p">{</span>
+      <span class="p">&lt;</span> <span class="n">space</span> <span class="o">=</span><span class="p">&gt;</span> <span class="s">'control'</span><span class="p">,</span>
+      <span class="o">==</span> <span class="n">space</span> <span class="o">=</span><span class="p">&gt;</span> <span class="s">'space'</span><span class="p">,</span>
+      <span class="p">&gt;</span> <span class="n">space</span> <span class="o">&amp;&amp;</span> <span class="p">&lt;</span> <span class="n">zero</span> <span class="o">=</span><span class="p">&gt;</span> <span class="s">'punctuation'</span><span class="p">,</span>
+      <span class="p">&gt;</span><span class="o">=</span> <span class="n">zero</span> <span class="o">&amp;&amp;</span> <span class="p">&lt;</span><span class="o">=</span> <span class="n">nine</span> <span class="o">=</span><span class="p">&gt;</span> <span class="s">'digit'</span><span class="p">,</span>
+      <span class="n">_</span> <span class="o">=</span><span class="p">&gt;</span> <span class="s">''</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+  <span class="k">assert</span><span class="p">(</span><span class="n">asciiCharType</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="o">==</span> <span class="s">'space'</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-variable'>pattern_types variable</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">switch</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="p">{</span>
+    <span class="c1">// 'var a' and 'var b' are variable patterns</span>
+    <span class="c1">// that bind to 1 and 2, respectively.</span>
+    <span class="k">case</span> <span class="p">(</span><span class="kd">var</span> <span class="n">a</span><span class="p">,</span> <span class="kd">var</span> <span class="n">b</span><span class="p">)</span><span class="o">:</span>
+    <span class="c1">// 'a' and 'b' are in scope in the case body.</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-variable-typed'>pattern_types variable-typed</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">switch</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="p">{</span>
+    <span class="c1">// Does not match.</span>
+    <span class="k">case</span> <span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">String</span> <span class="n">b</span><span class="p">)</span><span class="o">:</span> <span class="c1">// ...</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-wildcard'>pattern_types wildcard</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+  <span class="kd">var</span> <span class="p">[</span><span class="n">_</span><span class="p">,</span> <span class="n">two</span><span class="p">,</span> <span class="n">_</span><span class="p">]</span> <span class="o">=</span> <span class="n">list</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-wildcard-typed'>pattern_types wildcard-typed</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">record</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">'one'</span><span class="p">);</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">record</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="p">(</span><span class="kt">int</span> <span class="n">_</span><span class="p">,</span> <span class="kt">String</span> <span class="n">_</span><span class="p">)</span><span class="o">:</span>
+      <span class="n">print</span><span class="p">(</span><span class="s">'First field is int and second is String.'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='pattern_types-parens'>pattern_types parens</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="n">x</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="n">y</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="n">z</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="n">token</span> <span class="o">=</span> <span class="k">switch</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+    <span class="n">x</span> <span class="o">||</span> <span class="n">y</span> <span class="o">&amp;&amp;</span> <span class="n">z</span> <span class="o">=</span><span class="p">&gt;</span> <span class="s">'matches true'</span><span class="p">,</span>
+    <span class="p">(</span><span class="n">x</span> <span class="o">||</span> <span class="n">y</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">z</span> <span class="o">=</span><span class="p">&gt;</span> <span class="s">'matches false'</span><span class="p">,</span>
+    <span class="c1">// ...</span>
+    <span class="n">_</span> <span class="o">=</span><span class="p">&gt;</span> <span class="k">throw</span> <span class="n">FormatException</span><span class="p">(</span><span class="s">'Invalid'</span><span class="p">)</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='switch-constant-pattern'>switch constant-pattern</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">number</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Constant pattern matches if 1 == number.</span>
+    <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
+      <span class="n">print</span><span class="p">(</span><span class="s">'one'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='switch-list-pattern'>switch list-pattern</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">obj</span> <span class="o">=</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">];</span>
+  <span class="kd">const</span> <span class="n">a</span> <span class="o">=</span> <span class="s">'a'</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="n">b</span> <span class="o">=</span> <span class="s">'b'</span><span class="p">;</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// List pattern [a, b] matches obj first if obj is a list with two fields,</span>
+    <span class="c1">// then if its fields match the constant subpatterns 'a' and 'b'.</span>
+    <span class="k">case</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span><span class="o">:</span>
+      <span class="n">print</span><span class="p">(</span><span class="s">'</span><span class="si">$a</span><span class="s">, </span><span class="si">$b</span><span class="s">'</span><span class="p">);</span> <span class="c1">// a, b</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='switch-statement'>switch-statement</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">obj</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="n">first</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="n">last</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Matches if 1 == obj.</span>
+    <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
+      <span class="n">print</span><span class="p">(</span><span class="s">'one'</span><span class="p">);</span>
+
+    <span class="c1">// Matches if the value of obj is between the constant values of 'first' and 'last'.</span>
+    <span class="k">case</span> <span class="p">&gt;</span><span class="o">=</span> <span class="n">first</span> <span class="o">&amp;&amp;</span> <span class="p">&lt;</span><span class="o">=</span> <span class="nl">last:</span>
+      <span class="n">print</span><span class="p">(</span><span class="s">'in range'</span><span class="p">);</span>
+
+    <span class="c1">// Matches if obj is a record with two fields, then assigns the fields to 'a' and 'b'.</span>
+    <span class="k">case</span> <span class="p">(</span><span class="kd">var</span> <span class="n">a</span><span class="p">,</span> <span class="kd">var</span> <span class="n">b</span><span class="p">)</span><span class="o">:</span>
+      <span class="n">print</span><span class="p">(</span><span class="s">'a = </span><span class="si">$a</span><span class="s">, b = </span><span class="si">$b</span><span class="s">'</span><span class="p">);</span>
+
+    <span class="k">default</span><span class="o">:</span>
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
