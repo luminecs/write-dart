@@ -496,7 +496,7 @@
               </ul>
           </li>
           <li>
-            <a href="#concurrency" class="toc-h1 toc-link" data-title="concurrency">concurrency</a>
+            <a href="#concurrency" class="toc-h1 toc-link" data-title="Concurrency">Concurrency</a>
               <ul class="toc-list-h2">
                   <li>
                     <a href="#sync-read-json-file" class="toc-h2 toc-link" data-title="sync read json file">sync read json file</a>
@@ -509,6 +509,14 @@
                   </li>
                   <li>
                     <a href="#simple_worker_isolate" class="toc-h2 toc-link" data-title="simple_worker_isolate">simple_worker_isolate</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#extension-methods" class="toc-h1 toc-link" data-title="Extension Methods">Extension Methods</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#extension-list" class="toc-h2 toc-link" data-title="extension list">extension list</a>
                   </li>
               </ul>
           </li>
@@ -1282,7 +1290,7 @@
     <span class="k">default</span><span class="o">:</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div><h1 id='concurrency'>concurrency</h1><h2 id='sync-read-json-file'>sync read json file</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'dart:convert'</span><span class="o">;</span>
+</code></pre></div><h1 id='concurrency'>Concurrency</h1><h2 id='sync-read-json-file'>sync read json file</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'dart:convert'</span><span class="o">;</span>
 <span class="kn">import</span> <span class="s">'dart:io'</span><span class="o">;</span>
 
 <span class="c1">// {"a": "foo", "b": "bar", "c": "baz"}</span>
@@ -1355,6 +1363,25 @@
   <span class="kd">final</span> <span class="n">jsonData</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Isolate</span><span class="o">.</span><span class="na">run</span><span class="p">(</span><span class="n">_readAndParseJson</span><span class="p">);</span>
   <span class="c1">// Use that data.</span>
   <span class="n">print</span><span class="p">(</span><span class="s">'Number of JSON keys: </span><span class="si">${jsonData.length}</span><span class="s">'</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h1 id='extension-methods'>Extension Methods</h1><h2 id='extension-list'>extension list</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">extension</span> <span class="n">MyFancyList</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="kd">on</span> <span class="kt">List</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="kd">get</span> <span class="n">doubleLength</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">length</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">List</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="kd">operator</span> <span class="o">-</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">reversed</span><span class="o">.</span><span class="na">toList</span><span class="p">();</span>
+  <span class="kt">List</span><span class="p">&lt;</span><span class="kt">List</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;&gt;</span> <span class="n">split</span><span class="p">(</span><span class="kt">int</span> <span class="n">at</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="p">[</span><span class="n">sublist</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">at</span><span class="p">),</span> <span class="n">sublist</span><span class="p">(</span><span class="n">at</span><span class="p">)];</span>
+<span class="p">}</span>
+
+<span class="n">extension</span> <span class="n">MyIntList</span> <span class="kd">on</span> <span class="kt">List</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="kd">get</span> <span class="n">tripleLength</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">length</span> <span class="o">*</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">list1</span> <span class="o">=</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">];</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">list1</span><span class="o">.</span><span class="na">doubleLength</span><span class="p">);</span> <span class="c1">// 6</span>
+  <span class="n">print</span><span class="p">(</span><span class="o">-</span><span class="n">list1</span><span class="p">);</span> <span class="c1">// [c, b, a]</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">list1</span><span class="o">.</span><span class="na">split</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span> <span class="c1">// [[a], [b, c]]</span>
+
+  <span class="kd">final</span> <span class="n">list2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">list2</span><span class="o">.</span><span class="na">tripleLength</span><span class="p">);</span> <span class="c1">// 9</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">two</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">error</span><span class="p">(</span><span class="s">'error from two'</span><span class="p">);</span>
