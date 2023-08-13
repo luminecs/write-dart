@@ -496,6 +496,23 @@
               </ul>
           </li>
           <li>
+            <a href="#concurrency" class="toc-h1 toc-link" data-title="concurrency">concurrency</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#sync-read-json-file" class="toc-h2 toc-link" data-title="sync read json file">sync read json file</a>
+                  </li>
+                  <li>
+                    <a href="#async-read-json-file" class="toc-h2 toc-link" data-title="async read json file">async read json file</a>
+                  </li>
+                  <li>
+                    <a href="#simple_isolate_closure" class="toc-h2 toc-link" data-title="simple_isolate_closure">simple_isolate_closure</a>
+                  </li>
+                  <li>
+                    <a href="#simple_worker_isolate" class="toc-h2 toc-link" data-title="simple_worker_isolate">simple_worker_isolate</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#future" class="toc-h1 toc-link" data-title="Future">Future</a>
               <ul class="toc-list-h2">
                   <li>
@@ -1264,6 +1281,80 @@
 
     <span class="k">default</span><span class="o">:</span>
   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h1 id='concurrency'>concurrency</h1><h2 id='sync-read-json-file'>sync read json file</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'dart:convert'</span><span class="o">;</span>
+<span class="kn">import</span> <span class="s">'dart:io'</span><span class="o">;</span>
+
+<span class="c1">// {"a": "foo", "b": "bar", "c": "baz"}</span>
+<span class="kd">const</span> <span class="kt">String</span> <span class="n">filename</span> <span class="o">=</span> <span class="s">'with_keys.json'</span><span class="p">;</span>
+
+<span class="kt">String</span> <span class="nf">_readFileSync</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span>
+  <span class="kd">final</span> <span class="n">contents</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="na">readAsStringSync</span><span class="p">();</span>
+  <span class="k">return</span> <span class="n">contents</span><span class="o">.</span><span class="na">trim</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="c1">// Read some data.</span>
+  <span class="kd">final</span> <span class="n">fileData</span> <span class="o">=</span> <span class="n">_readFileSync</span><span class="p">();</span>
+  <span class="kd">final</span> <span class="n">jsonData</span> <span class="o">=</span> <span class="n">jsonDecode</span><span class="p">(</span><span class="n">fileData</span><span class="p">);</span>
+  <span class="c1">// Use that data.</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'Number of JSON keys: </span><span class="si">${jsonData.length}</span><span class="s">'</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='async-read-json-file'>async read json file</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'dart:convert'</span><span class="o">;</span>
+<span class="kn">import</span> <span class="s">'dart:io'</span><span class="o">;</span>
+
+<span class="c1">// {"a": "foo", "b": "bar", "c": "baz"}</span>
+<span class="kd">const</span> <span class="kt">String</span> <span class="n">filename</span> <span class="o">=</span> <span class="s">'with_keys.json'</span><span class="p">;</span>
+
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">_readFileAsync</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span>
+  <span class="kd">final</span> <span class="n">contents</span> <span class="o">=</span> <span class="k">await</span> <span class="n">file</span><span class="o">.</span><span class="na">readAsString</span><span class="p">();</span>
+  <span class="k">return</span> <span class="n">contents</span><span class="o">.</span><span class="na">trim</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="c1">// Read some data.</span>
+  <span class="kd">final</span> <span class="n">fileData</span> <span class="o">=</span> <span class="k">await</span> <span class="n">_readFileAsync</span><span class="p">();</span>
+  <span class="kd">final</span> <span class="n">jsonData</span> <span class="o">=</span> <span class="n">jsonDecode</span><span class="p">(</span><span class="n">fileData</span><span class="p">);</span>
+  <span class="c1">// Use that data.</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'Number of JSON keys: </span><span class="si">${jsonData.length}</span><span class="s">'</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='simple_isolate_closure'>simple_isolate_closure</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'dart:convert'</span><span class="o">;</span>
+<span class="kn">import</span> <span class="s">'dart:io'</span><span class="o">;</span>
+<span class="kn">import</span> <span class="s">'dart:isolate'</span><span class="o">;</span>
+
+<span class="c1">// {"a": "foo", "b": "bar", "c": "baz"}</span>
+<span class="kd">const</span> <span class="kt">String</span> <span class="n">filename</span> <span class="o">=</span> <span class="s">'with_keys.json'</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="c1">// Read some data.</span>
+  <span class="kd">final</span> <span class="n">jsonData</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Isolate</span><span class="o">.</span><span class="na">run</span><span class="p">(()</span> <span class="kd">async</span> <span class="p">{</span>
+    <span class="kd">final</span> <span class="n">fileData</span> <span class="o">=</span> <span class="k">await</span> <span class="n">File</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="na">readAsString</span><span class="p">();</span>
+    <span class="kd">final</span> <span class="n">jsonData</span> <span class="o">=</span> <span class="n">jsonDecode</span><span class="p">(</span><span class="n">fileData</span><span class="p">)</span> <span class="k">as</span> <span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kd">dynamic</span><span class="p">&gt;;</span>
+    <span class="k">return</span> <span class="n">jsonData</span><span class="p">;</span>
+  <span class="p">});</span>
+  <span class="c1">// Use that data.</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'Number of JSON keys: </span><span class="si">${jsonData.length}</span><span class="s">'</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='simple_worker_isolate'>simple_worker_isolate</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'dart:convert'</span><span class="o">;</span>
+<span class="kn">import</span> <span class="s">'dart:io'</span><span class="o">;</span>
+<span class="kn">import</span> <span class="s">'dart:isolate'</span><span class="o">;</span>
+
+<span class="c1">// {"a": "foo", "b": "bar", "c": "baz"}</span>
+<span class="kd">const</span> <span class="kt">String</span> <span class="n">filename</span> <span class="o">=</span> <span class="s">'with_keys.json'</span><span class="p">;</span>
+<span class="c1">// spawned</span>
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kd">dynamic</span><span class="p">&gt;&gt;</span> <span class="n">_readAndParseJson</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">fileData</span> <span class="o">=</span> <span class="k">await</span> <span class="n">File</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="na">readAsString</span><span class="p">();</span>
+  <span class="kd">final</span> <span class="n">jsonData</span> <span class="o">=</span> <span class="n">jsonDecode</span><span class="p">(</span><span class="n">fileData</span><span class="p">)</span> <span class="k">as</span> <span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kd">dynamic</span><span class="p">&gt;;</span>
+  <span class="k">return</span> <span class="n">jsonData</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="c1">// Read some data.</span>
+  <span class="kd">final</span> <span class="n">jsonData</span> <span class="o">=</span> <span class="k">await</span> <span class="n">Isolate</span><span class="o">.</span><span class="na">run</span><span class="p">(</span><span class="n">_readAndParseJson</span><span class="p">);</span>
+  <span class="c1">// Use that data.</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'Number of JSON keys: </span><span class="si">${jsonData.length}</span><span class="s">'</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">two</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">error</span><span class="p">(</span><span class="s">'error from two'</span><span class="p">);</span>
