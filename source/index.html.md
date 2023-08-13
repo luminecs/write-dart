@@ -708,6 +708,247 @@ void main() {
 }
 ```
 
+## pattern_types logical-or
+
+```dart
+class Color {
+  static const red = true;
+  static const yellow = false;
+  static const blue = true;
+}
+
+void main() {
+  var color = Color();
+  var isPrimary = switch (color) {
+    Color.red || Color.yellow || Color.blue => true,
+    _ => false
+  };
+  print('$isPrimary'); // false
+}
+```
+
+## pattern_types share-guard
+
+```dart
+sealed class Shape {}
+
+class Square implements Shape {
+  final double size;
+  Square(this.size);
+}
+
+class Circle implements Shape {
+  final double size;
+  Circle(this.size);
+}
+
+void main() {
+  var shape = Square(10);
+  switch (shape) {
+    case Square(size: var s) || Circle(size: var s) when s > 0:
+      print('Non-empty symmetric shape');
+  }
+}
+```
+
+## pattern_types null-assert-match
+
+```dart
+void main() {
+  List<String?> row = ['user', null];
+  switch (row) {
+    case ['user', var name!]:
+    // 'name' is a non-nullable string here.
+  }
+}
+```
+
+## pattern_types null-assert-dec
+
+```dart
+void main() {
+  (int?, int?) position = (2, 3);
+  var (x!, y!) = position;
+}
+```
+
+## pattern_types null-check
+
+```dart
+void main() {
+  String? maybeString = 'nullable with base type String';
+  switch (maybeString) {
+    case var s?:
+    // 's' has type non-nullable String here.
+  }
+}
+```
+
+## pattern_types object
+
+```dart
+sealed class Shape {}
+
+class Square implements Shape {
+  final double size;
+  Square(this.size);
+}
+
+class Circle implements Shape {
+  final double size;
+  Circle(this.size);
+}
+
+class Rect {
+  final int width;
+  final int height;
+  Rect({required this.width, required this.height});
+}
+
+void main() {
+  var shape = Square(10);
+  switch (shape) {
+    // Matches if shape is of type Rect,
+    // and then against the properties of Rect.
+    case Rect(width: var w, height: var h): // ...
+  }
+}
+```
+
+## pattern_types object-getter
+
+```dart
+class Point {
+  final int? x;
+  final int? y;
+  Point(this.x, this.y);
+}
+
+void main() {
+  // Binds new variables x and y to the
+  // values of Point's x and y properties.
+  var Point(:x, :y) = Point(1, 2);
+}
+```
+
+## pattern_types record
+
+```dart
+void main() {
+  var (myString: foo, myNumber: bar) = (myString: 'string', myNumber: 1);
+}
+```
+
+## pattern_types record-getter
+
+```dart
+void main() {
+  var record = (untyped: '1', typed: 2);
+  // Record pattern with variable subpatterns:
+  var (untyped: untyped, typed: int typed) = record;
+  var (:untyped1, :int typed1) = (untyped1: '1', typed1: 2);
+
+  switch (record) {
+    case (untyped: var untyped, typed: int typed): // ...
+    case (:var untyped, :int typed): // ...
+  }
+
+  // Record pattern with null-check and null-assert subpatterns:
+  switch (record) {
+    case (checked: var checked?, asserted: var asserted!): // ...
+    case (:var checked?, :var asserted!): // ...
+  }
+
+  // Record pattern wih cast subpattern:
+  var (untyped: untyped2 as int, typed: typed2 as String) = (untyped: '1', typed: 2);
+  var (:untyped3 as int, :typed3 as String) = (untyped3: '1', typed3: 2);
+}
+```
+
+## pattern_types relational
+
+```dart
+void main() {
+  String asciiCharType(int char) {
+    const space = 32;
+    const zero = 48;
+    const nine = 57;
+
+    return switch (char) {
+      < space => 'control',
+      == space => 'space',
+      > space && < zero => 'punctuation',
+      >= zero && <= nine => 'digit',
+      _ => ''
+    };
+  }
+  assert(asciiCharType(32) == 'space');
+}
+```
+
+## pattern_types variable
+
+```dart
+void main() {
+  switch ((1, 2)) {
+    // 'var a' and 'var b' are variable patterns
+    // that bind to 1 and 2, respectively.
+    case (var a, var b):
+    // 'a' and 'b' are in scope in the case body.
+  }
+}
+```
+
+## pattern_types variable-typed
+
+```dart
+void main() {
+  switch ((1, 2)) {
+    // Does not match.
+    case (int a, String b): // ...
+  }
+}
+```
+
+## pattern_types wildcard
+
+```dart
+void main() {
+  var list = [1, 2, 3];
+  var [_, two, _] = list;
+}
+```
+
+## pattern_types wildcard-typed
+
+```dart
+void main() {
+  var record = (1, 'one');
+  switch (record) {
+    case (int _, String _):
+      print('First field is int and second is String.');
+  }
+}
+```
+
+## pattern_types parens
+
+```dart
+void main() {
+  const x = true;
+  const y = true;
+  const z = false;
+  var result = true;
+  var token = switch (result) {
+    // ...
+    x || y && z => 'matches true',
+    (x || y) && z => 'matches false',
+    // ...
+    _ => throw FormatException('Invalid')
+  };
+}
+```
+
 
 
 
