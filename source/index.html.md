@@ -1125,7 +1125,36 @@ void main() {
 }
 ```
 
+## extension String parse
 
+`未完成`
+
+```dart
+extension NumberParsing on String {
+  int parseInt() {
+    return int.parse(this);
+  }
+
+  double parseDouble() {
+    return double.parse(this);
+  }
+}
+
+extension HexParsing on String {
+  int parseHexInt() {
+    return int.parse(this, radix: 16);
+  }
+}
+
+void main() {
+  int i = '1'.parseInt();
+  double d = '1'.parseDouble();
+  int h = '1'.parseHexInt();
+  print(i); // 1
+  print(d); // 1.0
+  print(h); // 1
+}
+```
 
 
 
