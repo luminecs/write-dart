@@ -1003,6 +1003,102 @@ void main() {
 }
 ```
 
+# concurrency
+
+## sync read json file
+
+```dart
+import 'dart:convert';
+import 'dart:io';
+
+// {"a": "foo", "b": "bar", "c": "baz"}
+const String filename = 'with_keys.json';
+
+String _readFileSync() {
+  final file = File(filename);
+  final contents = file.readAsStringSync();
+  return contents.trim();
+}
+
+void main() async {
+  // Read some data.
+  final fileData = _readFileSync();
+  final jsonData = jsonDecode(fileData);
+  // Use that data.
+  print('Number of JSON keys: ${jsonData.length}');
+}
+```
+
+## async read json file
+
+```dart
+import 'dart:convert';
+import 'dart:io';
+
+// {"a": "foo", "b": "bar", "c": "baz"}
+const String filename = 'with_keys.json';
+
+Future<String> _readFileAsync() async {
+  final file = File(filename);
+  final contents = await file.readAsString();
+  return contents.trim();
+}
+
+void main() async {
+  // Read some data.
+  final fileData = await _readFileAsync();
+  final jsonData = jsonDecode(fileData);
+  // Use that data.
+  print('Number of JSON keys: ${jsonData.length}');
+}
+```
+
+## simple_isolate_closure
+
+```dart
+import 'dart:convert';
+import 'dart:io';
+import 'dart:isolate';
+
+// {"a": "foo", "b": "bar", "c": "baz"}
+const String filename = 'with_keys.json';
+
+void main() async {
+  // Read some data.
+  final jsonData = await Isolate.run(() async {
+    final fileData = await File(filename).readAsString();
+    final jsonData = jsonDecode(fileData) as Map<String, dynamic>;
+    return jsonData;
+  });
+  // Use that data.
+  print('Number of JSON keys: ${jsonData.length}');
+}
+```
+
+## simple_worker_isolate
+
+```dart
+import 'dart:convert';
+import 'dart:io';
+import 'dart:isolate';
+
+// {"a": "foo", "b": "bar", "c": "baz"}
+const String filename = 'with_keys.json';
+// spawned
+Future<Map<String, dynamic>> _readAndParseJson() async {
+  final fileData = await File(filename).readAsString();
+  final jsonData = jsonDecode(fileData) as Map<String, dynamic>;
+  return jsonData;
+}
+
+void main() async {
+  // Read some data.
+  final jsonData = await Isolate.run(_readAndParseJson);
+  // Use that data.
+  print('Number of JSON keys: ${jsonData.length}');
+}
+```
+
 
 
 
