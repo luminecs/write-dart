@@ -1462,6 +1462,265 @@ void other() {
 
 # Non promotion
 
+## property_bang
+
+```dart
+class C1 {
+  int? i;
+
+  void f() {
+    if (i == null) return;
+    print(i!.isEven);
+  }
+}
+```
+
+## property_copy
+
+```dart
+class C {
+  int? i;
+  void f() {
+    final i = this.i;
+    if (i == null) return; // return
+    print(i.isEven);
+  }
+}
+```
+
+## write_combine_ifs
+
+```dart
+void f(bool b, int? i, int? j) {
+  if (i == null) return;
+  if (b) {
+    i = j;
+  } else {
+    print(i.isEven);
+  }
+}
+```
+
+## write_change_type
+
+```dart
+void f(bool b, int? i, int j) {
+  if (i == null) return;
+  if (b) {
+    i = j;
+  }
+  if (!b) {
+    print(i.isEven);
+  }
+}
+```
+
+## loop
+
+```dart
+class Link {
+  final value = 0;
+  late Link next;
+}
+
+void f(Link? p) {
+  while (p != null) {
+    print(p.value);
+    p = p.next;
+  }
+}
+```
+
+## switch-loop
+
+```dart
+void f(int i, int? j, int? k) {
+  switch (i) {
+    label:
+    case 0:
+      if (j == null) return;
+      print(j.isEven);
+      j = k;
+      continue label;
+  }
+}
+```
+
+## catch-null-check
+
+```dart
+void f(int? i, int? j) {
+  if (i == null) return;
+  try {
+    i = j; // (1)
+    // ... Additional code ...
+    if (i == null) return; // (2)
+    // ... Additional code ...
+  } catch (e) {
+    if (i != null) {
+      print(i.isEven); // (3) OK due to the null check in the line above.
+    } else {
+      // Handle the case where i is null.
+    }
+  }
+}
+```
+
+## catch-bang
+
+```dart
+void f(int? i, int? j) {
+  if (i == null) return;
+  try {
+    i = j; // (1)
+    // ... Additional code ...
+    if (i == null) return; // (2)
+    // ... Additional code ...
+  } catch (e) {
+    print(i!.isEven); // (3) OK because of the `!`.
+  }
+}
+```
+
+## subtype-variable
+
+```dart
+void f(Object o) {
+  if (o is Comparable /* (1) */) {
+    Object o2 = o;
+    if (o2 is Pattern /* (2) */) {
+      print(o2.matchAsPrefix('foo')); // (3) OK; o2 was promoted to `Pattern`.
+    }
+  }
+}
+```
+
+## subtype-redundant
+
+```dart
+void f(Object o) {
+  if (o is Comparable /* (1) */) {
+    if (o is Pattern /* (2) */) {
+      print((o as Pattern).matchAsPrefix('foo')); // (3) OK
+    }
+  }
+}
+```
+
+## subtype-String
+
+```dart
+void f(Object o) {
+  if (o is Comparable /* (1) */) {
+    if (o is String /* (2) */) {
+      print(o.matchAsPrefix('foo')); // (3) OK
+    }
+  }
+}
+```
+
+## local-write-capture-reorder
+
+```dart
+void f(int? i, int? j) {
+  if (i == null) return; // (1)
+  // ... Additional code ...
+  print(i.isEven); // (2) OK
+  var foo = () {
+    i = j;
+  };
+  // ... Use foo ...
+}
+```
+
+## local-write-capture-copy
+
+```dart
+void f(int? i, int? j) {
+  var foo = () {
+    i = j;
+  };
+  // ... Use foo ...
+  var i2 = i;
+  if (i2 == null) return; // (1)
+  // ... Additional code ...
+  print(i2.isEven); // (2) OK because `i2` isn't write captured.
+}
+```
+
+## local-write-capture-bang
+
+```dart
+void f(int? i, int? j) {
+  var foo = () {
+    i = j;
+  };
+  // ... Use foo ...
+  if (i == null) return; // (1)
+  // ... Additional code ...
+  print(i!.isEven); // (2) OK due to `!` check.
+}
+```
+
+## closure-new-var
+
+```dart
+void f(int? i, int? j) {
+  if (i == null) return;
+  var i2 = i;
+  var foo = () {
+    print(i2.isEven); // (1) OK because `i2` isn't changed later.
+  };
+  i = j; // (2)
+}
+```
+
+## closure-new-var2
+
+```dart
+void f(int? i) {
+  var j = i ?? 0;
+  var foo = () {
+    print(j.isEven); // OK
+  };
+}
+```
+
+## closure-write-capture
+
+```dart
+void f(int? i, int? j) {
+  var foo = () {
+    var i2 = i;
+    if (i2 == null) return;
+    print(i2.isEven); // OK because i2 is local to this closure.
+  };
+  var bar = () {
+    i = j;
+  };
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
