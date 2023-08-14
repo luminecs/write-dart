@@ -1179,6 +1179,13 @@ extension on String {
 }
 
 bool isBlank(String string) => string.isBlank;
+
+void main() {
+  assert(isBlank('not-blank') == false);
+  assert(isBlank(' not-blank ') == false);
+  assert(isBlank('') == true);
+  assert(isBlank(' ') == true);
+}
 ```
 
 > usage_explicit.dart
