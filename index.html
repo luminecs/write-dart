@@ -519,7 +519,7 @@
                     <a href="#extension-list" class="toc-h2 toc-link" data-title="extension list">extension list</a>
                   </li>
                   <li>
-                    <a href="#extension-string-parse" class="toc-h2 toc-link" data-title="extension String parse">extension String parse</a>
+                    <a href="#extension-string-amp-import-as-hide" class="toc-h2 toc-link" data-title="extension String &amp; import-as-hide">extension String &amp; import-as-hide</a>
                   </li>
               </ul>
           </li>
@@ -1386,8 +1386,10 @@
   <span class="kd">final</span> <span class="n">list2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
   <span class="n">print</span><span class="p">(</span><span class="n">list2</span><span class="o">.</span><span class="na">tripleLength</span><span class="p">);</span> <span class="c1">// 9</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='extension-string-parse'>extension String parse</h2>
-<p><code>未完成</code></p>
+</code></pre></div><h2 id='extension-string-amp-import-as-hide'>extension String &amp; import-as-hide</h2>
+<blockquote>
+<p>string_apis.dart</p>
+</blockquote>
 <div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">extension</span> <span class="n">NumberParsing</span> <span class="kd">on</span> <span class="kt">String</span> <span class="p">{</span>
   <span class="kt">int</span> <span class="n">parseInt</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">return</span> <span class="kt">int</span><span class="o">.</span><span class="na">parse</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
@@ -1397,20 +1399,125 @@
     <span class="k">return</span> <span class="kt">double</span><span class="o">.</span><span class="na">parse</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>string_apis_2.dart</p>
+</blockquote>
+<div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">extension</span> <span class="n">NumberParsing2</span> <span class="kd">on</span> <span class="kt">String</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">parseInt</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kt">int</span><span class="o">.</span><span class="na">parse</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 
 <span class="n">extension</span> <span class="n">HexParsing</span> <span class="kd">on</span> <span class="kt">String</span> <span class="p">{</span>
   <span class="kt">int</span> <span class="n">parseHexInt</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">return</span> <span class="kt">int</span><span class="o">.</span><span class="na">parse</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nl">radix:</span> <span class="mi">16</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>string_apis_3.dart</p>
+</blockquote>
+<div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">extension</span> <span class="n">NumberParsing</span> <span class="kd">on</span> <span class="kt">String</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">parseInt</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kt">int</span><span class="o">.</span><span class="na">parse</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nl">radix:</span> <span class="mi">16</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kt">num</span> <span class="n">parseNum</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kt">num</span><span class="o">.</span><span class="na">parse</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>string_apis_unnamed.dart</p>
+</blockquote>
+<div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">extension</span> <span class="kd">on</span> <span class="kt">String</span> <span class="p">{</span>
+  <span class="kt">bool</span> <span class="kd">get</span> <span class="n">isBlank</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">trim</span><span class="p">()</span><span class="o">.</span><span class="na">isEmpty</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="nf">isBlank</span><span class="p">(</span><span class="kt">String</span> <span class="n">string</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">string</span><span class="o">.</span><span class="na">isBlank</span><span class="p">;</span>
+</code></pre></div>
+<blockquote>
+<p>usage_explicit.dart</p>
+</blockquote>
+<div class="highlight"><pre class="highlight dart tab-dart"><code><span class="c1">// Both libraries define extensions on String that contain parseInt(),</span>
+<span class="c1">// and the extensions have different names.</span>
+<span class="kn">import</span> <span class="s">'string_apis.dart'</span><span class="o">;</span> <span class="c1">// Contains NumberParsing extension.</span>
+<span class="kn">import</span> <span class="s">'string_apis_2.dart'</span><span class="o">;</span> <span class="c1">// Contains NumberParsing2 extension.</span>
 
 <span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="s">'1'</span><span class="o">.</span><span class="na">parseInt</span><span class="p">();</span>
-  <span class="kt">double</span> <span class="n">d</span> <span class="o">=</span> <span class="s">'1'</span><span class="o">.</span><span class="na">parseDouble</span><span class="p">();</span>
-  <span class="kt">int</span> <span class="n">h</span> <span class="o">=</span> <span class="s">'1'</span><span class="o">.</span><span class="na">parseHexInt</span><span class="p">();</span>
-  <span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> <span class="c1">// 1</span>
-  <span class="n">print</span><span class="p">(</span><span class="n">d</span><span class="p">);</span> <span class="c1">// 1.0</span>
-  <span class="n">print</span><span class="p">(</span><span class="n">h</span><span class="p">);</span> <span class="c1">// 1</span>
+  <span class="c1">// print('42'.parseInt()); // Doesn't work.</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">NumberParsing</span><span class="p">(</span><span class="s">'42'</span><span class="p">)</span><span class="o">.</span><span class="na">parseInt</span><span class="p">());</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">NumberParsing2</span><span class="p">(</span><span class="s">'42'</span><span class="p">)</span><span class="o">.</span><span class="na">parseInt</span><span class="p">());</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'42'</span><span class="o">.</span><span class="na">parseDouble</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>usage_import.dart</p>
+</blockquote>
+<div class="highlight"><pre class="highlight dart tab-dart"><code><span class="c1">// Defines the String extension method parseInt().</span>
+<span class="kn">import</span> <span class="s">'string_apis.dart'</span><span class="o">;</span>
+
+<span class="c1">// Also defines parseInt(), but hiding NumberParsing2</span>
+<span class="c1">// hides that extension method.</span>
+<span class="kn">import</span> <span class="s">'string_apis_2.dart'</span> <span class="kd">hide</span> <span class="n">NumberParsing2</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Uses the parseInt() defined in 'string_apis.dart'.</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'42'</span><span class="o">.</span><span class="na">parseInt</span><span class="p">());</span>
+  <span class="c1">// Uses parseHexInt(), defined in 'string_apis_2.dart'.</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'42'</span><span class="o">.</span><span class="na">parseHexInt</span><span class="p">());</span>
+  <span class="c1">// Uses the parseDouble() defined in 'string_apis.dart'.</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'42'</span><span class="o">.</span><span class="na">parseDouble</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>usage_prefix.dart</p>
+</blockquote>
+<div class="highlight"><pre class="highlight dart tab-dart"><code><span class="c1">// Both libraries define extensions named NumberParsing</span>
+<span class="c1">// that contain the extension method parseInt().</span>
+<span class="c1">// One NumberParsing extension (in 'string_apis_3.dart')</span>
+<span class="c1">// also defines parseNum().</span>
+<span class="kn">import</span> <span class="s">'string_apis.dart'</span><span class="o">;</span>
+<span class="kn">import</span> <span class="s">'string_apis_3.dart'</span> <span class="k">as</span> <span class="n">rad</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// print('42'.parseInt()); // Doesn't work.</span>
+  <span class="c1">// Use the ParseNumbers extension from string_apis.dart.</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">NumberParsing</span><span class="p">(</span><span class="s">'42'</span><span class="p">)</span><span class="o">.</span><span class="na">parseInt</span><span class="p">());</span>
+  <span class="c1">// Use the ParseNumbers extension from string_apis_3.dart.</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">rad</span><span class="o">.</span><span class="na">NumberParsing</span><span class="p">(</span><span class="s">'42'</span><span class="p">)</span><span class="o">.</span><span class="na">parseInt</span><span class="p">());</span>
+  <span class="c1">// Only string_apis_3.dart has parseNum().</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'42'</span><span class="o">.</span><span class="na">parseNum</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>usage_simple_extension.dart</p>
+</blockquote>
+<div class="highlight"><pre class="highlight dart tab-dart"><code><span class="c1">// Import a library that contains an extension on String.</span>
+<span class="kn">import</span> <span class="s">'string_apis.dart'</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// WithOUT extension methods.</span>
+  <span class="n">print</span><span class="p">(</span><span class="kt">int</span><span class="o">.</span><span class="na">parse</span><span class="p">(</span><span class="s">'42'</span><span class="p">));</span>
+  <span class="n">print</span><span class="p">(</span><span class="kt">double</span><span class="o">.</span><span class="na">parse</span><span class="p">(</span><span class="s">'42'</span><span class="p">));</span>
+
+  <span class="c1">// WITH extension methods.</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'42'</span><span class="o">.</span><span class="na">padLeft</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span> <span class="c1">// Use a String method.</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'42'</span><span class="o">.</span><span class="na">parseInt</span><span class="p">());</span> <span class="c1">// Use an extension method.</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'42'</span><span class="o">.</span><span class="na">parseDouble</span><span class="p">());</span>
+
+  <span class="c1">// var vs. dynamic.</span>
+  <span class="kd">var</span> <span class="n">v</span> <span class="o">=</span> <span class="s">'2'</span><span class="p">;</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="na">parseInt</span><span class="p">());</span> <span class="c1">// Output: 2</span>
+
+  <span class="kd">dynamic</span> <span class="n">d</span> <span class="o">=</span> <span class="s">'2'</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Runtime exception: NoSuchMethodError</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="na">parseInt</span><span class="p">());</span>
+  <span class="p">}</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">d</span><span class="p">);</span> <span class="c1">// Avoid unused_local_variable hint.</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">two</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">error</span><span class="p">(</span><span class="s">'error from two'</span><span class="p">);</span>
