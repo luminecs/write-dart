@@ -560,6 +560,59 @@
           </li>
           <li>
             <a href="#non-promotion" class="toc-h1 toc-link" data-title="Non promotion">Non promotion</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#property_bang" class="toc-h2 toc-link" data-title="property_bang">property_bang</a>
+                  </li>
+                  <li>
+                    <a href="#property_copy" class="toc-h2 toc-link" data-title="property_copy">property_copy</a>
+                  </li>
+                  <li>
+                    <a href="#write_combine_ifs" class="toc-h2 toc-link" data-title="write_combine_ifs">write_combine_ifs</a>
+                  </li>
+                  <li>
+                    <a href="#write_change_type" class="toc-h2 toc-link" data-title="write_change_type">write_change_type</a>
+                  </li>
+                  <li>
+                    <a href="#loop" class="toc-h2 toc-link" data-title="loop">loop</a>
+                  </li>
+                  <li>
+                    <a href="#switch-loop" class="toc-h2 toc-link" data-title="switch-loop">switch-loop</a>
+                  </li>
+                  <li>
+                    <a href="#catch-null-check" class="toc-h2 toc-link" data-title="catch-null-check">catch-null-check</a>
+                  </li>
+                  <li>
+                    <a href="#catch-bang" class="toc-h2 toc-link" data-title="catch-bang">catch-bang</a>
+                  </li>
+                  <li>
+                    <a href="#subtype-variable" class="toc-h2 toc-link" data-title="subtype-variable">subtype-variable</a>
+                  </li>
+                  <li>
+                    <a href="#subtype-redundant" class="toc-h2 toc-link" data-title="subtype-redundant">subtype-redundant</a>
+                  </li>
+                  <li>
+                    <a href="#subtype-string" class="toc-h2 toc-link" data-title="subtype-String">subtype-String</a>
+                  </li>
+                  <li>
+                    <a href="#local-write-capture-reorder" class="toc-h2 toc-link" data-title="local-write-capture-reorder">local-write-capture-reorder</a>
+                  </li>
+                  <li>
+                    <a href="#local-write-capture-copy" class="toc-h2 toc-link" data-title="local-write-capture-copy">local-write-capture-copy</a>
+                  </li>
+                  <li>
+                    <a href="#local-write-capture-bang" class="toc-h2 toc-link" data-title="local-write-capture-bang">local-write-capture-bang</a>
+                  </li>
+                  <li>
+                    <a href="#closure-new-var" class="toc-h2 toc-link" data-title="closure-new-var">closure-new-var</a>
+                  </li>
+                  <li>
+                    <a href="#closure-new-var2" class="toc-h2 toc-link" data-title="closure-new-var2">closure-new-var2</a>
+                  </li>
+                  <li>
+                    <a href="#closure-write-capture" class="toc-h2 toc-link" data-title="closure-write-capture">closure-write-capture</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#future" class="toc-h1 toc-link" data-title="Future">Future</a>
@@ -1697,7 +1750,161 @@
   <span class="n">nullableString</span> <span class="o">??=</span> <span class="s">'alternate'</span><span class="p">;</span>
   <span class="n">nullableString</span> <span class="o">=</span> <span class="n">nullableString</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">?</span> <span class="n">nullableString</span> <span class="o">:</span> <span class="s">'alternate'</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h1 id='non-promotion'>Non promotion</h1><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
+</code></pre></div><h1 id='non-promotion'>Non promotion</h1><h2 id='property_bang'>property_bang</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">C1</span> <span class="p">{</span>
+  <span class="kt">int</span><span class="o">?</span> <span class="n">i</span><span class="p">;</span>
+
+  <span class="kt">void</span> <span class="n">f</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="o">!.</span><span class="na">isEven</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='property_copy'>property_copy</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">C</span> <span class="p">{</span>
+  <span class="kt">int</span><span class="o">?</span> <span class="n">i</span><span class="p">;</span>
+  <span class="kt">void</span> <span class="n">f</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">final</span> <span class="n">i</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">i</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span> <span class="c1">// return</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="na">isEven</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='write_combine_ifs'>write_combine_ifs</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">bool</span> <span class="n">b</span><span class="p">,</span> <span class="kt">int</span><span class="o">?</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span><span class="o">?</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="na">isEven</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='write_change_type'>write_change_type</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">bool</span> <span class="n">b</span><span class="p">,</span> <span class="kt">int</span><span class="o">?</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="na">isEven</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='loop'>loop</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Link</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="kd">late</span> <span class="n">Link</span> <span class="n">next</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="n">Link</span><span class="o">?</span> <span class="n">p</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">while</span> <span class="p">(</span><span class="n">p</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="na">value</span><span class="p">);</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="na">next</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='switch-loop'>switch-loop</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span><span class="o">?</span> <span class="n">j</span><span class="p">,</span> <span class="kt">int</span><span class="o">?</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nl">label:</span>
+    <span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+      <span class="n">print</span><span class="p">(</span><span class="n">j</span><span class="o">.</span><span class="na">isEven</span><span class="p">);</span>
+      <span class="n">j</span> <span class="o">=</span> <span class="n">k</span><span class="p">;</span>
+      <span class="k">continue</span> <span class="n">label</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='catch-null-check'>catch-null-check</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="o">?</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span><span class="o">?</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span> <span class="c1">// (1)</span>
+    <span class="c1">// ... Additional code ...</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span> <span class="c1">// (2)</span>
+    <span class="c1">// ... Additional code ...</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="na">isEven</span><span class="p">);</span> <span class="c1">// (3) OK due to the null check in the line above.</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="c1">// Handle the case where i is null.</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='catch-bang'>catch-bang</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="o">?</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span><span class="o">?</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span> <span class="c1">// (1)</span>
+    <span class="c1">// ... Additional code ...</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span> <span class="c1">// (2)</span>
+    <span class="c1">// ... Additional code ...</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="o">!.</span><span class="na">isEven</span><span class="p">);</span> <span class="c1">// (3) OK because of the `!`.</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='subtype-variable'>subtype-variable</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">Object</span> <span class="n">o</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">o</span> <span class="k">is</span> <span class="kt">Comparable</span> <span class="cm">/* (1) */</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">Object</span> <span class="n">o2</span> <span class="o">=</span> <span class="n">o</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">o2</span> <span class="k">is</span> <span class="kt">Pattern</span> <span class="cm">/* (2) */</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">print</span><span class="p">(</span><span class="n">o2</span><span class="o">.</span><span class="na">matchAsPrefix</span><span class="p">(</span><span class="s">'foo'</span><span class="p">));</span> <span class="c1">// (3) OK; o2 was promoted to `Pattern`.</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='subtype-redundant'>subtype-redundant</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">Object</span> <span class="n">o</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">o</span> <span class="k">is</span> <span class="kt">Comparable</span> <span class="cm">/* (1) */</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">o</span> <span class="k">is</span> <span class="kt">Pattern</span> <span class="cm">/* (2) */</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">print</span><span class="p">((</span><span class="n">o</span> <span class="k">as</span> <span class="kt">Pattern</span><span class="p">)</span><span class="o">.</span><span class="na">matchAsPrefix</span><span class="p">(</span><span class="s">'foo'</span><span class="p">));</span> <span class="c1">// (3) OK</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='subtype-string'>subtype-String</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">Object</span> <span class="n">o</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">o</span> <span class="k">is</span> <span class="kt">Comparable</span> <span class="cm">/* (1) */</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">o</span> <span class="k">is</span> <span class="kt">String</span> <span class="cm">/* (2) */</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">print</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="na">matchAsPrefix</span><span class="p">(</span><span class="s">'foo'</span><span class="p">));</span> <span class="c1">// (3) OK</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='local-write-capture-reorder'>local-write-capture-reorder</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="o">?</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span><span class="o">?</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span> <span class="c1">// (1)</span>
+  <span class="c1">// ... Additional code ...</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="na">isEven</span><span class="p">);</span> <span class="c1">// (2) OK</span>
+  <span class="kd">var</span> <span class="n">foo</span> <span class="o">=</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+  <span class="p">};</span>
+  <span class="c1">// ... Use foo ...</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='local-write-capture-copy'>local-write-capture-copy</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="o">?</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span><span class="o">?</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">foo</span> <span class="o">=</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+  <span class="p">};</span>
+  <span class="c1">// ... Use foo ...</span>
+  <span class="kd">var</span> <span class="n">i2</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">i2</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span> <span class="c1">// (1)</span>
+  <span class="c1">// ... Additional code ...</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">i2</span><span class="o">.</span><span class="na">isEven</span><span class="p">);</span> <span class="c1">// (2) OK because `i2` isn't write captured.</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='local-write-capture-bang'>local-write-capture-bang</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="o">?</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span><span class="o">?</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">foo</span> <span class="o">=</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+  <span class="p">};</span>
+  <span class="c1">// ... Use foo ...</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span> <span class="c1">// (1)</span>
+  <span class="c1">// ... Additional code ...</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="o">!.</span><span class="na">isEven</span><span class="p">);</span> <span class="c1">// (2) OK due to `!` check.</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='closure-new-var'>closure-new-var</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="o">?</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span><span class="o">?</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="n">i2</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="n">foo</span> <span class="o">=</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">i2</span><span class="o">.</span><span class="na">isEven</span><span class="p">);</span> <span class="c1">// (1) OK because `i2` isn't changed later.</span>
+  <span class="p">};</span>
+  <span class="n">i</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span> <span class="c1">// (2)</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='closure-new-var2'>closure-new-var2</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="o">?</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">??</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="n">foo</span> <span class="o">=</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">j</span><span class="o">.</span><span class="na">isEven</span><span class="p">);</span> <span class="c1">// OK</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='closure-write-capture'>closure-write-capture</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span><span class="o">?</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span><span class="o">?</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">foo</span> <span class="o">=</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="n">i2</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">i2</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">i2</span><span class="o">.</span><span class="na">isEven</span><span class="p">);</span> <span class="c1">// OK because i2 is local to this closure.</span>
+  <span class="p">};</span>
+  <span class="kd">var</span> <span class="n">bar</span> <span class="o">=</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">two</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">error</span><span class="p">(</span><span class="s">'error from two'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">three</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from three'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">four</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from four'</span><span class="p">);</span>
