@@ -1436,6 +1436,13 @@
 <span class="p">}</span>
 
 <span class="kt">bool</span> <span class="nf">isBlank</span><span class="p">(</span><span class="kt">String</span> <span class="n">string</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">string</span><span class="o">.</span><span class="na">isBlank</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">assert</span><span class="p">(</span><span class="n">isBlank</span><span class="p">(</span><span class="s">'not-blank'</span><span class="p">)</span> <span class="o">==</span> <span class="kc">false</span><span class="p">);</span>
+  <span class="k">assert</span><span class="p">(</span><span class="n">isBlank</span><span class="p">(</span><span class="s">' not-blank '</span><span class="p">)</span> <span class="o">==</span> <span class="kc">false</span><span class="p">);</span>
+  <span class="k">assert</span><span class="p">(</span><span class="n">isBlank</span><span class="p">(</span><span class="s">''</span><span class="p">)</span> <span class="o">==</span> <span class="kc">true</span><span class="p">);</span>
+  <span class="k">assert</span><span class="p">(</span><span class="n">isBlank</span><span class="p">(</span><span class="s">' '</span><span class="p">)</span> <span class="o">==</span> <span class="kc">true</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 <blockquote>
 <p>usage_explicit.dart</p>
