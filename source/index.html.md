@@ -1125,9 +1125,9 @@ void main() {
 }
 ```
 
-## extension String parse
+## extension String & import-as-hide
 
-`未完成`
+> string_apis.dart
 
 ```dart
 extension NumberParsing on String {
@@ -1139,22 +1139,137 @@ extension NumberParsing on String {
     return double.parse(this);
   }
 }
+```
+
+> string_apis_2.dart
+
+```dart
+extension NumberParsing2 on String {
+  int parseInt() {
+    return int.parse(this);
+  }
+}
 
 extension HexParsing on String {
   int parseHexInt() {
     return int.parse(this, radix: 16);
   }
 }
+```
 
-void main() {
-  int i = '1'.parseInt();
-  double d = '1'.parseDouble();
-  int h = '1'.parseHexInt();
-  print(i); // 1
-  print(d); // 1.0
-  print(h); // 1
+> string_apis_3.dart
+
+```dart
+extension NumberParsing on String {
+  int parseInt() {
+    return int.parse(this, radix: 16);
+  }
+
+  num parseNum() {
+    return num.parse(this);
+  }
 }
 ```
+
+> string_apis_unnamed.dart
+
+```dart
+extension on String {
+  bool get isBlank => trim().isEmpty;
+}
+
+bool isBlank(String string) => string.isBlank;
+```
+
+> usage_explicit.dart
+
+```dart
+// Both libraries define extensions on String that contain parseInt(),
+// and the extensions have different names.
+import 'string_apis.dart'; // Contains NumberParsing extension.
+import 'string_apis_2.dart'; // Contains NumberParsing2 extension.
+
+void main() {
+  // print('42'.parseInt()); // Doesn't work.
+  print(NumberParsing('42').parseInt());
+  print(NumberParsing2('42').parseInt());
+  print('42'.parseDouble());
+}
+```
+
+> usage_import.dart
+
+```dart
+// Defines the String extension method parseInt().
+import 'string_apis.dart';
+
+// Also defines parseInt(), but hiding NumberParsing2
+// hides that extension method.
+import 'string_apis_2.dart' hide NumberParsing2;
+
+void main() {
+  // Uses the parseInt() defined in 'string_apis.dart'.
+  print('42'.parseInt());
+  // Uses parseHexInt(), defined in 'string_apis_2.dart'.
+  print('42'.parseHexInt());
+  // Uses the parseDouble() defined in 'string_apis.dart'.
+  print('42'.parseDouble());
+}
+```
+
+> usage_prefix.dart
+
+```dart
+// Both libraries define extensions named NumberParsing
+// that contain the extension method parseInt().
+// One NumberParsing extension (in 'string_apis_3.dart')
+// also defines parseNum().
+import 'string_apis.dart';
+import 'string_apis_3.dart' as rad;
+
+void main() {
+  // print('42'.parseInt()); // Doesn't work.
+  // Use the ParseNumbers extension from string_apis.dart.
+  print(NumberParsing('42').parseInt());
+  // Use the ParseNumbers extension from string_apis_3.dart.
+  print(rad.NumberParsing('42').parseInt());
+  // Only string_apis_3.dart has parseNum().
+  print('42'.parseNum());
+}
+```
+
+> usage_simple_extension.dart
+
+```dart
+// Import a library that contains an extension on String.
+import 'string_apis.dart';
+
+void main() {
+  // WithOUT extension methods.
+  print(int.parse('42'));
+  print(double.parse('42'));
+
+  // WITH extension methods.
+  print('42'.padLeft(5)); // Use a String method.
+  print('42'.parseInt()); // Use an extension method.
+  print('42'.parseDouble());
+
+  // var vs. dynamic.
+  var v = '2';
+  print(v.parseInt()); // Output: 2
+
+  dynamic d = '2';
+
+  if (true) {
+    // Runtime exception: NoSuchMethodError
+    print(d.parseInt());
+  }
+  print(d); // Avoid unused_local_variable hint.
+}
+```
+
+
+
 
 
 
