@@ -1275,6 +1275,234 @@ void main() {
 }
 ```
 
+# Null safety
+
+## non_nullable_types
+
+```dart
+void main() {
+  int a;
+  a = 145;
+  // A value of type 'Null' can't be assigned to a variable of type 'int'.
+  // a = null;
+  print('a is $a.');
+}
+```
+
+## nullable_types
+
+```dart
+void main() {
+  int? a;
+  a = null;
+  print('a is $a.');
+}
+```
+
+## more_nullable_types
+
+```dart
+void main() {
+  List<String> aListOfStrings = ['one', 'two', 'three'];
+  List<String>? aNullableListOfStrings;
+  List<String?> aListOfNullableStrings = ['one', null, 'three'];
+
+  print('$aListOfStrings.'); // [one, two, three]
+  print('$aNullableListOfStrings.'); // null
+  print('$aListOfNullableStrings.'); // [one, null, three]
+}
+```
+
+## late_keyword
+
+```dart
+class Meal {
+  late String _description;
+
+  set description(String desc) {
+    _description = 'Meal description: $desc';
+  }
+
+  String get description => _description;
+}
+
+void main() {
+  final myMeal = Meal();
+  // Unhandled exception:
+  // LateInitializationError: Field '_description@18009629' has not been initialized.
+  print(myMeal.description);
+  myMeal.description = 'Feijoada!';
+  print(myMeal.description);
+}
+```
+
+## late_lazy
+
+```dart
+int _computeValue() {
+  print('In _computeValue...');
+  return 3;
+}
+
+class CachedValueProvider {
+  final _cache = _computeValue();
+  int get value => _cache;
+}
+
+void main() {
+  print('Calling constructor...');
+  var provider = CachedValueProvider();
+  print('Getting value...');
+  print('The value is ${provider.value}!');
+}
+
+// Calling constructor...
+// In _computeValue...
+// Getting value...
+// The value is 3!
+```
+
+## late_circular_references
+
+```dart
+class Team {
+  late final Coach coach;
+}
+
+class Coach {
+  late final Team team;
+}
+
+void main() {
+  final myTeam = Team();
+  final myCoach = Coach();
+  myTeam.coach = myCoach;
+  myCoach.team = myTeam;
+
+  print('All done!');
+}
+```
+
+## promotion_exceptions
+
+```dart
+int getLength(String? str) {
+  // Try throwing an exception here if `str` is null.
+  if (str == null) {
+    throw Exception('String is null');
+  }
+  return str.length;
+}
+
+void main() {
+  print(getLength(null));
+}
+```
+
+## type_promotion
+
+```dart
+int getLength(String? str) {
+  // Add null check here
+  if (str == null) {
+    return 0;
+  }
+  return str.length;
+}
+
+void main() {
+  print(getLength('This is a string!'));
+}
+```
+
+## assertion_operator
+
+```dart
+int? couldReturnNullButDoesnt() => -3;
+
+void main() {
+  int? couldBeNullButIsnt = 1;
+  List<int?> listThatCouldHoldNulls = [2, null, 4];
+  int a = couldBeNullButIsnt;
+  int b = listThatCouldHoldNulls.first!; // first item in the list
+  int c = couldReturnNullButDoesnt()!.abs(); // absolute value
+  print('a is $a.'); // 1
+  print('b is $b.'); // 2
+  print('c is $c.'); // 3
+}
+```
+
+## null_aware_operators
+
+```dart
+class TestObject {
+  void action() {}
+}
+
+TestObject? nullableObjectGenerate() => TestObject();
+
+String? nullableStringGenerate() => null;
+
+void other() {
+  final nullableObject = nullableObjectGenerate();
+  // The following calls the 'action' method
+  // only if nullableObject is not null
+  nullableObject?.action();
+
+  var nullableString = nullableStringGenerate();
+  // Both of the following print out 'alternate' if nullableString is null
+  print(nullableString ?? 'alternate');
+  print(nullableString != null ? nullableString : 'alternate');
+
+  // Both of the following set nullableString to 'alternate' if it is null
+  nullableString ??= 'alternate';
+  nullableString = nullableString != null ? nullableString : 'alternate';
+}
+```
+
+# Non promotion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
