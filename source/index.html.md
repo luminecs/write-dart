@@ -1763,7 +1763,42 @@ void main() {
 }
 ```
 
+## covariant
 
+```dart
+class Animal {
+  void chase(Animal x) {}
+}
+
+class Mouse extends Animal {}
+
+class Cat extends Animal {
+  @override
+  void chase(covariant Mouse x) {}
+}
+```
+
+## bounded
+
+```dart
+class C<T extends Iterable> {
+  final T collection;
+  C(this.collection);
+}
+
+void cannotRunThis() {
+  // undefined_method
+  var c = C(Iterable.empty()).collection;
+  // c.add(2); //!analysis-issue
+}
+
+void main() {
+  // add-type-arg
+  var c = C<List>([]).collection;
+  c.add(2);
+  print(c); // [2]
+}
+```
 
 
 
