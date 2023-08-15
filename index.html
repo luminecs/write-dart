@@ -616,6 +616,14 @@
           </li>
           <li>
             <a href="#type-system" class="toc-h1 toc-link" data-title="Type System">Type System</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#animal-type" class="toc-h2 toc-link" data-title="animal type">animal type</a>
+                  </li>
+                  <li>
+                    <a href="#runtime-checks" class="toc-h2 toc-link" data-title="runtime-checks">runtime-checks</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#future" class="toc-h1 toc-link" data-title="Future">Future</a>
@@ -1907,7 +1915,57 @@
     <span class="n">i</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
   <span class="p">};</span>
 <span class="p">}</span>
-</code></pre></div><h1 id='type-system'>Type System</h1><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
+</code></pre></div><h1 id='type-system'>Type System</h1><h2 id='animal-type'>animal type</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">Never</span> <span class="n">ellipsis</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s">'!'</span><span class="p">);</span>
+
+<span class="kd">class</span> <span class="nc">Animal</span> <span class="p">{</span>
+  <span class="kt">void</span> <span class="n">chase</span><span class="p">(</span><span class="n">Animal</span> <span class="n">a</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="n">Animal</span> <span class="kd">get</span> <span class="n">parent</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">ellipsis</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">HoneyBadger</span> <span class="kd">extends</span> <span class="n">Animal</span> <span class="p">{</span>
+  <span class="nd">@override</span>
+  <span class="kt">void</span> <span class="n">chase</span><span class="p">(</span><span class="n">Animal</span> <span class="n">a</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="nd">@override</span>
+  <span class="n">HoneyBadger</span> <span class="kd">get</span> <span class="n">parent</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">ellipsis</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">HoneyBadger1</span> <span class="kd">extends</span> <span class="n">Animal</span> <span class="p">{</span>
+  <span class="nd">@override</span>
+  <span class="kt">void</span> <span class="n">chase</span><span class="p">(</span><span class="kt">Object</span> <span class="n">a</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="nd">@override</span>
+  <span class="n">Animal</span> <span class="kd">get</span> <span class="n">parent</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">ellipsis</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">Alligator</span> <span class="kd">extends</span> <span class="n">Animal</span> <span class="p">{}</span>
+<span class="kd">class</span> <span class="nc">Cat</span> <span class="kd">extends</span> <span class="n">Animal</span> <span class="p">{}</span>
+<span class="kd">class</span> <span class="nc">Dog</span> <span class="kd">extends</span> <span class="n">Animal</span> <span class="p">{}</span>
+<span class="kd">class</span> <span class="nc">MaineCoon</span> <span class="kd">extends</span> <span class="n">Cat</span> <span class="p">{}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Animal</span> <span class="n">c1</span> <span class="o">=</span> <span class="n">Cat</span><span class="p">();</span> <span class="c1">// ok</span>
+  <span class="n">MaineCoon</span> <span class="n">c2</span> <span class="o">=</span> <span class="n">Cat</span><span class="p">();</span> <span class="c1">// error</span>
+  <span class="n">Cat</span> <span class="n">c3</span> <span class="o">=</span> <span class="n">Cat</span><span class="p">();</span> <span class="c1">// ok</span>
+  <span class="n">Cat</span> <span class="n">c4</span> <span class="o">=</span> <span class="n">MaineCoon</span><span class="p">();</span> <span class="c1">// ok</span>
+  <span class="c1">// generic-type-assignment</span>
+  <span class="kt">List</span><span class="p">&lt;</span><span class="n">MaineCoon</span><span class="p">&gt;</span> <span class="n">myMaineCoons</span> <span class="o">=</span> <span class="n">ellipsis</span><span class="p">();</span>
+  <span class="kt">List</span><span class="p">&lt;</span><span class="n">Cat</span><span class="p">&gt;</span> <span class="n">myCats</span> <span class="o">=</span> <span class="n">myMaineCoons</span><span class="p">;</span>
+
+  <span class="kt">List</span><span class="p">&lt;</span><span class="n">Animal</span><span class="p">&gt;</span> <span class="n">myAnimals</span> <span class="o">=</span> <span class="n">ellipsis</span><span class="p">();</span>
+  <span class="kt">List</span><span class="p">&lt;</span><span class="n">Cat</span><span class="p">&gt;</span> <span class="n">myCats</span> <span class="o">=</span> <span class="n">myAnimals</span><span class="p">;</span> <span class="c1">// error</span>
+
+  <span class="c1">// generic-type-assignment-implied-cast</span>
+  <span class="kt">List</span><span class="p">&lt;</span><span class="n">Animal</span><span class="p">&gt;</span> <span class="n">myAnimals1</span> <span class="o">=</span> <span class="n">ellipsis</span><span class="p">();</span>
+  <span class="kt">List</span><span class="p">&lt;</span><span class="n">Cat</span><span class="p">&gt;</span> <span class="n">myCats1</span> <span class="o">=</span> <span class="n">myAnimals1</span> <span class="k">as</span> <span class="kt">List</span><span class="p">&lt;</span><span class="n">Cat</span><span class="p">&gt;;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='runtime-checks'>runtime-checks</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="c1">// Unhandled exception:</span>
+<span class="c1">// type 'List&lt;Animal&gt;' is not a subtype of type 'List&lt;Cat&gt;' in type cast</span>
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">List</span><span class="p">&lt;</span><span class="n">Animal</span><span class="p">&gt;</span> <span class="n">animals</span> <span class="o">=</span> <span class="p">[</span><span class="n">Dog</span><span class="p">()];</span>
+  <span class="kt">List</span><span class="p">&lt;</span><span class="n">Cat</span><span class="p">&gt;</span> <span class="n">cats</span> <span class="o">=</span> <span class="n">animals</span> <span class="k">as</span> <span class="kt">List</span><span class="p">&lt;</span><span class="n">Cat</span><span class="p">&gt;;</span>
+<span class="p">}</span>
+</code></pre></div><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">two</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">error</span><span class="p">(</span><span class="s">'error from two'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">three</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from three'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">four</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from four'</span><span class="p">);</span>
