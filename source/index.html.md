@@ -1703,7 +1703,65 @@ void f(int? i, int? j) {
 
 # Type System
 
+## animal type
 
+```dart
+Never ellipsis<T>() => throw Exception('!');
+
+class Animal {
+  void chase(Animal a) {}
+  Animal get parent => ellipsis();
+}
+
+class HoneyBadger extends Animal {
+  @override
+  void chase(Animal a) {}
+
+  @override
+  HoneyBadger get parent => ellipsis();
+}
+
+class HoneyBadger1 extends Animal {
+  @override
+  void chase(Object a) {}
+
+  @override
+  Animal get parent => ellipsis();
+}
+
+class Alligator extends Animal {}
+class Cat extends Animal {}
+class Dog extends Animal {}
+class MaineCoon extends Cat {}
+
+void main() {
+  Animal c1 = Cat(); // ok
+  MaineCoon c2 = Cat(); // error
+  Cat c3 = Cat(); // ok
+  Cat c4 = MaineCoon(); // ok
+  // generic-type-assignment
+  List<MaineCoon> myMaineCoons = ellipsis();
+  List<Cat> myCats = myMaineCoons;
+
+  List<Animal> myAnimals = ellipsis();
+  List<Cat> myCats = myAnimals; // error
+
+  // generic-type-assignment-implied-cast
+  List<Animal> myAnimals1 = ellipsis();
+  List<Cat> myCats1 = myAnimals1 as List<Cat>;
+}
+```
+
+## runtime-checks
+
+```dart
+// Unhandled exception:
+// type 'List<Animal>' is not a subtype of type 'List<Cat>' in type cast
+void main() {
+  List<Animal> animals = [Dog()];
+  List<Cat> cats = animals as List<Cat>;
+}
+```
 
 
 
