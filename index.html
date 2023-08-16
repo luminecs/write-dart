@@ -629,6 +629,30 @@
                   <li>
                     <a href="#bounded" class="toc-h2 toc-link" data-title="bounded">bounded</a>
                   </li>
+                  <li>
+                    <a href="#strong_analysis-dart-2-note-unused-but-necessary" class="toc-h2 toc-link" data-title="strong_analysis dart-2-note-unused-but-necessary">strong_analysis dart-2-note-unused-but-necessary</a>
+                  </li>
+                  <li>
+                    <a href="#strong_analysis-opening-example" class="toc-h2 toc-link" data-title="strong_analysis opening-example">strong_analysis opening-example</a>
+                  </li>
+                  <li>
+                    <a href="#strong_analysis-static-analysis-enabled" class="toc-h2 toc-link" data-title="strong_analysis static-analysis-enabled">strong_analysis static-analysis-enabled</a>
+                  </li>
+                  <li>
+                    <a href="#strong_analysis-type-inference-orig" class="toc-h2 toc-link" data-title="strong_analysis type-inference-orig">strong_analysis type-inference-orig</a>
+                  </li>
+                  <li>
+                    <a href="#strong_analysis-type-inference" class="toc-h2 toc-link" data-title="strong_analysis type-inference">strong_analysis type-inference</a>
+                  </li>
+                  <li>
+                    <a href="#strong_analysis-local-var-type-inference-error" class="toc-h2 toc-link" data-title="strong_analysis local-var-type-inference-error">strong_analysis local-var-type-inference-error</a>
+                  </li>
+                  <li>
+                    <a href="#strong_analysis-local-var-type-inference-ok" class="toc-h2 toc-link" data-title="strong_analysis local-var-type-inference-ok">strong_analysis local-var-type-inference-ok</a>
+                  </li>
+                  <li>
+                    <a href="#strong_analysis-type-arg-inference" class="toc-h2 toc-link" data-title="strong_analysis type-arg-inference">strong_analysis type-arg-inference</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1998,7 +2022,56 @@
   <span class="n">c</span><span class="o">.</span><span class="na">add</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
   <span class="n">print</span><span class="p">(</span><span class="n">c</span><span class="p">);</span> <span class="c1">// [2]</span>
 <span class="p">}</span>
-</code></pre></div><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
+</code></pre></div><h2 id='strong_analysis-dart-2-note-unused-but-necessary'>strong_analysis dart-2-note-unused-but-necessary</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="c1">// i is dynamic in Dart 1.x</span>
+  <span class="c1">// i is inferred as int in Dart 2</span>
+  <span class="kd">dynamic</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="s">'Hello'</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='strong_analysis-opening-example'>strong_analysis opening-example</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">printInts</span><span class="p">(</span><span class="kt">List</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">print</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[];</span> <span class="c1">// List&lt;dynamic&gt; list</span>
+  <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="p">(</span><span class="s">'2'</span><span class="p">);</span>
+  <span class="c1">// The argument type 'List&lt;dynamic&gt;' can't</span>
+  <span class="c1">// be assigned to the parameter type 'List&lt;int&gt;'.</span>
+  <span class="n">printInts</span><span class="p">(</span><span class="n">list</span><span class="p">);</span> <span class="c1">//!analysis-issue</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='strong_analysis-static-analysis-enabled'>strong_analysis static-analysis-enabled</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="c1">// static-analysis-enabled</span>
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// ignore: stable, beta, dev, invalid_assignment</span>
+  <span class="kt">bool</span> <span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='strong_analysis-type-inference-orig'>strong_analysis type-inference-orig</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="c1">// type-inference-orig</span>
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kd">dynamic</span><span class="p">&gt;</span> <span class="n">arguments</span> <span class="o">=</span> <span class="p">{</span><span class="s">'argA'</span><span class="o">:</span> <span class="s">'hello'</span><span class="p">,</span> <span class="s">'argB'</span><span class="o">:</span> <span class="mi">42</span><span class="p">};</span>
+  <span class="c1">// ignore: stable, beta, dev, argument_type_not_assignable</span>
+  <span class="n">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+
+  <span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kd">dynamic</span><span class="p">&gt;</span> <span class="n">message</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'method'</span><span class="o">:</span> <span class="s">'someMethod'</span><span class="p">,</span>
+    <span class="s">'args'</span><span class="o">:</span> <span class="p">&lt;</span><span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kd">dynamic</span><span class="p">&gt;&gt;[</span><span class="n">arguments</span><span class="p">],</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='strong_analysis-type-inference'>strong_analysis type-inference</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">List</span><span class="p">&lt;</span><span class="kd">dynamic</span><span class="p">&gt;&gt;</span> <span class="n">foo</span> <span class="o">=</span> <span class="p">{};</span>
+  <span class="c1">// List&lt;dynamic&gt;? arguments</span>
+  <span class="kd">var</span> <span class="n">arguments</span> <span class="o">=</span> <span class="n">foo</span><span class="p">[</span><span class="s">'args'</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='strong_analysis-local-var-type-inference-error'>strong_analysis local-var-type-inference-error</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// x is inferred as an int.</span>
+  <span class="kd">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="c1">// ignore: stable, beta, dev, stable, dev, invalid_assignment</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="mf">4.0</span><span class="p">;</span> <span class="c1">//!analysis-issue</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='strong_analysis-local-var-type-inference-ok'>strong_analysis local-var-type-inference-ok</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// A num can be double or int.</span>
+  <span class="kt">num</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="mf">4.0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='strong_analysis-type-arg-inference'>strong_analysis type-arg-inference</h2><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">two</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">error</span><span class="p">(</span><span class="s">'error from two'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">three</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from three'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">four</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from four'</span><span class="p">);</span>
