@@ -668,6 +668,9 @@
                   <li>
                     <a href="#common_fixes_analysis-invalid-method-override" class="toc-h2 toc-link" data-title="common_fixes_analysis invalid-method-override">common_fixes_analysis invalid-method-override</a>
                   </li>
+                  <li>
+                    <a href="#common_fixes_analysis-type-arguments" class="toc-h2 toc-link" data-title="common_fixes_analysis type-arguments">common_fixes_analysis type-arguments</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -2146,6 +2149,15 @@
 <span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
   <span class="n">NumberAdder</span> <span class="n">adder</span> <span class="o">=</span> <span class="n">MyAdder</span><span class="p">();</span>
   <span class="n">adder</span><span class="o">.</span><span class="na">add</span><span class="p">(</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='common_fixes_analysis-type-arguments'>common_fixes_analysis type-arguments</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Superclass</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">{</span>
+  <span class="kt">void</span> <span class="n">method</span><span class="p">(</span><span class="n">T</span> <span class="n">param</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">Subclass</span> <span class="kd">extends</span> <span class="n">Superclass</span> <span class="p">{</span>
+  <span class="nd">@override</span>
+  <span class="c1">// ignore: stable, beta, dev, invalid_override</span>
+  <span class="kt">void</span> <span class="n">method</span><span class="p">(</span><span class="kt">int</span> <span class="n">param</span><span class="p">)</span> <span class="p">{}</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">two</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">error</span><span class="p">(</span><span class="s">'error from two'</span><span class="p">);</span>
