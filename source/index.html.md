@@ -1954,6 +1954,27 @@ void main() {
 }
 ```
 
+## common_fixes_analysis invalid-method-override
+
+```dart
+abstract class NumberAdder {
+  num add(num a, num b);
+}
+
+// invalid-method-override
+class MyAdder extends NumberAdder {
+  @override
+  // ignore: stable, beta, dev, invalid_override
+  num add(int a, int b) => a + b; // error
+}
+
+// runtime-failure
+void main() {
+  NumberAdder adder = MyAdder();
+  adder.add(1.2, 3.4);
+}
+```
+
 
 
 
