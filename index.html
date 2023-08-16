@@ -665,9 +665,6 @@
                   <li>
                     <a href="#common_fixes_analysis-inferred-collection-types" class="toc-h2 toc-link" data-title="common_fixes_analysis inferred-collection-types">common_fixes_analysis inferred-collection-types</a>
                   </li>
-                  <li>
-                    <a href="#common_fixes_analysis-inferred-collection-types-ok" class="toc-h2 toc-link" data-title="common_fixes_analysis inferred-collection-types-ok">common_fixes_analysis inferred-collection-types-ok</a>
-                  </li>
               </ul>
           </li>
           <li>
@@ -2131,7 +2128,6 @@
   <span class="kd">var</span> <span class="n">m</span> <span class="o">=</span> <span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">num</span><span class="p">&gt;{</span><span class="s">'a'</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'b'</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">'c'</span><span class="o">:</span> <span class="mi">3</span><span class="p">};</span>
   <span class="n">m</span><span class="p">[</span><span class="s">'d'</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='common_fixes_analysis-inferred-collection-types-ok'>common_fixes_analysis inferred-collection-types-ok</h2><div class="highlight"><pre class="highlight dart tab-dart"><code>
 </code></pre></div><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">two</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">error</span><span class="p">(</span><span class="s">'error from two'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">three</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from three'</span><span class="p">);</span>
