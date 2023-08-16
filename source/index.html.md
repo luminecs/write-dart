@@ -1886,6 +1886,79 @@ void main() {
 
 ## strong_analysis type-arg-inference
 
+```dart
+void main() {
+  // Inferred as if you wrote <int>[].
+  List<int> listOfInt = [];
+  // Inferred as if you wrote <double>[3.0].
+  var listOfDouble = [3.0];
+  // Inferred as Iterable<int>.
+  var ints = listOfDouble.map((x) => x.toInt());
+  // ignore: stable, beta, dev, invalid_assignment
+  listOfDouble[0] = '';
+}
+```
+
+## common_fixes_analysis canvas-undefined
+
+```dart
+import 'dart:html';
+
+void main() {
+  final double x = 0;
+  final double y = 0;
+  
+  var canvas = querySelector('canvas')!;
+  // ignore: stable, beta, dev, undefined_getter
+  canvas.context2D.lineTo(x, y); //!analysis-issue
+}
+```
+
+## common_fixes_analysis canvas-as
+
+```dart
+import 'dart:html';
+
+void main() {
+  final double x = 0;
+  final double y = 0;
+  
+  var canvas = querySelector('canvas') as CanvasElement;
+  canvas.context2D.lineTo(x, y);
+}
+```
+
+## common_fixes_analysis canvas-dynamic
+
+```dart
+import 'dart:html';
+
+void main() {
+  dynamic canvasOrImg = querySelector('canvas, img');
+  var width = canvasOrImg.width; // dynamic width
+}
+```
+
+## common_fixes_analysis inferred-collection-types
+
+```dart
+void main() {
+  // Inferred as Map<String, int>
+  var map = {'a': 1, 'b': 2, 'c': 3};
+  // ignore: stable, beta, dev, invalid_assignment
+  map['d'] = 1.5; //!analysis-issue
+  
+  // ok
+  var m = <String, num>{'a': 1, 'b': 2, 'c': 3};
+  m['d'] = 1.5;
+}
+```
+
+## common_fixes_analysis inferred-collection-types-ok
+
+```dart
+
+```
 
 
 
