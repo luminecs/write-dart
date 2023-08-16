@@ -1975,6 +1975,20 @@ void main() {
 }
 ```
 
+## common_fixes_analysis type-arguments
+
+```dart
+class Superclass<T> {
+  void method(T param) {}
+}
+
+class Subclass extends Superclass {
+  @override
+  // ignore: stable, beta, dev, invalid_override
+  void method(int param) {}
+}
+```
+
 
 
 
