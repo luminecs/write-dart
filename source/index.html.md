@@ -1800,6 +1800,97 @@ void main() {
 }
 ```
 
+## strong_analysis dart-2-note-unused-but-necessary
+
+```dart
+void main() {
+  var i = 1;
+  // i is dynamic in Dart 1.x
+  // i is inferred as int in Dart 2
+  dynamic x = 1;
+  x = 'Hello';
+}
+```
+
+## strong_analysis opening-example
+
+```dart
+void printInts(List<int> a) => print(a);
+
+void main() {
+  final list = []; // List<dynamic> list
+  list.add(1);
+  list.add('2');
+  // The argument type 'List<dynamic>' can't
+  // be assigned to the parameter type 'List<int>'.
+  printInts(list); //!analysis-issue
+}
+```
+
+## strong_analysis static-analysis-enabled
+
+```dart
+// static-analysis-enabled
+void main() {
+  // ignore: stable, beta, dev, invalid_assignment
+  bool b = [0][0];
+}
+```
+
+## strong_analysis type-inference-orig
+
+```dart
+// type-inference-orig
+void main() {
+  Map<String, dynamic> arguments = {'argA': 'hello', 'argB': 42};
+  // ignore: stable, beta, dev, argument_type_not_assignable
+  arguments[1] = null;
+
+  Map<String, dynamic> message = {
+    'method': 'someMethod',
+    'args': <Map<String, dynamic>>[arguments],
+  };
+}
+```
+
+## strong_analysis type-inference
+
+```dart
+void main() {
+  Map<String, List<dynamic>> foo = {};
+  // List<dynamic>? arguments
+  var arguments = foo['args'];
+}
+```
+
+## strong_analysis local-var-type-inference-error
+
+```dart
+void main() {
+  // x is inferred as an int.
+  var x = 3;
+  // ignore: stable, beta, dev, stable, dev, invalid_assignment
+  x = 4.0; //!analysis-issue
+}
+```
+
+## strong_analysis local-var-type-inference-ok
+
+```dart
+void main() {
+  // A num can be double or int.
+  num y = 3;
+  y = 4.0;
+}
+```
+
+## strong_analysis type-arg-inference
+
+
+
+
+
+
 
 
 
