@@ -1954,11 +1954,7 @@ void main() {
 }
 ```
 
-## common_fixes_analysis inferred-collection-types-ok
 
-```dart
-
-```
 
 
 
