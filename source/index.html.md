@@ -2230,7 +2230,9 @@ void main() {
 }
 ```
 
-# Html querySelector
+# Html
+
+## querySelector
 
 ```dart
 import 'dart:html';
@@ -2252,6 +2254,54 @@ void main() {
   List<Element> specialParagraphElements = querySelectorAll(
     '#id p.class',
   );
+}
+```
+
+## attributes
+
+```dart
+import 'dart:html';
+
+void main() {
+  Element elem = querySelector('#an-id')!;
+  elem.attributes['someAttribute'] = 'someValue';
+}
+```
+
+## creating-elements
+
+```dart
+import 'dart:html';
+
+void main() {
+  var elem = ParagraphElement();
+  elem.text = 'Creating is easy!';
+}
+```
+
+## html
+
+```dart
+import 'dart:html';
+
+void main() {
+  // creating-elements
+  var elem = ParagraphElement();
+  elem.text = 'Creating is easy!';
+  // creating-from-html
+  var elem2 = Element.html(
+    '<p>Creating <em>is</em> easy!</p>',
+  );
+  // body-children-add
+  document.body!.children.add(elem2);
+  // nodes-add
+  querySelector('#inputs')!.nodes.add(elem);
+  // replaceWith
+  querySelector('#status')!.replaceWith(elem);
+  // remove
+  // Find a node by ID, and remove it
+  // from the DOM if it is found.
+  querySelector('#expendable')?.remove();
 }
 ```
 
