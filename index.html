@@ -425,6 +425,36 @@
                     <a href="#json" class="toc-h2 toc-link" data-title="json">json</a>
                   </li>
                   <li>
+                    <a href="#record-syntax" class="toc-h2 toc-link" data-title="record-syntax">record-syntax</a>
+                  </li>
+                  <li>
+                    <a href="#record-type-annotation" class="toc-h2 toc-link" data-title="record-type-annotation">record-type-annotation</a>
+                  </li>
+                  <li>
+                    <a href="#record-type-declaration" class="toc-h2 toc-link" data-title="record-type-declaration">record-type-declaration</a>
+                  </li>
+                  <li>
+                    <a href="#record-type-named-declaration" class="toc-h2 toc-link" data-title="record-type-named-declaration">record-type-named-declaration</a>
+                  </li>
+                  <li>
+                    <a href="#record-type-mismatched-names" class="toc-h2 toc-link" data-title="record-type-mismatched-names">record-type-mismatched-names</a>
+                  </li>
+                  <li>
+                    <a href="#record-type-matched-names" class="toc-h2 toc-link" data-title="record-type-matched-names">record-type-matched-names</a>
+                  </li>
+                  <li>
+                    <a href="#record-getters-two" class="toc-h2 toc-link" data-title="record-getters-two">record-getters-two</a>
+                  </li>
+                  <li>
+                    <a href="#record-shape" class="toc-h2 toc-link" data-title="record-shape">record-shape</a>
+                  </li>
+                  <li>
+                    <a href="#record-shape-mismatch" class="toc-h2 toc-link" data-title="record-shape-mismatch">record-shape-mismatch</a>
+                  </li>
+                  <li>
+                    <a href="#record-multiple-returns" class="toc-h2 toc-link" data-title="record-multiple-returns">record-multiple-returns</a>
+                  </li>
+                  <li>
                     <a href="#pattern_types-cast" class="toc-h2 toc-link" data-title="pattern_types cast">pattern_types cast</a>
                   </li>
                   <li>
@@ -1223,6 +1253,89 @@
   <span class="k">if</span> <span class="p">(</span><span class="n">json</span> <span class="k">case</span> <span class="p">{</span><span class="s">'user'</span><span class="o">:</span> <span class="p">[</span><span class="kt">String</span> <span class="n">name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">age</span><span class="p">]})</span> <span class="p">{</span>
     <span class="n">print</span><span class="p">(</span><span class="s">'User </span><span class="si">$name</span><span class="s"> is </span><span class="si">$age</span><span class="s"> years old.'</span><span class="p">);</span>
   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='record-syntax'>record-syntax</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">record</span> <span class="o">=</span> <span class="p">(</span><span class="s">'first'</span><span class="p">,</span> <span class="nl">a:</span> <span class="mi">2</span><span class="p">,</span> <span class="nl">b:</span> <span class="kc">true</span><span class="p">,</span> <span class="s">'last'</span><span class="p">);</span>
+  <span class="c1">// record-getters</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">record</span><span class="p">.</span><span class="err">$</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// first</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">record</span><span class="p">.</span><span class="err">$</span><span class="mi">2</span><span class="p">);</span> <span class="c1">// last</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="na">a</span><span class="p">);</span> <span class="c1">// 2</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="na">b</span><span class="p">);</span> <span class="c1">// true</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='record-type-annotation'>record-type-annotation</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span> <span class="n">swap</span><span class="p">((</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span> <span class="n">record</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">=</span> <span class="n">record</span><span class="p">;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">print</span><span class="p">(</span><span class="n">swap</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)));</span> <span class="c1">// (2, 1)</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='record-type-declaration'>record-type-declaration</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Record type annotation in a variable declaration:</span>
+  <span class="p">(</span><span class="kt">String</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span> <span class="n">record</span><span class="p">;</span>
+  <span class="c1">// Initialize it with a record expression:</span>
+  <span class="n">record</span> <span class="o">=</span> <span class="p">(</span><span class="s">'A string'</span><span class="p">,</span> <span class="mi">123</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='record-type-named-declaration'>record-type-named-declaration</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Record type annotation in a variable declaration:</span>
+  <span class="p">({</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">b</span><span class="p">})</span> <span class="n">record</span><span class="p">;</span>
+  <span class="c1">// Initialize it with a record expression:</span>
+  <span class="n">record</span> <span class="o">=</span> <span class="p">(</span><span class="nl">a:</span> <span class="mi">123</span><span class="p">,</span> <span class="nl">b:</span> <span class="kc">true</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='record-type-mismatched-names'>record-type-mismatched-names</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">({</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">})</span> <span class="n">recordAB</span> <span class="o">=</span> <span class="p">(</span><span class="nl">a:</span> <span class="mi">1</span><span class="p">,</span> <span class="nl">b:</span> <span class="mi">2</span><span class="p">);</span>
+  <span class="p">({</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">})</span> <span class="n">recordXY</span> <span class="o">=</span> <span class="p">(</span><span class="nl">x:</span> <span class="mi">3</span><span class="p">,</span> <span class="nl">y:</span> <span class="mi">4</span><span class="p">);</span>
+  <span class="c1">// Compile error! These records don't have the same type.</span>
+  <span class="c1">// recordAB = recordXY;</span>
+  <span class="n">recordAB</span><span class="p">;</span>
+  <span class="n">recordXY</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='record-type-matched-names'>record-type-matched-names</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="n">recordAB</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+  <span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span> <span class="n">recordXY</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+  <span class="n">recordAB</span> <span class="o">=</span> <span class="n">recordXY</span><span class="p">;</span> <span class="c1">// OK.</span>
+  <span class="n">recordAB</span><span class="p">;</span>
+  <span class="n">recordXY</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='record-getters-two'>record-getters-two</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">(</span><span class="kt">num</span><span class="p">,</span> <span class="kt">Object</span><span class="p">)</span> <span class="n">pair</span> <span class="o">=</span> <span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="s">'a'</span><span class="p">);</span>
+  <span class="c1">// Static type `num`, runtime type `int`.</span>
+  <span class="kd">var</span> <span class="n">first</span> <span class="o">=</span> <span class="n">pair</span><span class="p">.</span><span class="err">$</span><span class="mi">1</span><span class="p">;</span>
+  <span class="c1">// Static type `Object`, runtime type `String`.</span>
+  <span class="kd">var</span> <span class="n">second</span> <span class="o">=</span> <span class="n">pair</span><span class="p">.</span><span class="err">$</span><span class="mi">2</span><span class="p">;</span>
+  <span class="n">first</span><span class="p">;</span>
+  <span class="n">second</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='record-shape'>record-shape</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">z</span><span class="p">)</span> <span class="n">point</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+  <span class="p">(</span><span class="kt">int</span> <span class="n">r</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="n">color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">point</span> <span class="o">==</span> <span class="n">color</span><span class="p">);</span> <span class="c1">// true</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='record-shape-mismatch'>record-shape-mismatch</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">({</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">z</span><span class="p">})</span> <span class="n">point</span> <span class="o">=</span> <span class="p">(</span><span class="nl">x:</span> <span class="mi">1</span><span class="p">,</span> <span class="nl">y:</span> <span class="mi">2</span><span class="p">,</span> <span class="nl">z:</span> <span class="mi">3</span><span class="p">);</span>
+  <span class="p">({</span><span class="kt">int</span> <span class="n">r</span><span class="p">,</span> <span class="kt">int</span> <span class="n">g</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">})</span> <span class="n">color</span> <span class="o">=</span> <span class="p">(</span><span class="nl">r:</span> <span class="mi">1</span><span class="p">,</span> <span class="nl">g:</span> <span class="mi">2</span><span class="p">,</span> <span class="nl">b:</span> <span class="mi">3</span><span class="p">);</span>
+  <span class="c1">// Prints 'false'. Lint: Equals on unrelated types.</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">point</span> <span class="o">==</span> <span class="n">color</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='record-multiple-returns'>record-multiple-returns</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">(</span><span class="kt">String</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span> <span class="n">userInfo</span><span class="p">(</span><span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kd">dynamic</span><span class="p">&gt;</span> <span class="n">json</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">json</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span> <span class="k">as</span> <span class="kt">String</span><span class="p">,</span> <span class="n">json</span><span class="p">[</span><span class="s">'age'</span><span class="p">]</span> <span class="k">as</span> <span class="kt">int</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kd">final</span> <span class="n">json</span> <span class="o">=</span> <span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kd">dynamic</span><span class="p">&gt;{</span>
+    <span class="s">'name'</span><span class="o">:</span> <span class="s">'Dash'</span><span class="p">,</span>
+    <span class="s">'age'</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s">'color'</span><span class="o">:</span> <span class="s">'blue'</span><span class="p">,</span>
+  <span class="p">};</span>
+  <span class="c1">// Destructures using a record pattern:</span>
+  <span class="kd">var</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">)</span> <span class="o">=</span> <span class="n">userInfo</span><span class="p">(</span><span class="n">json</span><span class="p">);</span>
+  <span class="cm">/* Equivalent to:
+    var info = userInfo(json);
+    var name = info.$1;
+    var age  = info.$2;
+  */</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">name</span><span class="p">);</span> <span class="c1">// Dash</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">age</span><span class="p">);</span> <span class="c1">// 10</span>
 <span class="p">}</span>
 </code></pre></div><h2 id='pattern_types-cast'>pattern_types cast</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
   <span class="p">(</span><span class="kt">num</span><span class="p">,</span> <span class="kt">Object</span><span class="p">)</span> <span class="n">record</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">'s'</span><span class="p">);</span>
