@@ -671,6 +671,15 @@
                   <li>
                     <a href="#common_fixes_analysis-type-arguments" class="toc-h2 toc-link" data-title="common_fixes_analysis type-arguments">common_fixes_analysis type-arguments</a>
                   </li>
+                  <li>
+                    <a href="#common_fixes_analysis-super-goes-last" class="toc-h2 toc-link" data-title="common_fixes_analysis super-goes-last">common_fixes_analysis super-goes-last</a>
+                  </li>
+                  <li>
+                    <a href="#common_fixes_analysis-func-fail" class="toc-h2 toc-link" data-title="common_fixes_analysis func-fail">common_fixes_analysis func-fail</a>
+                  </li>
+                  <li>
+                    <a href="#common_fixes_analysis-type-inf-null" class="toc-h2 toc-link" data-title="common_fixes_analysis type-inf-null">common_fixes_analysis type-inf-null</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -2158,6 +2167,57 @@
   <span class="nd">@override</span>
   <span class="c1">// ignore: stable, beta, dev, invalid_override</span>
   <span class="kt">void</span> <span class="n">method</span><span class="p">(</span><span class="kt">int</span> <span class="n">param</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='common_fixes_analysis-super-goes-last'>common_fixes_analysis super-goes-last</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Eats</span> <span class="p">{}</span>
+
+<span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Animal</span> <span class="p">{</span>
+  <span class="n">Animal</span><span class="p">(</span><span class="n">Eats</span> <span class="n">food</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">_HoneyBadger</span> <span class="kd">extends</span> <span class="n">Animal</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="kt">String</span> <span class="n">_name</span><span class="p">;</span>
+
+  <span class="c1">// super-goes-last</span>
+  <span class="n">_HoneyBadger</span><span class="p">(</span><span class="n">Eats</span> <span class="n">food</span><span class="p">,</span> <span class="kt">String</span> <span class="n">name</span><span class="p">)</span>
+      <span class="c1">// ignore: stable, beta, dev, super_invocation_not_last</span>
+      <span class="o">:</span> <span class="k">super</span><span class="p">(</span><span class="n">food</span><span class="p">),</span>
+        <span class="n">_name</span> <span class="o">=</span> <span class="n">name</span> <span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">HoneyBadger</span> <span class="kd">extends</span> <span class="n">Animal</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="kt">String</span> <span class="n">_name</span><span class="p">;</span>
+
+  <span class="c1">// super-goes-last-ok</span>
+  <span class="n">HoneyBadger</span><span class="p">(</span><span class="n">Eats</span> <span class="n">food</span><span class="p">,</span> <span class="kt">String</span> <span class="n">name</span><span class="p">)</span>
+      <span class="o">:</span> <span class="n">_name</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span>
+        <span class="k">super</span><span class="p">(</span><span class="n">food</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='common_fixes_analysis-func-fail'>common_fixes_analysis func-fail</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">funcFail</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">void</span> <span class="n">filterValues</span><span class="p">(</span><span class="kt">bool</span> <span class="kt">Function</span><span class="p">(</span><span class="kd">dynamic</span><span class="p">)</span> <span class="n">filter</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="c1">// ignore: stable, beta, dev, argument_type_not_assignable</span>
+  <span class="n">filterValues</span><span class="p">((</span><span class="kt">String</span> <span class="n">x</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">x</span><span class="o">.</span><span class="na">contains</span><span class="p">(</span><span class="s">'hello'</span><span class="p">));</span> <span class="c1">// error</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">funcT</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">void</span> <span class="n">filterValues</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="kt">bool</span> <span class="kt">Function</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="n">filter</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="n">filterValues</span><span class="p">((</span><span class="kt">String</span> <span class="n">x</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">x</span><span class="o">.</span><span class="na">contains</span><span class="p">(</span><span class="s">'hello'</span><span class="p">));</span> <span class="c1">// ok</span>
+  <span class="n">filterValues</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;((</span><span class="n">x</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">x</span><span class="o">.</span><span class="na">contains</span><span class="p">(</span><span class="s">'hello'</span><span class="p">));</span> <span class="c1">// ok</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">funcCast</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">void</span> <span class="n">filterValues</span><span class="p">(</span><span class="kt">bool</span> <span class="kt">Function</span><span class="p">(</span><span class="kd">dynamic</span><span class="p">)</span> <span class="n">filter</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="n">filterValues</span><span class="p">((</span><span class="n">x</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="p">(</span><span class="n">x</span> <span class="k">as</span> <span class="kt">String</span><span class="p">)</span><span class="o">.</span><span class="na">contains</span><span class="p">(</span><span class="s">'hello'</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='common_fixes_analysis-type-inf-null'>common_fixes_analysis type-inf-null</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">infNull</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">ints</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+  <span class="c1">// ignore: non_bool_operand, undefined_operator, return_of_invalid_type_from_closure</span>
+  <span class="kd">var</span> <span class="n">maximumOrNull</span> <span class="o">=</span> <span class="n">ints</span><span class="o">.</span><span class="na">fold</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">a</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">a</span> <span class="p">&lt;</span> <span class="n">b</span> <span class="o">?</span> <span class="n">b</span> <span class="o">:</span> <span class="n">a</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">infFix</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">ints</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+  <span class="kd">var</span> <span class="n">maximumOrNull</span> <span class="o">=</span>
+      <span class="n">ints</span><span class="o">.</span><span class="na">fold</span><span class="p">&lt;</span><span class="kt">int</span><span class="o">?</span><span class="p">&gt;(</span><span class="kc">null</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">a</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">a</span> <span class="p">&lt;</span> <span class="n">b</span> <span class="o">?</span> <span class="n">b</span> <span class="o">:</span> <span class="n">a</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">two</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">error</span><span class="p">(</span><span class="s">'error from two'</span><span class="p">);</span>
