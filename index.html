@@ -680,6 +680,9 @@
                   <li>
                     <a href="#common_fixes_analysis-type-inf-null" class="toc-h2 toc-link" data-title="common_fixes_analysis type-inf-null">common_fixes_analysis type-inf-null</a>
                   </li>
+                  <li>
+                    <a href="#instantiate-to-bound-sanity" class="toc-h2 toc-link" data-title="instantiate-to-bound sanity">instantiate-to-bound sanity</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -2218,6 +2221,16 @@
   <span class="kd">var</span> <span class="n">ints</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
   <span class="kd">var</span> <span class="n">maximumOrNull</span> <span class="o">=</span>
       <span class="n">ints</span><span class="o">.</span><span class="na">fold</span><span class="p">&lt;</span><span class="kt">int</span><span class="o">?</span><span class="p">&gt;(</span><span class="kc">null</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">a</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">a</span> <span class="p">&lt;</span> <span class="n">b</span> <span class="o">?</span> <span class="n">b</span> <span class="o">:</span> <span class="n">a</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='instantiate-to-bound-sanity'>instantiate-to-bound sanity</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">B</span><span class="p">&lt;</span><span class="n">S</span> <span class="kd">extends</span> <span class="kt">int</span><span class="p">,</span> <span class="n">T</span><span class="p">&gt;</span> <span class="p">{</span>
+  <span class="kt">String</span> <span class="kd">get</span> <span class="n">typeOfS</span> <span class="o">=</span><span class="p">&gt;</span> <span class="s">'</span><span class="si">$S</span><span class="s">'</span><span class="p">;</span>
+  <span class="kt">String</span> <span class="kd">get</span> <span class="n">typeOfT</span> <span class="o">=</span><span class="p">&gt;</span> <span class="s">'</span><span class="si">$T</span><span class="s">'</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">b</span> <span class="o">=</span> <span class="n">B</span><span class="p">();</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="na">typeOfS</span><span class="p">);</span> <span class="c1">// int</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="na">typeOfT</span><span class="p">);</span> <span class="c1">// dynamic</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">two</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">error</span><span class="p">(</span><span class="s">'error from two'</span><span class="p">);</span>
