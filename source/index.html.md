@@ -481,6 +481,30 @@ void main() {
 }
 ```
 
+## for-and-closures
+
+```dart
+void main() {
+  var callbacks = [];
+  for (var i = 0; i < 2; i++) {
+    callbacks.add(() => print(i));
+  }
+  for (final callback in callbacks) {
+    callback();
+  }
+}
+```
+
+## for-each
+
+```dart
+void main() {
+  var collection = [1, 2, 3];
+  collection.forEach(print);
+}
+```
+
+
 # Patterns
 
 ## algebraic_datatypes
