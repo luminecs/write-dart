@@ -652,6 +652,142 @@ void main() {
 }
 ```
 
+## record-syntax
+
+```dart
+void main() {
+  var record = ('first', a: 2, b: true, 'last');
+  // record-getters
+  print(record.$1); // first
+  print(record.$2); // last
+  print(record.a); // 2
+  print(record.b); // true
+}
+```
+
+## record-type-annotation
+
+```dart
+void main() {
+  (int, int) swap((int, int) record) {
+    var (a, b) = record;
+    return (b, a);
+  }
+
+  print(swap((1, 2))); // (2, 1)
+}
+```
+
+## record-type-declaration
+
+```dart
+void main() {
+  // Record type annotation in a variable declaration:
+  (String, int) record;
+  // Initialize it with a record expression:
+  record = ('A string', 123);
+}
+```
+
+## record-type-named-declaration
+
+```dart
+void main() {
+  // Record type annotation in a variable declaration:
+  ({int a, bool b}) record;
+  // Initialize it with a record expression:
+  record = (a: 123, b: true);
+}
+```
+
+## record-type-mismatched-names
+
+```dart
+void main() {
+  ({int a, int b}) recordAB = (a: 1, b: 2);
+  ({int x, int y}) recordXY = (x: 3, y: 4);
+  // Compile error! These records don't have the same type.
+  // recordAB = recordXY;
+  recordAB;
+  recordXY;
+}
+```
+
+## record-type-matched-names
+
+```dart
+void main() {
+  (int a, int b) recordAB = (1, 2);
+  (int x, int y) recordXY = (3, 4);
+  recordAB = recordXY; // OK.
+  recordAB;
+  recordXY;
+}
+```
+
+## record-getters-two
+
+```dart
+void main() {
+  (num, Object) pair = (42, 'a');
+  // Static type `num`, runtime type `int`.
+  var first = pair.$1;
+  // Static type `Object`, runtime type `String`.
+  var second = pair.$2;
+  first;
+  second;
+}
+```
+
+## record-shape
+
+```dart
+void main() {
+  (int x, int y, int z) point = (1,2,3);
+  (int r, int g, int b) color = (1,2,3);
+  print(point == color); // true
+}
+```
+
+## record-shape-mismatch
+
+```dart
+void main() {
+  ({int x, int y, int z}) point = (x: 1, y: 2, z: 3);
+  ({int r, int g, int b}) color = (r: 1, g: 2, b: 3);
+  // Prints 'false'. Lint: Equals on unrelated types.
+  print(point == color);
+}
+```
+
+## record-multiple-returns
+
+```dart
+void main() {
+  (String, int) userInfo(Map<String, dynamic> json) {
+    return (json['name'] as String, json['age'] as int);
+  }
+
+  final json = <String, dynamic>{
+    'name': 'Dash',
+    'age': 10,
+    'color': 'blue',
+  };
+  // Destructures using a record pattern:
+  var (name, age) = userInfo(json);
+  /* Equivalent to:
+    var info = userInfo(json);
+    var name = info.$1;
+    var age  = info.$2;
+  */
+  print(name); // Dash
+  print(age); // 10
+}
+```
+
+
+
+
 ## pattern_types cast
 
 ```dart
