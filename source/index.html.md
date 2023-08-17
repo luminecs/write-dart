@@ -1989,6 +1989,72 @@ class Subclass extends Superclass {
 }
 ```
 
+## common_fixes_analysis super-goes-last
+
+```dart
+class Eats {}
+
+abstract class Animal {
+  Animal(Eats food);
+}
+
+class _HoneyBadger extends Animal {
+  final String _name;
+
+  // super-goes-last
+  _HoneyBadger(Eats food, String name)
+      // ignore: stable, beta, dev, super_invocation_not_last
+      : super(food),
+        _name = name {}
+}
+
+class HoneyBadger extends Animal {
+  final String _name;
+
+  // super-goes-last-ok
+  HoneyBadger(Eats food, String name)
+      : _name = name,
+        super(food) {}
+}
+```
+
+## common_fixes_analysis func-fail
+
+```dart
+void funcFail() {
+  void filterValues(bool Function(dynamic) filter) {}
+  // ignore: stable, beta, dev, argument_type_not_assignable
+  filterValues((String x) => x.contains('hello')); // error
+}
+
+void funcT() {
+  void filterValues<T>(bool Function(T) filter) {}
+  filterValues((String x) => x.contains('hello')); // ok
+  filterValues<String>((x) => x.contains('hello')); // ok
+}
+
+void funcCast() {
+  void filterValues(bool Function(dynamic) filter) {}
+  filterValues((x) => (x as String).contains('hello'));
+}
+```
+
+## common_fixes_analysis type-inf-null
+
+```dart
+void infNull() {
+  var ints = [1, 2, 3];
+  // ignore: non_bool_operand, undefined_operator, return_of_invalid_type_from_closure
+  var maximumOrNull = ints.fold(null, (a, b) => a == null || a < b ? b : a);
+}
+
+void infFix() {
+  var ints = [1, 2, 3];
+  var maximumOrNull =
+      ints.fold<int?>(null, (a, b) => a == null || a < b ? b : a);
+}
+```
+
 
 
 
