@@ -722,6 +722,23 @@
               </ul>
           </li>
           <li>
+            <a href="#html" class="toc-h1 toc-link" data-title="Html">Html</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#queryselector" class="toc-h2 toc-link" data-title="querySelector">querySelector</a>
+                  </li>
+                  <li>
+                    <a href="#attributes" class="toc-h2 toc-link" data-title="attributes">attributes</a>
+                  </li>
+                  <li>
+                    <a href="#creating-elements" class="toc-h2 toc-link" data-title="creating-elements">creating-elements</a>
+                  </li>
+                  <li>
+                    <a href="#html-2" class="toc-h2 toc-link" data-title="html">html</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#future" class="toc-h1 toc-link" data-title="Future">Future</a>
               <ul class="toc-list-h2">
                   <li>
@@ -2363,6 +2380,59 @@
   <span class="kd">final</span> <span class="n">b</span> <span class="o">=</span> <span class="n">B</span><span class="p">();</span>
   <span class="n">print</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="na">typeOfS</span><span class="p">);</span> <span class="c1">// int</span>
   <span class="n">print</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="na">typeOfT</span><span class="p">);</span> <span class="c1">// dynamic</span>
+<span class="p">}</span>
+</code></pre></div><h1 id='html'>Html</h1><h2 id='queryselector'>querySelector</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'dart:html'</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Find an element by id (an-id).</span>
+  <span class="n">Element</span> <span class="n">idElement</span> <span class="o">=</span> <span class="n">querySelector</span><span class="p">(</span><span class="s">'#an-id'</span><span class="p">)</span><span class="o">!</span><span class="p">;</span>
+  <span class="c1">// Find an element by class (a-class).</span>
+  <span class="n">Element</span> <span class="n">classElement</span> <span class="o">=</span> <span class="n">querySelector</span><span class="p">(</span><span class="s">'.a-class'</span><span class="p">)</span><span class="o">!</span><span class="p">;</span>
+  <span class="c1">// Find all elements by tag (&lt;div&gt;).</span>
+  <span class="kt">List</span><span class="p">&lt;</span><span class="n">Element</span><span class="p">&gt;</span> <span class="n">divElements</span> <span class="o">=</span> <span class="n">querySelectorAll</span><span class="p">(</span><span class="s">'div'</span><span class="p">);</span>
+  <span class="c1">// Find all text inputs.</span>
+  <span class="kt">List</span><span class="p">&lt;</span><span class="n">Element</span><span class="p">&gt;</span> <span class="n">textInputElements</span> <span class="o">=</span> <span class="n">querySelectorAll</span><span class="p">(</span>
+    <span class="s">'input[type="text"]'</span><span class="p">,</span>
+  <span class="p">);</span>
+  <span class="c1">// Find all elements with the CSS class 'class'</span>
+  <span class="c1">// inside of a &lt;p&gt; that is inside an element with</span>
+  <span class="c1">// the ID 'id'.</span>
+  <span class="kt">List</span><span class="p">&lt;</span><span class="n">Element</span><span class="p">&gt;</span> <span class="n">specialParagraphElements</span> <span class="o">=</span> <span class="n">querySelectorAll</span><span class="p">(</span>
+    <span class="s">'#id p.class'</span><span class="p">,</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='attributes'>attributes</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'dart:html'</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Element</span> <span class="n">elem</span> <span class="o">=</span> <span class="n">querySelector</span><span class="p">(</span><span class="s">'#an-id'</span><span class="p">)</span><span class="o">!</span><span class="p">;</span>
+  <span class="n">elem</span><span class="o">.</span><span class="na">attributes</span><span class="p">[</span><span class="s">'someAttribute'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'someValue'</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='creating-elements'>creating-elements</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'dart:html'</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">elem</span> <span class="o">=</span> <span class="n">ParagraphElement</span><span class="p">();</span>
+  <span class="n">elem</span><span class="o">.</span><span class="na">text</span> <span class="o">=</span> <span class="s">'Creating is easy!'</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='html-2'>html</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'dart:html'</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// creating-elements</span>
+  <span class="kd">var</span> <span class="n">elem</span> <span class="o">=</span> <span class="n">ParagraphElement</span><span class="p">();</span>
+  <span class="n">elem</span><span class="o">.</span><span class="na">text</span> <span class="o">=</span> <span class="s">'Creating is easy!'</span><span class="p">;</span>
+  <span class="c1">// creating-from-html</span>
+  <span class="kd">var</span> <span class="n">elem2</span> <span class="o">=</span> <span class="n">Element</span><span class="o">.</span><span class="na">html</span><span class="p">(</span>
+    <span class="s">'&lt;p&gt;Creating &lt;em&gt;is&lt;/em&gt; easy!&lt;/p&gt;'</span><span class="p">,</span>
+  <span class="p">);</span>
+  <span class="c1">// body-children-add</span>
+  <span class="n">document</span><span class="o">.</span><span class="na">body</span><span class="o">!.</span><span class="na">children</span><span class="o">.</span><span class="na">add</span><span class="p">(</span><span class="n">elem2</span><span class="p">);</span>
+  <span class="c1">// nodes-add</span>
+  <span class="n">querySelector</span><span class="p">(</span><span class="s">'#inputs'</span><span class="p">)</span><span class="o">!.</span><span class="na">nodes</span><span class="o">.</span><span class="na">add</span><span class="p">(</span><span class="n">elem</span><span class="p">);</span>
+  <span class="c1">// replaceWith</span>
+  <span class="n">querySelector</span><span class="p">(</span><span class="s">'#status'</span><span class="p">)</span><span class="o">!.</span><span class="na">replaceWith</span><span class="p">(</span><span class="n">elem</span><span class="p">);</span>
+  <span class="c1">// remove</span>
+  <span class="c1">// Find a node by ID, and remove it</span>
+  <span class="c1">// from the DOM if it is found.</span>
+  <span class="n">querySelector</span><span class="p">(</span><span class="s">'#expendable'</span><span class="p">)</span><span class="o">?.</span><span class="na">remove</span><span class="p">();</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">two</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">error</span><span class="p">(</span><span class="s">'error from two'</span><span class="p">);</span>
