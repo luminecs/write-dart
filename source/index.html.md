@@ -2055,6 +2055,21 @@ void infFix() {
 }
 ```
 
+## instantiate-to-bound sanity
+
+```dart
+class B<S extends int, T> {
+  String get typeOfS => '$S';
+  String get typeOfT => '$T';
+}
+
+void main() {
+  final b = B();
+  print(b.typeOfS); // int
+  print(b.typeOfT); // dynamic
+}
+```
+
 
 
 
