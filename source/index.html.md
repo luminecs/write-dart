@@ -2576,9 +2576,58 @@ void main() {
 }
 ```
 
+# Create Libraries
 
+```
+lib
+ ├── hw_mp.dart
+ └── src
+     ├── hw_html.dart
+     ├── hw_io.dart
+     └── hw_none.dart
+```
 
+> lib/hw_mp.dart
 
+```dart
+/// A multi-platform Hello World library.
+library hw_mp;
+
+// #docregion export
+export 'src/hw_none.dart' // Stub implementation
+    if (dart.library.io) 'src/hw_io.dart' // dart:io implementation
+    if (dart.library.html) 'src/hw_html.dart'; // dart:html implementation
+```
+
+> lib/src/hw_html.dart
+
+```dart
+import 'dart:html';
+
+void alarm([String? text]) {
+  window.alert(text ?? message);
+}
+
+String get message => 'Hello World from JavaScript!';
+```
+
+> lib/src/hw_io.dart
+
+```dart
+import 'dart:io';
+
+void alarm([String? text]) {
+  stderr.writeln(text ?? message);
+}
+
+String get message => 'Hello World from the VM!';
+```
+
+```dart
+void alarm([String? text]) => throw UnsupportedError('hw_none alarm');
+
+String get message => throw UnsupportedError('hw_none message');
+```
 
 
 
