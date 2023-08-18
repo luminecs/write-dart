@@ -778,6 +778,38 @@
             <a href="#create-libraries" class="toc-h1 toc-link" data-title="Create Libraries">Create Libraries</a>
           </li>
           <li>
+            <a href="#iterables" class="toc-h1 toc-link" data-title="Iterables">Iterables</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#any" class="toc-h2 toc-link" data-title="any">any</a>
+                  </li>
+                  <li>
+                    <a href="#every" class="toc-h2 toc-link" data-title="every">every</a>
+                  </li>
+                  <li>
+                    <a href="#any-every" class="toc-h2 toc-link" data-title="any-every">any-every</a>
+                  </li>
+                  <li>
+                    <a href="#firstwhere" class="toc-h2 toc-link" data-title="firstWhere">firstWhere</a>
+                  </li>
+                  <li>
+                    <a href="#first-where-long" class="toc-h2 toc-link" data-title="first-where-long">first-where-long</a>
+                  </li>
+                  <li>
+                    <a href="#elementat" class="toc-h2 toc-link" data-title="elementAt">elementAt</a>
+                  </li>
+                  <li>
+                    <a href="#map-int" class="toc-h2 toc-link" data-title="map-int">map-int</a>
+                  </li>
+                  <li>
+                    <a href="#map-string" class="toc-h2 toc-link" data-title="map-string">map-string</a>
+                  </li>
+                  <li>
+                    <a href="#take-while" class="toc-h2 toc-link" data-title="take-while">take-while</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#function" class="toc-h1 toc-link" data-title="Function">Function</a>
               <ul class="toc-list-h2">
                   <li>
@@ -2734,6 +2766,97 @@
 </code></pre></div><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">alarm</span><span class="p">([</span><span class="kt">String</span><span class="o">?</span> <span class="n">text</span><span class="p">])</span> <span class="o">=</span><span class="p">&gt;</span> <span class="k">throw</span> <span class="n">UnsupportedError</span><span class="p">(</span><span class="s">'hw_none alarm'</span><span class="p">);</span>
 
 <span class="kt">String</span> <span class="kd">get</span> <span class="n">message</span> <span class="o">=</span><span class="p">&gt;</span> <span class="k">throw</span> <span class="n">UnsupportedError</span><span class="p">(</span><span class="s">'hw_none message'</span><span class="p">);</span>
+</code></pre></div><h1 id='iterables'>Iterables</h1><h2 id='any'>any</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">any</span><span class="p">(</span><span class="n">Iterable</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">items</span><span class="p">,</span> <span class="kt">Function</span><span class="p">(</span><span class="kt">String</span><span class="p">)</span> <span class="n">print</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">items</span><span class="o">.</span><span class="na">any</span><span class="p">((</span><span class="n">item</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">item</span><span class="o">.</span><span class="na">contains</span><span class="p">(</span><span class="s">'Z'</span><span class="p">)))</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'At least one item contains "Z"'</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'No item contains "Z"'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Zoo'</span><span class="p">,</span> <span class="s">'Home'</span><span class="p">];</span>
+  <span class="n">any</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">print</span><span class="p">(</span><span class="n">s</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='every'>every</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">bool</span> <span class="nf">bad</span><span class="p">(</span><span class="n">Iterable</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">items</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">final</span> <span class="n">item</span> <span class="k">in</span> <span class="n">items</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="na">length</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="nf">good</span><span class="p">(</span><span class="n">Iterable</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">items</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">items</span><span class="o">.</span><span class="na">every</span><span class="p">((</span><span class="n">item</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">item</span><span class="o">.</span><span class="na">length</span> <span class="p">&gt;</span><span class="o">=</span> <span class="mi">5</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">good</span><span class="p">([</span><span class="s">'12345'</span><span class="p">]));</span> <span class="c1">// true</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='any-every'>any-every</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Salad'</span><span class="p">,</span> <span class="s">'Popcorn'</span><span class="p">,</span> <span class="s">'Toast'</span><span class="p">];</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">items</span><span class="o">.</span><span class="na">any</span><span class="p">((</span><span class="n">item</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">item</span><span class="o">.</span><span class="na">contains</span><span class="p">(</span><span class="s">'a'</span><span class="p">)))</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'At least one item contains "a"'</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">items</span><span class="o">.</span><span class="na">every</span><span class="p">((</span><span class="n">item</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">item</span><span class="o">.</span><span class="na">length</span> <span class="p">&gt;</span><span class="o">=</span> <span class="mi">5</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'All items have length &gt;= 5'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='firstwhere'>firstWhere</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="n">iterable</span> <span class="o">=</span> <span class="p">[</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'123456'</span><span class="p">,</span> <span class="s">'abcdef'</span><span class="p">];</span>
+  <span class="kt">String</span> <span class="n">element</span> <span class="o">=</span> <span class="n">iterable</span><span class="o">.</span><span class="na">firstWhere</span><span class="p">((</span><span class="n">element</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">element</span><span class="o">.</span><span class="na">length</span> <span class="p">&gt;</span> <span class="mi">5</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">element</span><span class="p">);</span> <span class="c1">// 123456</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='first-where-long'>first-where-long</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">bool</span> <span class="nf">predicate</span><span class="p">(</span><span class="kt">String</span> <span class="n">item</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">item</span><span class="o">.</span><span class="na">length</span> <span class="p">&gt;</span> <span class="mi">5</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Salad'</span><span class="p">,</span> <span class="s">'Popcorn'</span><span class="p">,</span> <span class="s">'Toast'</span><span class="p">,</span> <span class="s">'Lasagne'</span><span class="p">];</span>
+  <span class="c1">// You can find with a simple expression:</span>
+  <span class="kd">var</span> <span class="n">foundItem1</span> <span class="o">=</span> <span class="n">items</span><span class="o">.</span><span class="na">firstWhere</span><span class="p">((</span><span class="n">item</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">item</span><span class="o">.</span><span class="na">length</span> <span class="p">&gt;</span> <span class="mi">5</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">foundItem1</span><span class="p">);</span> <span class="c1">// Popcorn</span>
+
+  <span class="c1">// Or try using a function block:</span>
+  <span class="kd">var</span> <span class="n">foundItem2</span> <span class="o">=</span> <span class="n">items</span><span class="o">.</span><span class="na">firstWhere</span><span class="p">((</span><span class="n">item</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">item</span><span class="o">.</span><span class="na">length</span> <span class="p">&gt;</span> <span class="mi">5</span><span class="p">;</span>
+  <span class="p">});</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">foundItem2</span><span class="p">);</span> <span class="c1">// Popcorn</span>
+
+  <span class="c1">// Or even pass in a function reference:</span>
+  <span class="kd">var</span> <span class="n">foundItem3</span> <span class="o">=</span> <span class="n">items</span><span class="o">.</span><span class="na">firstWhere</span><span class="p">(</span><span class="n">predicate</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">foundItem3</span><span class="p">);</span> <span class="c1">// Popcorn</span>
+
+  <span class="c1">// You can also use an `orElse` function in case no value is found!</span>
+  <span class="kd">var</span> <span class="n">foundItem4</span> <span class="o">=</span> <span class="n">items</span><span class="o">.</span><span class="na">firstWhere</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">item</span><span class="o">.</span><span class="na">length</span> <span class="p">&gt;</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="nl">orElse:</span> <span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="s">'None!'</span><span class="p">,</span>
+  <span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">foundItem4</span><span class="p">);</span> <span class="c1">// None!</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='elementat'>elementAt</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Iterable</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">iterable</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+  <span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="n">iterable</span><span class="o">.</span><span class="na">elementAt</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">value</span><span class="p">);</span> <span class="c1">// 2</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='map-int'>map-int</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+  <span class="n">Iterable</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">output</span> <span class="o">=</span> <span class="n">numbers</span><span class="o">.</span><span class="na">map</span><span class="p">((</span><span class="n">e</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">e</span> <span class="o">*</span> <span class="mi">10</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">output</span><span class="p">);</span> <span class="c1">// (10, 20, 30)</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='map-string'>map-string</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+  <span class="n">Iterable</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">output</span> <span class="o">=</span> <span class="n">numbers</span><span class="o">.</span><span class="na">map</span><span class="p">((</span><span class="n">e</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">e</span><span class="o">.</span><span class="na">toString</span><span class="p">());</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">output</span><span class="p">);</span> <span class="c1">// (1, 2, 3)</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='take-while'>take-while</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">];</span>
+  <span class="kd">var</span> <span class="n">numbersUntilNegative</span> <span class="o">=</span> <span class="n">numbers</span><span class="o">.</span><span class="na">takeWhile</span><span class="p">((</span><span class="n">e</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="o">!</span><span class="n">e</span><span class="o">.</span><span class="na">isNegative</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">numbersUntilNegative</span><span class="p">);</span> <span class="c1">// (1, 2, 3)</span>
+<span class="p">}</span>
 </code></pre></div><h1 id='function'>Function</h1><h2 id='pass-function'>pass function</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'package:flutter/material.dart'</span><span class="o">;</span>
 
 <span class="kd">typedef</span> <span class="n">Hello</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="o">=</span> <span class="kt">void</span> <span class="kt">Function</span><span class="p">(</span><span class="n">T</span> <span class="n">value</span><span class="p">);</span>
