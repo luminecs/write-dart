@@ -775,6 +775,14 @@
               </ul>
           </li>
           <li>
+            <a href="#function" class="toc-h1 toc-link" data-title="Function">Function</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#pass-function" class="toc-h2 toc-link" data-title="pass function">pass function</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#future" class="toc-h1 toc-link" data-title="Future">Future</a>
               <ul class="toc-list-h2">
                   <li>
@@ -2681,6 +2689,49 @@
     <span class="n">wsStream</span><span class="o">.</span><span class="na">close</span><span class="p">();</span>
   <span class="p">}</span>
 <span class="p">}</span>
+</code></pre></div><h1 id='function'>Function</h1><h2 id='pass-function'>pass function</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'package:flutter/material.dart'</span><span class="o">;</span>
+
+<span class="kd">typedef</span> <span class="n">Hello</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="o">=</span> <span class="kt">void</span> <span class="kt">Function</span><span class="p">(</span><span class="n">T</span> <span class="n">value</span><span class="p">);</span>
+
+<span class="kd">class</span> <span class="nc">PassFunction</span> <span class="kd">extends</span> <span class="n">StatelessWidget</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="n">PassFunction</span><span class="p">({</span><span class="k">super</span><span class="o">.</span><span class="na">key</span><span class="p">,</span> <span class="kd">required</span> <span class="k">this</span><span class="o">.</span><span class="na">onTest</span><span class="p">,</span> <span class="kd">required</span> <span class="k">this</span><span class="o">.</span><span class="na">hello</span><span class="p">});</span>
+
+  <span class="kd">final</span> <span class="kt">Function</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="n">onTest</span><span class="p">;</span>
+  <span class="kd">final</span> <span class="n">Hello</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">hello</span><span class="p">;</span>
+
+  <span class="nd">@override</span>
+  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">OutlinedButton</span><span class="p">(</span>
+      <span class="nl">onPressed:</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="n">onTest</span><span class="p">(</span><span class="mi">512</span><span class="p">);</span>
+        <span class="n">hello</span><span class="p">(</span><span class="s">'你好'</span><span class="p">);</span>
+      <span class="p">},</span>
+      <span class="nl">child:</span> <span class="kd">const</span> <span class="n">Text</span><span class="p">(</span><span class="s">'click'</span><span class="p">),</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">App</span> <span class="kd">extends</span> <span class="n">StatelessWidget</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="n">App</span><span class="p">({</span><span class="k">super</span><span class="o">.</span><span class="na">key</span><span class="p">});</span>
+
+  <span class="nd">@override</span>
+  <span class="n">Widget</span> <span class="n">build</span><span class="p">(</span><span class="n">BuildContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">MaterialApp</span><span class="p">(</span>
+      <span class="nl">home:</span> <span class="n">Scaffold</span><span class="p">(</span>
+        <span class="nl">body:</span> <span class="n">PassFunction</span><span class="p">(</span>
+          <span class="nl">onTest:</span> <span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> <span class="c1">// 512</span>
+          <span class="p">},</span>
+          <span class="nl">hello:</span> <span class="p">(</span><span class="kt">String</span> <span class="n">text</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">print</span><span class="p">(</span><span class="n">text</span><span class="p">);</span> <span class="c1">// 你好</span>
+          <span class="p">},</span>
+        <span class="p">),</span>
+      <span class="p">),</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">runApp</span><span class="p">(</span><span class="kd">const</span> <span class="n">App</span><span class="p">());</span>
 </code></pre></div><h1 id='future'>Future</h1><h2 id='long-chain'>long-chain</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">one</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from one'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">two</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">error</span><span class="p">(</span><span class="s">'error from two'</span><span class="p">);</span>
 <span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">three</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Future</span><span class="o">.</span><span class="na">value</span><span class="p">(</span><span class="s">'from three'</span><span class="p">);</span>
