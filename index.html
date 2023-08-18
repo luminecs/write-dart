@@ -775,6 +775,9 @@
               </ul>
           </li>
           <li>
+            <a href="#create-libraries" class="toc-h1 toc-link" data-title="Create Libraries">Create Libraries</a>
+          </li>
+          <li>
             <a href="#function" class="toc-h1 toc-link" data-title="Function">Function</a>
               <ul class="toc-list-h2">
                   <li>
@@ -2689,6 +2692,48 @@
     <span class="n">wsStream</span><span class="o">.</span><span class="na">close</span><span class="p">();</span>
   <span class="p">}</span>
 <span class="p">}</span>
+</code></pre></div><h1 id='create-libraries'>Create Libraries</h1><div class="highlight"><pre class="highlight plaintext"><code>lib
+ ├── hw_mp.dart
+ └── src
+     ├── hw_html.dart
+     ├── hw_io.dart
+     └── hw_none.dart
+</code></pre></div>
+<blockquote>
+<p>lib/hw_mp.dart</p>
+</blockquote>
+<div class="highlight"><pre class="highlight dart tab-dart"><code><span class="c1">/// A multi-platform Hello World library.</span>
+<span class="kn">library</span> <span class="n">hw_mp</span><span class="o">;</span>
+
+<span class="c1">// #docregion export</span>
+<span class="kn">export</span> <span class="s">'src/hw_none.dart'</span> <span class="c1">// Stub implementation</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dart</span><span class="o">.</span><span class="na">library</span><span class="o">.</span><span class="na">io</span><span class="p">)</span> <span class="s">'src/hw_io.dart'</span> <span class="c1">// dart:io implementation</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">dart</span><span class="o">.</span><span class="na">library</span><span class="o">.</span><span class="na">html</span><span class="p">)</span> <span class="s">'src/hw_html.dart'</span><span class="o">;</span> <span class="c1">// dart:html implementation</span>
+</code></pre></div>
+<blockquote>
+<p>lib/src/hw_html.dart</p>
+</blockquote>
+<div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'dart:html'</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">alarm</span><span class="p">([</span><span class="kt">String</span><span class="o">?</span> <span class="n">text</span><span class="p">])</span> <span class="p">{</span>
+  <span class="n">window</span><span class="o">.</span><span class="na">alert</span><span class="p">(</span><span class="n">text</span> <span class="o">??</span> <span class="n">message</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">String</span> <span class="kd">get</span> <span class="n">message</span> <span class="o">=</span><span class="p">&gt;</span> <span class="s">'Hello World from JavaScript!'</span><span class="p">;</span>
+</code></pre></div>
+<blockquote>
+<p>lib/src/hw_io.dart</p>
+</blockquote>
+<div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'dart:io'</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">alarm</span><span class="p">([</span><span class="kt">String</span><span class="o">?</span> <span class="n">text</span><span class="p">])</span> <span class="p">{</span>
+  <span class="n">stderr</span><span class="o">.</span><span class="na">writeln</span><span class="p">(</span><span class="n">text</span> <span class="o">??</span> <span class="n">message</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">String</span> <span class="kd">get</span> <span class="n">message</span> <span class="o">=</span><span class="p">&gt;</span> <span class="s">'Hello World from the VM!'</span><span class="p">;</span>
+</code></pre></div><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">alarm</span><span class="p">([</span><span class="kt">String</span><span class="o">?</span> <span class="n">text</span><span class="p">])</span> <span class="o">=</span><span class="p">&gt;</span> <span class="k">throw</span> <span class="n">UnsupportedError</span><span class="p">(</span><span class="s">'hw_none alarm'</span><span class="p">);</span>
+
+<span class="kt">String</span> <span class="kd">get</span> <span class="n">message</span> <span class="o">=</span><span class="p">&gt;</span> <span class="k">throw</span> <span class="n">UnsupportedError</span><span class="p">(</span><span class="s">'hw_none message'</span><span class="p">);</span>
 </code></pre></div><h1 id='function'>Function</h1><h2 id='pass-function'>pass function</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'package:flutter/material.dart'</span><span class="o">;</span>
 
 <span class="kd">typedef</span> <span class="n">Hello</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="o">=</span> <span class="kt">void</span> <span class="kt">Function</span><span class="p">(</span><span class="n">T</span> <span class="n">value</span><span class="p">);</span>
