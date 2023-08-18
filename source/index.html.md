@@ -2660,7 +2660,55 @@ void main() {
 
 
 
+# Function
 
+## pass function
+
+```dart
+import 'package:flutter/material.dart';
+
+typedef Hello<T> = void Function(T value);
+
+class PassFunction extends StatelessWidget {
+  const PassFunction({super.key, required this.onTest, required this.hello});
+
+  final Function(int) onTest;
+  final Hello<String> hello;
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      onPressed: () {
+        onTest(512);
+        hello('你好');
+      },
+      child: const Text('click'),
+    );
+  }
+}
+
+class App extends StatelessWidget {
+  const App({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: PassFunction(
+          onTest: (i) {
+            print(i); // 512
+          },
+          hello: (String text) {
+            print(text); // 你好
+          },
+        ),
+      ),
+    );
+  }
+}
+
+void main() => runApp(const App());
+```
 
 # Future
 
