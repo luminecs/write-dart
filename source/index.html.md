@@ -2629,7 +2629,143 @@ void alarm([String? text]) => throw UnsupportedError('hw_none alarm');
 String get message => throw UnsupportedError('hw_none message');
 ```
 
+# Iterables
 
+## any
+
+```dart
+void any(Iterable<String> items, Function(String) print) {
+  if (items.any((item) => item.contains('Z'))) {
+    print('At least one item contains "Z"');
+  } else {
+    print('No item contains "Z"');
+  }
+}
+
+void main() {
+  var items = ['Zoo', 'Home'];
+  any(items, (s) => print(s));
+}
+```
+
+## every
+
+```dart
+bool bad(Iterable<String> items) {
+  for (final item in items) {
+    if (item.length < 5) {
+      return false;
+    }
+  }
+  return true;
+}
+
+bool good(Iterable<String> items) {
+  return items.every((item) => item.length >= 5);
+}
+
+void main() {
+  print(good(['12345'])); // true
+}
+```
+
+## any-every
+
+```dart
+void main() {
+  const items = ['Salad', 'Popcorn', 'Toast'];
+
+  if (items.any((item) => item.contains('a'))) {
+    print('At least one item contains "a"');
+  }
+
+  if (items.every((item) => item.length >= 5)) {
+    print('All items have length >= 5');
+  }
+}
+```
+
+## firstWhere
+
+```dart
+void main() {
+  const iterable = ['a', '123456', 'abcdef'];
+  String element = iterable.firstWhere((element) => element.length > 5);
+  print(element); // 123456
+}
+```
+
+## first-where-long
+
+```dart
+bool predicate(String item) {
+  return item.length > 5;
+}
+
+void main() {
+  const items = ['Salad', 'Popcorn', 'Toast', 'Lasagne'];
+  // You can find with a simple expression:
+  var foundItem1 = items.firstWhere((item) => item.length > 5);
+  print(foundItem1); // Popcorn
+
+  // Or try using a function block:
+  var foundItem2 = items.firstWhere((item) {
+    return item.length > 5;
+  });
+  print(foundItem2); // Popcorn
+
+  // Or even pass in a function reference:
+  var foundItem3 = items.firstWhere(predicate);
+  print(foundItem3); // Popcorn
+
+  // You can also use an `orElse` function in case no value is found!
+  var foundItem4 = items.firstWhere(
+    (item) => item.length > 10,
+    orElse: () => 'None!',
+  );
+  print(foundItem4); // None!
+}
+```
+
+## elementAt
+
+```dart
+void main() {
+  Iterable<int> iterable = [1, 2, 3];
+  int value = iterable.elementAt(1);
+  print(value); // 2
+}
+```
+
+## map-int
+
+```dart
+void main() {
+  final numbers = [1, 2, 3];
+  Iterable<int> output = numbers.map((e) => e * 10);
+  print(output); // (10, 20, 30)
+}
+```
+
+## map-string
+
+```dart
+void main() {
+  final numbers = [1, 2, 3];
+  Iterable<String> output = numbers.map((e) => e.toString());
+  print(output); // (1, 2, 3)
+}
+```
+
+## take-while
+
+```dart
+void main() {
+  const numbers = [1, 2, 3, -1, 4, 5];
+  var numbersUntilNegative = numbers.takeWhile((e) => !e.isNegative);
+  print(numbersUntilNegative); // (1, 2, 3)
+}
+```
 
 
 
