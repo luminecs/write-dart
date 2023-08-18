@@ -2305,8 +2305,276 @@ void main() {
 }
 ```
 
+## classes-add
 
+```dart
+import 'dart:html';
 
+void main() {
+  var elem = querySelector('#message')!;
+  elem.classes.add('warning');
+}
+```
+
+## set-id
+
+```dart
+import 'dart:html';
+
+void main() {
+  var message = DivElement();
+  message.id = 'message2';
+  message.text = 'Please subscribe to the Dart mailing list.';
+}
+```
+
+## elem-set-cascade
+
+```dart
+void main() {
+  var message = DivElement()
+    ..id = 'message2'
+    ..text = 'Please subscribe to the Dart mailing list.';
+  // set-style
+  message.style
+    ..fontWeight = 'bold'
+    ..fontSize = '3em';
+}
+```
+
+## onClick
+
+```dart
+import 'dart:html';
+
+void main() {
+  void submitData() {}
+  // Find a button by ID and add an event handler.
+  querySelector('#submitInfo')!.onClick.listen((event) {
+    // When the button is clicked, it runs this code.
+    submitData();
+  });
+}
+```
+
+## target
+
+```dart
+import 'dart:html';
+
+void main() {
+  document.body!.onClick.listen((event) {
+    final clickedElem = event.target;
+  });
+}
+```
+
+## try-getString
+
+```dart
+import 'dart:html';
+
+Future<void> tryGetString() async {
+  String jsonUri = 'data.json';
+  final url = 'https://httpbin.org';
+  try {
+    await HttpRequest.getString(jsonUri);
+    String pageHtml = await HttpRequest.getString(url);
+    // Process data...
+  } catch (e) {
+    // Handle exception...
+  }
+}
+```
+
+## new-HttpRequest
+
+```dart
+import 'dart:html';
+
+void main() {
+  var encodedData = 'encoded data';
+  var url = 'random-url';
+
+  void requestComplete(HttpRequest req) {}
+  var request = HttpRequest();
+  request
+    ..open('POST', url)
+    ..onLoadEnd.listen((event) {
+      requestComplete(request);
+    })
+    ..send(encodedData);
+}
+```
+
+## href
+
+```dart
+import 'dart:html';
+
+void main() {
+  final html = '<a id="example" href="/another/example">link text</a>';
+  document.body!.appendHtml(html);
+  var anchor = querySelector('#example') as AnchorElement;
+  print(anchor.href); // endsWith('/another/example')
+  anchor.href = 'https://dart.dev';
+}
+```
+
+## os-html
+
+```dart
+import 'dart:html';
+
+void main() {
+  const html = '''<!-- In HTML: -->
+    <p>
+      <span class="linux">Words for Linux</span>
+      <span class="macos">Words for Mac</span>
+      <span class="windows">Words for Windows</span>
+    </p>''';
+  document.body!.appendHtml(html);
+  String determineUserOs() => 'linux';
+  const osList = ['macos', 'windows', 'linux'];
+  final userOs = determineUserOs();
+  // For each possible OS...
+  for (final os in osList) {
+    // Matches user OS?
+    bool shouldShow = (os == userOs);
+    // Find all elements with class=os. For example, if
+    // os == 'windows', call querySelectorAll('.windows')
+    // to find all elements with the class "windows".
+    // Note that '.$os' uses string interpolation.
+    for (final elem in querySelectorAll('.$os')) {
+      elem.hidden = !shouldShow; // Show or hide.
+    }
+  }
+}
+```
+
+## request
+
+```dart
+import 'dart:html';
+
+void main() {
+  final url = 'https://httpbin.org/headers';
+  Future<void> request() async {
+    HttpRequest req = await HttpRequest.request(
+      url,
+      method: 'HEAD',
+    );
+    if (req.status == 200) {
+      // Successful URL access...
+    }
+  }
+  request();
+}
+```
+
+## POST
+
+```dart
+import 'dart:html';
+
+void main() {
+  const url = 'https://httpbin.org/post';
+  String encodeMap(Map<String, String> data) {
+    return data.entries
+        .map((e) =>
+            '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+        .join('&');
+  }
+
+  void test() async {
+    const data = {'dart': 'fun', 'angular': 'productive'};
+    var request = HttpRequest();
+    request
+      ..open('POST', url)
+      ..setRequestHeader(
+        'Content-type',
+        'application/x-www-form-urlencoded',
+      )
+      ..send(encodeMap(data));
+    await request.onLoadEnd.first;
+    if (request.status == 200) {
+      // Successful URL access...
+    }
+  }
+}
+```
+
+## WebSocket
+
+```dart
+import 'dart:async';
+import 'dart:html';
+
+class Logger {
+  final List<String> _log = [];
+
+  List<String> get log => List.from(_log);
+  void clear() => _log.clear();
+  void print(Object o) => _log.add(o.toString());
+
+  @override
+  String toString() => _log.join('\n');
+}
+
+void main() {
+  final logger = Logger();
+  final print = logger.print; // shadow global print
+  final wsStream = StreamController<String>();
+
+  var ws = WebSocket('ws://echo.websocket.org');
+
+  void initWebSocket([int retrySeconds = 1]) {
+    var reconnectScheduled = false;
+    print('Connecting to websocket');
+
+    void scheduleReconnect() {
+      if (!reconnectScheduled) {
+        Timer(Duration(seconds: retrySeconds),
+                () => initWebSocket(retrySeconds * 2));
+      }
+      reconnectScheduled = true;
+    }
+
+    ws.onOpen.listen((e) {
+      print('Connected');
+      ws.send('Hello from Dart!');
+    });
+    ws.onClose.listen((e) {
+      print('Websocket closed, retrying in $retrySeconds seconds');
+      scheduleReconnect();
+    });
+    ws.onError.listen((e) {
+      print('Error connecting to ws');
+      scheduleReconnect();
+    });
+    ws.onMessage.listen((MessageEvent e) {
+      print('Received message: ${e.data}');
+      wsStream.add(('Received message'));
+    });
+  }
+
+  final t = wsStream.stream.timeout(
+    const Duration(seconds: 5),
+    onTimeout: (s) => s.add('Timeout!'),
+  );
+
+  // Under heavy loads we don't get a response,
+  // so let's accept the possibility of a timeout.
+  try {
+    initWebSocket();
+    t.first; // 'Received message' || 'Timeout'
+  } catch (e) {
+    print(e);
+  } finally {
+    wsStream.close();
+  }
+}
+```
 
 
 
