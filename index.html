@@ -887,6 +887,15 @@
                   <li>
                     <a href="#e873fcf64e" class="toc-h2 toc-link" data-title="以下三个函数有何区别？">以下三个函数有何区别？</a>
                   </li>
+                  <li>
+                    <a href="#async_example" class="toc-h2 toc-link" data-title="async_example">async_example</a>
+                  </li>
+                  <li>
+                    <a href="#futures_intro" class="toc-h2 toc-link" data-title="futures_intro">futures_intro</a>
+                  </li>
+                  <li>
+                    <a href="#try_catch" class="toc-h2 toc-link" data-title="try_catch">try_catch</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -3302,7 +3311,86 @@
 <span class="p">}</span>
 </code></pre></div>
 <p>函数 <code>processValue</code> 和 <code>processValue2</code> 相同，它们都是同步操作，<code>Future</code> 可有可无。函数 <code>processValue1</code> 因为使用了 <code>async</code>，所以是异步操作，必须返回 <code>Future</code>。</p>
-<h1 id='questions'>Questions</h1><h2 id='never'>Never 是什么？</h2>
+<h2 id='async_example'>async_example</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">fetchUserOrder</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Imagine that this function is more complex and slow.</span>
+  <span class="k">return</span> <span class="n">Future</span><span class="o">.</span><span class="na">delayed</span><span class="p">(</span><span class="n">Duration</span><span class="p">(</span><span class="nl">seconds:</span> <span class="mi">4</span><span class="p">),</span> <span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="s">'Large Latte'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">void</span><span class="p">&gt;</span> <span class="n">printOrderMessage</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'Awaiting user order...'</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="n">order</span> <span class="o">=</span> <span class="k">await</span> <span class="n">fetchUserOrder</span><span class="p">();</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'Your order is: </span><span class="si">$order</span><span class="s">'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// You can ignore this function -</span>
+<span class="c1">// it's here to visualize delay time in this example.</span>
+<span class="kt">void</span> <span class="nf">countSeconds</span><span class="p">(</span><span class="kt">int</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span><span class="o">=</span> <span class="n">s</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Future</span><span class="o">.</span><span class="na">delayed</span><span class="p">(</span><span class="n">Duration</span><span class="p">(</span><span class="nl">seconds:</span> <span class="n">i</span><span class="p">),</span> <span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">print</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="n">countSeconds</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+  <span class="k">await</span> <span class="n">printOrderMessage</span><span class="p">();</span>
+  <span class="c1">// Awaiting user order...</span>
+  <span class="c1">// 1</span>
+  <span class="c1">// 2</span>
+  <span class="c1">// 3</span>
+  <span class="c1">// 4</span>
+  <span class="c1">// Your order is: Large Latte</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='futures_intro'>futures_intro</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">void</span><span class="p">&gt;</span> <span class="n">fetchUserOrder</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Imagine that this function is fetching</span>
+  <span class="c1">// user info from another service or database.</span>
+  <span class="k">return</span> <span class="n">Future</span><span class="o">.</span><span class="na">delayed</span><span class="p">(</span><span class="n">Duration</span><span class="p">(</span><span class="nl">seconds:</span> <span class="mi">2</span><span class="p">),</span> <span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">print</span><span class="p">(</span><span class="s">'Large Latte'</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">void</span><span class="p">&gt;</span> <span class="n">fetchUserOrderError</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Imagine that this function is fetching</span>
+  <span class="c1">// user info but encounters a bug</span>
+  <span class="k">return</span> <span class="n">Future</span><span class="o">.</span><span class="na">delayed</span><span class="p">(</span><span class="n">Duration</span><span class="p">(</span><span class="nl">seconds:</span> <span class="mi">2</span><span class="p">),</span>
+          <span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s">'Logout failed: user ID is invalid'</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">process</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">fetchUserOrder</span><span class="p">();</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'Fetching user order...'</span><span class="p">);</span>
+  <span class="c1">// Fetching user order...</span>
+  <span class="c1">// Large Latte</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Future</span><span class="o">.</span><span class="na">wait</span><span class="p">([</span>
+    <span class="n">Future</span><span class="o">.</span><span class="na">delayed</span><span class="p">(</span><span class="n">Duration</span><span class="p">(</span><span class="nl">seconds:</span> <span class="mi">4</span><span class="p">)),</span>
+    <span class="n">Future</span><span class="o">.</span><span class="na">sync</span><span class="p">(</span><span class="n">process</span><span class="p">),</span>
+  <span class="p">]);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='try_catch'>try_catch</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">fetchUserOrder</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Imagine that this function is more complex.</span>
+  <span class="kd">var</span> <span class="n">str</span> <span class="o">=</span> <span class="n">Future</span><span class="o">.</span><span class="na">delayed</span><span class="p">(</span>
+      <span class="kd">const</span> <span class="n">Duration</span><span class="p">(</span><span class="nl">seconds:</span> <span class="mi">4</span><span class="p">),</span>
+      <span class="c1">// ignore: only_throw_errors</span>
+      <span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="k">throw</span> <span class="s">'Cannot locate user order'</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">str</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">void</span><span class="p">&gt;</span> <span class="n">printOrderMessage</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'Awaiting user order...'</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="n">order</span> <span class="o">=</span> <span class="k">await</span> <span class="n">fetchUserOrder</span><span class="p">();</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">order</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'Caught error: </span><span class="si">$err</span><span class="s">'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="k">await</span> <span class="n">printOrderMessage</span><span class="p">();</span>
+  <span class="c1">// Awaiting user order...</span>
+  <span class="c1">// Caught error: Cannot locate user order</span>
+<span class="p">}</span>
+</code></pre></div><h1 id='questions'>Questions</h1><h2 id='never'>Never 是什么？</h2>
 <p>Never 是 Dart 中的一个类型，表示没有值。它通常用于表示不可能返回的函数的返回类型。比如函数中途一定会抛出异常的函数。</p>
 <div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">Never</span> <span class="n">ellipsis</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s">'!'</span><span class="p">);</span>
 </code></pre></div><h2 id='dart-dynamic-object'>Dart 中 dynamic 和 Object 有何区别？</h2>
