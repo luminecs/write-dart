@@ -865,6 +865,12 @@
                   <li>
                     <a href="#when-complete" class="toc-h2 toc-link" data-title="when complete">when complete</a>
                   </li>
+                  <li>
+                    <a href="#sync" class="toc-h2 toc-link" data-title="sync">sync</a>
+                  </li>
+                  <li>
+                    <a href="#delayed" class="toc-h2 toc-link" data-title="delayed">delayed</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -3219,6 +3225,58 @@
       <span class="o">.</span><span class="na">whenComplete</span><span class="p">(()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s">'New error'</span><span class="p">))</span>
       <span class="c1">// Error is handled:</span>
       <span class="o">.</span><span class="na">catchError</span><span class="p">(</span><span class="n">handleError</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='sync'>sync</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'dart:io'</span><span class="o">;</span>
+
+<span class="kt">String</span> <span class="nf">obtainFilename</span><span class="p">(</span><span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kd">dynamic</span><span class="p">&gt;</span> <span class="n">data</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="s">'file name'</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">parseFileData</span><span class="p">(</span><span class="kt">String</span> <span class="n">contents</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="mi">42</span><span class="p">;</span>
+
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">parseAndRead</span><span class="p">(</span><span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kd">dynamic</span><span class="p">&gt;</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">filename</span> <span class="o">=</span> <span class="n">obtainFilename</span><span class="p">(</span><span class="n">data</span><span class="p">);</span> <span class="c1">// Could throw.</span>
+  <span class="kd">final</span> <span class="n">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">file</span><span class="o">.</span><span class="na">readAsString</span><span class="p">()</span><span class="o">.</span><span class="na">then</span><span class="p">((</span><span class="n">contents</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">parseFileData</span><span class="p">(</span><span class="n">contents</span><span class="p">);</span> <span class="c1">// Could throw.</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">parseAndRead1</span><span class="p">(</span><span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kd">dynamic</span><span class="p">&gt;</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">Future</span><span class="o">.</span><span class="na">sync</span><span class="p">(()</span> <span class="p">{</span>
+    <span class="kd">final</span> <span class="n">filename</span> <span class="o">=</span> <span class="n">obtainFilename</span><span class="p">(</span><span class="n">data</span><span class="p">);</span> <span class="c1">// Could throw.</span>
+    <span class="kd">final</span> <span class="n">file</span> <span class="o">=</span> <span class="n">File</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">file</span><span class="o">.</span><span class="na">readAsString</span><span class="p">()</span><span class="o">.</span><span class="na">then</span><span class="p">((</span><span class="n">contents</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="n">parseFileData</span><span class="p">(</span><span class="n">contents</span><span class="p">);</span> <span class="c1">// Could throw.</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kd">dynamic</span><span class="p">&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{};</span>
+  <span class="n">parseAndRead</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="na">catchError</span><span class="p">((</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'Inside catchError'</span><span class="p">);</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+  <span class="p">});</span>
+  <span class="c1">// Inside catchError</span>
+  <span class="c1">// PathNotFoundException: Cannot open file,</span>
+  <span class="c1">// path = 'file name' (OS Error: No such file</span>
+  <span class="c1">// or directory, errno = 2)</span>
+<span class="p">}</span>
+
+<span class="kt">Never</span> <span class="n">ellipsis</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s">'!'</span><span class="p">);</span>
+<span class="kt">int</span> <span class="nf">someFunc</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="mi">42</span><span class="p">;</span>
+
+<span class="kt">Function</span> <span class="nf">fragileFunc</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">Future</span><span class="o">.</span><span class="na">sync</span><span class="p">(()</span> <span class="p">{</span>
+    <span class="kd">final</span> <span class="n">x</span> <span class="o">=</span> <span class="n">someFunc</span><span class="p">();</span> <span class="c1">// Unexpectedly throws in some rare cases.</span>
+    <span class="kd">var</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">/</span> <span class="n">x</span><span class="p">;</span> <span class="c1">// x should not equal 0.</span>
+    <span class="n">ellipsis</span><span class="p">();</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='delayed'>delayed</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="n">print</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="k">await</span> <span class="n">Future</span><span class="o">.</span><span class="na">delayed</span><span class="p">(</span><span class="n">Duration</span><span class="p">(</span><span class="nl">milliseconds:</span> <span class="mi">1000</span><span class="p">));</span>
+  <span class="n">print</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='utils'>Utils</h1><h2 id='a-simple-logger'>A simple logger</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="c1">/// A simple logger</span>
 <span class="kd">class</span> <span class="nc">Logger</span> <span class="p">{</span>
