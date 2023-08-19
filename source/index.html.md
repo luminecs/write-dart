@@ -3295,6 +3295,72 @@ void main() {
 }
 ```
 
+## sync
+
+```dart
+import 'dart:io';
+
+String obtainFilename(Map<String, dynamic> data) => 'file name';
+
+int parseFileData(String contents) => 42;
+
+Future<int> parseAndRead(Map<String, dynamic> data) {
+  final filename = obtainFilename(data); // Could throw.
+  final file = File(filename);
+  return file.readAsString().then((contents) {
+    return parseFileData(contents); // Could throw.
+  });
+}
+
+Future<int> parseAndRead1(Map<String, dynamic> data) {
+  return Future.sync(() {
+    final filename = obtainFilename(data); // Could throw.
+    final file = File(filename);
+    return file.readAsString().then((contents) {
+      return parseFileData(contents); // Could throw.
+    });
+  });
+}
+
+void main() {
+  final Map<String, dynamic> data = {};
+  parseAndRead(data).catchError((e) {
+    print('Inside catchError');
+    print(e);
+    return -1;
+  });
+  // Inside catchError
+  // PathNotFoundException: Cannot open file,
+  // path = 'file name' (OS Error: No such file
+  // or directory, errno = 2)
+}
+
+Never ellipsis<T>() => throw Exception('!');
+int someFunc() => 42;
+
+Function fragileFunc() {
+  return Future.sync(() {
+    final x = someFunc(); // Unexpectedly throws in some rare cases.
+    var y = 10 / x; // x should not equal 0.
+    ellipsis();
+  });
+}
+```
+
+## delayed
+
+```dart
+void main() async {
+  print(1);
+  await Future.delayed(Duration(milliseconds: 1000));
+  print(2);
+}
+```
+
+
+
+
+
 # Utils
 
 ## A simple logger
