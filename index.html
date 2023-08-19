@@ -922,6 +922,9 @@
                   <li>
                     <a href="#http-retry" class="toc-h2 toc-link" data-title="http-retry">http-retry</a>
                   </li>
+                  <li>
+                    <a href="#fetch_http_package" class="toc-h2 toc-link" data-title="fetch_http_package">fetch_http_package</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -3516,6 +3519,112 @@
 <span class="c1">//   "publisher": "dart.dev",</span>
 <span class="c1">//   "repository": "https://github.com/dart-lang/http"</span>
 <span class="c1">// }</span>
+</code></pre></div><h2 id='fetch_http_package'>fetch_http_package</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'dart:convert'</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="s">'package:http/http.dart'</span> <span class="k">as</span> <span class="n">http</span><span class="o">;</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="k">await</span> <span class="n">printPackageInformation</span><span class="p">(</span><span class="s">'http'</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">''</span><span class="p">);</span>
+  <span class="k">await</span> <span class="n">printPackageInformation</span><span class="p">(</span><span class="s">'path'</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="c1">// Information about the http package:</span>
+<span class="c1">// Latest version: 0.13.5</span>
+<span class="c1">// Description: A composable, multi-platform, Future-based API for HTTP requests.</span>
+<span class="c1">// Publisher: dart.dev</span>
+<span class="c1">// Repository: https://github.com/dart-lang/http</span>
+<span class="c1">//</span>
+<span class="c1">// Information about the path package:</span>
+<span class="c1">// Latest version: 1.8.3</span>
+<span class="c1">// Description: A string-based path manipulation library with cross-platform support.</span>
+<span class="c1">// Publisher: dart.dev</span>
+<span class="c1">// Repository: https://github.com/dart-lang/path</span>
+
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">void</span><span class="p">&gt;</span> <span class="n">printPackageInformation</span><span class="p">(</span><span class="kt">String</span> <span class="n">packageName</span><span class="p">)</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">PackageInfo</span> <span class="n">packageInfo</span><span class="p">;</span>
+
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="n">packageInfo</span> <span class="o">=</span> <span class="k">await</span> <span class="n">getPackage</span><span class="p">(</span><span class="n">packageName</span><span class="p">);</span>
+  <span class="p">}</span> <span class="kd">on</span> <span class="n">PackageRetrievalException</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">print</span><span class="p">(</span><span class="s">'Information about the </span><span class="si">$packageName</span><span class="s"> package:'</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'Latest version: </span><span class="si">${packageInfo.latestVersion}</span><span class="s">'</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'Description: </span><span class="si">${packageInfo.description}</span><span class="s">'</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'Publisher: </span><span class="si">${packageInfo.publisher}</span><span class="s">'</span><span class="p">);</span>
+
+  <span class="kd">final</span> <span class="n">repository</span> <span class="o">=</span> <span class="n">packageInfo</span><span class="o">.</span><span class="na">repository</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">repository</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'Repository: </span><span class="si">$repository</span><span class="s">'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">Future</span><span class="p">&lt;</span><span class="n">PackageInfo</span><span class="p">&gt;</span> <span class="n">getPackage</span><span class="p">(</span><span class="kt">String</span> <span class="n">packageName</span><span class="p">)</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">packageUrl</span> <span class="o">=</span> <span class="kt">Uri</span><span class="o">.</span><span class="na">https</span><span class="p">(</span><span class="s">'dart.dev'</span><span class="p">,</span> <span class="s">'/f/packages/</span><span class="si">$packageName</span><span class="s">.json'</span><span class="p">);</span>
+  <span class="kd">final</span> <span class="n">packageResponse</span> <span class="o">=</span> <span class="k">await</span> <span class="n">http</span><span class="o">.</span><span class="na">get</span><span class="p">(</span><span class="n">packageUrl</span><span class="p">);</span>
+
+  <span class="c1">// If the request didn't succeed, throw an exception</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">packageResponse</span><span class="o">.</span><span class="na">statusCode</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="n">PackageRetrievalException</span><span class="p">(</span>
+      <span class="nl">packageName:</span> <span class="n">packageName</span><span class="p">,</span>
+      <span class="nl">statusCode:</span> <span class="n">packageResponse</span><span class="o">.</span><span class="na">statusCode</span><span class="p">,</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kd">final</span> <span class="n">packageJson</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="na">decode</span><span class="p">(</span><span class="n">packageResponse</span><span class="o">.</span><span class="na">body</span><span class="p">)</span> <span class="k">as</span> <span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kd">dynamic</span><span class="p">&gt;;</span>
+
+  <span class="k">return</span> <span class="n">PackageInfo</span><span class="o">.</span><span class="na">fromJson</span><span class="p">(</span><span class="n">packageJson</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">PackageInfo</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="kt">String</span> <span class="n">name</span><span class="p">;</span>
+  <span class="kd">final</span> <span class="kt">String</span> <span class="n">latestVersion</span><span class="p">;</span>
+  <span class="kd">final</span> <span class="kt">String</span> <span class="n">description</span><span class="p">;</span>
+  <span class="kd">final</span> <span class="kt">String</span> <span class="n">publisher</span><span class="p">;</span>
+  <span class="kd">final</span> <span class="kt">Uri</span><span class="o">?</span> <span class="n">repository</span><span class="p">;</span>
+
+  <span class="n">PackageInfo</span><span class="p">({</span>
+    <span class="kd">required</span> <span class="k">this</span><span class="o">.</span><span class="na">name</span><span class="p">,</span>
+    <span class="kd">required</span> <span class="k">this</span><span class="o">.</span><span class="na">latestVersion</span><span class="p">,</span>
+    <span class="kd">required</span> <span class="k">this</span><span class="o">.</span><span class="na">description</span><span class="p">,</span>
+    <span class="kd">required</span> <span class="k">this</span><span class="o">.</span><span class="na">publisher</span><span class="p">,</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">repository</span><span class="p">,</span>
+  <span class="p">});</span>
+
+  <span class="kd">factory</span> <span class="n">PackageInfo</span><span class="o">.</span><span class="na">fromJson</span><span class="p">(</span><span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kd">dynamic</span><span class="p">&gt;</span> <span class="n">json</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">final</span> <span class="n">repository</span> <span class="o">=</span> <span class="n">json</span><span class="p">[</span><span class="s">'repository'</span><span class="p">]</span> <span class="k">as</span> <span class="kt">String</span><span class="o">?</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">PackageInfo</span><span class="p">(</span>
+      <span class="nl">name:</span> <span class="n">json</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span> <span class="k">as</span> <span class="kt">String</span><span class="p">,</span>
+      <span class="nl">latestVersion:</span> <span class="n">json</span><span class="p">[</span><span class="s">'latestVersion'</span><span class="p">]</span> <span class="k">as</span> <span class="kt">String</span><span class="p">,</span>
+      <span class="nl">description:</span> <span class="n">json</span><span class="p">[</span><span class="s">'description'</span><span class="p">]</span> <span class="k">as</span> <span class="kt">String</span><span class="p">,</span>
+      <span class="nl">publisher:</span> <span class="n">json</span><span class="p">[</span><span class="s">'publisher'</span><span class="p">]</span> <span class="k">as</span> <span class="kt">String</span><span class="p">,</span>
+      <span class="nl">repository:</span> <span class="n">repository</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">?</span> <span class="kt">Uri</span><span class="o">.</span><span class="na">tryParse</span><span class="p">(</span><span class="n">repository</span><span class="p">)</span> <span class="o">:</span> <span class="kc">null</span><span class="p">,</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">PackageRetrievalException</span> <span class="kd">implements</span> <span class="n">Exception</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="kt">String</span> <span class="n">packageName</span><span class="p">;</span>
+  <span class="kd">final</span> <span class="kt">int</span><span class="o">?</span> <span class="n">statusCode</span><span class="p">;</span>
+
+  <span class="n">PackageRetrievalException</span><span class="p">({</span><span class="kd">required</span> <span class="k">this</span><span class="o">.</span><span class="na">packageName</span><span class="p">,</span> <span class="k">this</span><span class="o">.</span><span class="na">statusCode</span><span class="p">});</span>
+
+  <span class="nd">@override</span>
+  <span class="kt">String</span> <span class="n">toString</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">final</span> <span class="n">buf</span> <span class="o">=</span> <span class="n">StringBuffer</span><span class="p">();</span>
+    <span class="n">buf</span><span class="o">.</span><span class="na">write</span><span class="p">(</span><span class="s">'Failed to retrieve package:</span><span class="si">$packageName</span><span class="s"> information'</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">statusCode</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">buf</span><span class="o">.</span><span class="na">write</span><span class="p">(</span><span class="s">' with a status code of </span><span class="si">$statusCode</span><span class="s">'</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">buf</span><span class="o">.</span><span class="na">write</span><span class="p">(</span><span class="s">'!'</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">buf</span><span class="o">.</span><span class="na">toString</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div><h1 id='questions'>Questions</h1><h2 id='never'>Never 是什么？</h2>
 <p>Never 是 Dart 中的一个类型，表示没有值。它通常用于表示不可能返回的函数的返回类型。比如函数中途一定会抛出异常的函数。</p>
 <div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">Never</span> <span class="n">ellipsis</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="k">throw</span> <span class="n">Exception</span><span class="p">(</span><span class="s">'!'</span><span class="p">);</span>
