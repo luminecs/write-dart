@@ -3401,6 +3401,100 @@ Future<String> processValue2(dynamic value) {
 函数 `processValue` 和 `processValue2` 相同，它们都是同步操作，`Future` 可有可无。函数 `processValue1` 因为使用了 `async`，所以是异步操作，必须返回 `Future`。
 
 
+## async_example
+
+```dart
+Future<String> fetchUserOrder() {
+  // Imagine that this function is more complex and slow.
+  return Future.delayed(Duration(seconds: 4), () => 'Large Latte');
+}
+
+Future<void> printOrderMessage() async {
+  print('Awaiting user order...');
+  var order = await fetchUserOrder();
+  print('Your order is: $order');
+}
+
+// You can ignore this function -
+// it's here to visualize delay time in this example.
+void countSeconds(int s) {
+  for (var i = 1; i <= s; i++) {
+    Future.delayed(Duration(seconds: i), () => print(i));
+  }
+}
+
+void main() async {
+  countSeconds(4);
+  await printOrderMessage();
+  // Awaiting user order...
+  // 1
+  // 2
+  // 3
+  // 4
+  // Your order is: Large Latte
+}
+```
+
+## futures_intro
+
+```dart
+Future<void> fetchUserOrder() {
+  // Imagine that this function is fetching
+  // user info from another service or database.
+  return Future.delayed(Duration(seconds: 2), () => print('Large Latte'));
+}
+
+Future<void> fetchUserOrderError() {
+  // Imagine that this function is fetching
+  // user info but encounters a bug
+  return Future.delayed(Duration(seconds: 2),
+          () => throw Exception('Logout failed: user ID is invalid'));
+}
+
+void process() {
+  fetchUserOrder();
+  print('Fetching user order...');
+  // Fetching user order...
+  // Large Latte
+}
+
+void main() {
+  Future.wait([
+    Future.delayed(Duration(seconds: 4)),
+    Future.sync(process),
+  ]);
+}
+```
+
+## try_catch
+
+```dart
+Future<String> fetchUserOrder() {
+  // Imagine that this function is more complex.
+  var str = Future.delayed(
+      const Duration(seconds: 4),
+      // ignore: only_throw_errors
+      () => throw 'Cannot locate user order');
+  return str;
+}
+
+Future<void> printOrderMessage() async {
+  try {
+    print('Awaiting user order...');
+    var order = await fetchUserOrder();
+    print(order);
+  } catch (err) {
+    print('Caught error: $err');
+  }
+}
+
+void main() async {
+  await printOrderMessage();
+  // Awaiting user order...
+  // Caught error: Cannot locate user order
+}
+```
+
 
 
 
