@@ -2767,6 +2767,70 @@ void main() {
 }
 ```
 
+## take-while-long skipWhile
+
+```dart
+void main() {
+  const numbers = [1, 3, -2, 0, 4, 5];
+  var numbersUntilZero = numbers.takeWhile((number) => number != 0);
+  print('Numbers until 0: $numbersUntilZero'); // (1, 3, -2)
+
+  var numbersStartingAtZero = numbers.skipWhile((number) => number!=0);
+  print('Numbers starting at 0: $numbersStartingAtZero'); // (0, 4, 5)
+}
+```
+
+## where
+
+```dart
+void main() {
+  final numbers = [1, 2, 3, 4];
+  var evenNumbers = numbers.where((number) => number.isEven);
+  for (final number in evenNumbers) {
+    print('$number is even');
+  }
+}
+```
+
+## for-in
+
+```dart
+void main() {
+  const iterable = ['Salad', 'Popcorn', 'Toast'];
+  for (final element in iterable) {
+    print(element);
+  }
+}
+```
+
+## first-last
+
+```dart
+void main() {
+  Iterable<String> iterable = const ['Salad', 'Popcorn', 'Toast'];
+  print('The first element is ${iterable.first}');
+  print('The last element is ${iterable.last}');
+}
+```
+
+## numbers-where
+
+```dart
+void main() {
+  var evenNumbers = const [1, -2, 3, 42].where((number) => number.isEven);
+  for (final number in evenNumbers) {
+    print('$number is even.');
+  }
+  if (evenNumbers.any((number) => number.isNegative)) {
+    print('evenNumbers contains negative numbers.');
+  }
+  // If no element satisfies the predicate, the output is empty.
+  var largeNumbers = evenNumbers.where((number) => number > 1000);
+  if (largeNumbers.isEmpty) {
+    print('largeNumbers is empty!');
+  }
+}
+```
 
 
 
