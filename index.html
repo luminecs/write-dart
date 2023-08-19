@@ -807,6 +807,21 @@
                   <li>
                     <a href="#take-while" class="toc-h2 toc-link" data-title="take-while">take-while</a>
                   </li>
+                  <li>
+                    <a href="#take-while-long-skipwhile" class="toc-h2 toc-link" data-title="take-while-long skipWhile">take-while-long skipWhile</a>
+                  </li>
+                  <li>
+                    <a href="#where-2" class="toc-h2 toc-link" data-title="where">where</a>
+                  </li>
+                  <li>
+                    <a href="#for-in" class="toc-h2 toc-link" data-title="for-in">for-in</a>
+                  </li>
+                  <li>
+                    <a href="#first-last" class="toc-h2 toc-link" data-title="first-last">first-last</a>
+                  </li>
+                  <li>
+                    <a href="#numbers-where" class="toc-h2 toc-link" data-title="numbers-where">numbers-where</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -2856,6 +2871,46 @@
   <span class="kd">const</span> <span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">];</span>
   <span class="kd">var</span> <span class="n">numbersUntilNegative</span> <span class="o">=</span> <span class="n">numbers</span><span class="o">.</span><span class="na">takeWhile</span><span class="p">((</span><span class="n">e</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="o">!</span><span class="n">e</span><span class="o">.</span><span class="na">isNegative</span><span class="p">);</span>
   <span class="n">print</span><span class="p">(</span><span class="n">numbersUntilNegative</span><span class="p">);</span> <span class="c1">// (1, 2, 3)</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='take-while-long-skipwhile'>take-while-long skipWhile</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">];</span>
+  <span class="kd">var</span> <span class="n">numbersUntilZero</span> <span class="o">=</span> <span class="n">numbers</span><span class="o">.</span><span class="na">takeWhile</span><span class="p">((</span><span class="n">number</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">number</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'Numbers until 0: </span><span class="si">$numbersUntilZero</span><span class="s">'</span><span class="p">);</span> <span class="c1">// (1, 3, -2)</span>
+
+  <span class="kd">var</span> <span class="n">numbersStartingAtZero</span> <span class="o">=</span> <span class="n">numbers</span><span class="o">.</span><span class="na">skipWhile</span><span class="p">((</span><span class="n">number</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">number</span><span class="o">!=</span><span class="mi">0</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'Numbers starting at 0: </span><span class="si">$numbersStartingAtZero</span><span class="s">'</span><span class="p">);</span> <span class="c1">// (0, 4, 5)</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='where-2'>where</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">];</span>
+  <span class="kd">var</span> <span class="n">evenNumbers</span> <span class="o">=</span> <span class="n">numbers</span><span class="o">.</span><span class="na">where</span><span class="p">((</span><span class="n">number</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">number</span><span class="o">.</span><span class="na">isEven</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">final</span> <span class="n">number</span> <span class="k">in</span> <span class="n">evenNumbers</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'</span><span class="si">$number</span><span class="s"> is even'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='for-in'>for-in</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="n">iterable</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Salad'</span><span class="p">,</span> <span class="s">'Popcorn'</span><span class="p">,</span> <span class="s">'Toast'</span><span class="p">];</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">final</span> <span class="n">element</span> <span class="k">in</span> <span class="n">iterable</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">element</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='first-last'>first-last</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Iterable</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">iterable</span> <span class="o">=</span> <span class="kd">const</span> <span class="p">[</span><span class="s">'Salad'</span><span class="p">,</span> <span class="s">'Popcorn'</span><span class="p">,</span> <span class="s">'Toast'</span><span class="p">];</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'The first element is </span><span class="si">${iterable.first}</span><span class="s">'</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'The last element is </span><span class="si">${iterable.last}</span><span class="s">'</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='numbers-where'>numbers-where</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">evenNumbers</span> <span class="o">=</span> <span class="kd">const</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">42</span><span class="p">]</span><span class="o">.</span><span class="na">where</span><span class="p">((</span><span class="n">number</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">number</span><span class="o">.</span><span class="na">isEven</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">final</span> <span class="n">number</span> <span class="k">in</span> <span class="n">evenNumbers</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'</span><span class="si">$number</span><span class="s"> is even.'</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">evenNumbers</span><span class="o">.</span><span class="na">any</span><span class="p">((</span><span class="n">number</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">number</span><span class="o">.</span><span class="na">isNegative</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'evenNumbers contains negative numbers.'</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="c1">// If no element satisfies the predicate, the output is empty.</span>
+  <span class="kd">var</span> <span class="n">largeNumbers</span> <span class="o">=</span> <span class="n">evenNumbers</span><span class="o">.</span><span class="na">where</span><span class="p">((</span><span class="n">number</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">number</span> <span class="p">&gt;</span> <span class="mi">1000</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">largeNumbers</span><span class="o">.</span><span class="na">isEmpty</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'largeNumbers is empty!'</span><span class="p">);</span>
+  <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='function'>Function</h1><h2 id='pass-function'>pass function</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'package:flutter/material.dart'</span><span class="o">;</span>
 
