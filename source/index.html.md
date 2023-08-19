@@ -3495,6 +3495,154 @@ void main() async {
 }
 ```
 
+# Package http
+
+## buildUris
+
+```dart
+void main() {
+  // Parse the entire URI, including the scheme
+  Uri.parse('https://dart.dev/f/packages/http.json');
+  // Specifically create a URI with the https scheme
+  Uri.https('dart.dev', '/f/packages/http.json');
+}
+```
+
+## read
+
+```dart
+import 'package:http/http.dart' as http;
+
+void main() async {
+  final httpPackageUrl = Uri.https('dart.dev', '/f/packages/http.json');
+  final httpPackageInfo = await http.read(httpPackageUrl);
+  print(httpPackageInfo);
+}
+// {
+//   "name": "http",
+//   "latestVersion": "0.13.5",
+//   "description": "A composable, multi-platform, Future-based API for HTTP requests.",
+//   "publisher": "dart.dev",
+//   "repository": "https://github.com/dart-lang/http"
+// }
+```
+
+## get
+
+```dart
+import 'package:http/http.dart' as http;
+
+void main() async {
+  final httpPackageUrl = Uri.https('dart.dev', '/f/packages/http.json');
+  final httpPackageResponse = await http.get(httpPackageUrl);
+  if (httpPackageResponse.statusCode != 200) {
+    print('Failed to retrieve the http package!');
+    return;
+  }
+  print(httpPackageResponse.body);
+}
+// {
+//   "name": "http",
+//   "latestVersion": "0.13.5",
+//   "description": "A composable, multi-platform, Future-based API for HTTP requests.",
+//   "publisher": "dart.dev",
+//   "repository": "https://github.com/dart-lang/http"
+// }
+```
+
+## headers
+
+```dart
+import 'package:http/http.dart' as http;
+
+void headers() async {
+  await http.get(
+    Uri.https('dart.dev', '/f/packages/http.json'),
+    headers: {'User-Agent': '<product name>/<product-version>'},
+  );
+}
+```
+
+## json-decode
+
+```dart
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+
+void main() async {
+  final httpPackageUrl = Uri.https('dart.dev', '/f/packages/http.json');
+  final httpPackageInfo = await http.read(httpPackageUrl);
+  final httpPackageJson = json.decode(httpPackageInfo) as Map<String, dynamic>;
+  print(httpPackageJson);
+}
+// {name: http, latestVersion: 0.13.5, 
+// description: A composable, multi-platform, 
+// Future-based API for HTTP requests., 
+// publisher: dart.dev, 
+// repository: https://github.com/dart-lang/http}
+```
+
+## http-client
+
+```dart
+import 'package:http/http.dart' as http;
+
+void main() async {
+  final httpPackageUrl = Uri.https('dart.dev', '/f/packages/http.json');
+  final client = http.Client();
+  try {
+    final httpPackageInfo = await client.read(httpPackageUrl);
+    print(httpPackageInfo);
+  } finally {
+    client.close();
+  }
+}
+// {
+//   "name": "http",
+//   "latestVersion": "0.13.5",
+//   "description": "A composable, multi-platform, Future-based API for HTTP requests.",
+//   "publisher": "dart.dev",
+//   "repository": "https://github.com/dart-lang/http"
+// }
+```
+
+## http-retry
+
+```dart
+import 'package:http/http.dart' as http;
+import 'package:http/retry.dart';
+
+void main() async {
+  final httpPackageUrl = Uri.https('dart.dev', '/f/packages/http.json');
+  final client = RetryClient(http.Client());
+  try {
+    final httpPackageInfo = await client.read(httpPackageUrl);
+    print(httpPackageInfo);
+  } finally {
+    client.close();
+  }
+}
+// {
+//   "name": "http",
+//   "latestVersion": "0.13.5",
+//   "description": "A composable, multi-platform, Future-based API for HTTP requests.",
+//   "publisher": "dart.dev",
+//   "repository": "https://github.com/dart-lang/http"
+// }
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
