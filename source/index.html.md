@@ -43,6 +43,35 @@ void main() {
 这是一个 <code>Warning</code> 示例。
 </aside>
 
+
+# Generics
+
+## base_class
+
+```dart
+class SomeBaseClass {}
+
+class Foo<T extends SomeBaseClass> {
+  // Implementation goes here...
+  String toString() => "Instance of 'Foo<$T>'"; // ignore: annotate_overrides
+}
+
+class Extender extends SomeBaseClass {}
+
+void main() {
+  var extenderFoo = Foo<Extender>();
+  print(extenderFoo); // Instance of 'Foo<Extender>'
+
+  var someBaseClassFoo = Foo<SomeBaseClass>();
+  print(someBaseClassFoo); // Instance of 'Foo<SomeBaseClass>'
+
+  var foo = Foo();
+  print(foo); // Instance of 'Foo<SomeBaseClass>'
+}
+```
+
+
+
 # Metadata
 
 ```dart
