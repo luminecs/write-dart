@@ -330,6 +330,12 @@
                   <li>
                     <a href="#constructor" class="toc-h2 toc-link" data-title="constructor">constructor</a>
                   </li>
+                  <li>
+                    <a href="#is" class="toc-h2 toc-link" data-title="is">is</a>
+                  </li>
+                  <li>
+                    <a href="#method" class="toc-h2 toc-link" data-title="method">method</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1042,6 +1048,22 @@
   <span class="n">print</span><span class="p">(</span><span class="n">nameSet</span><span class="p">);</span> <span class="c1">// {Seth, Kathy, Lars}</span>
 
   <span class="kd">var</span> <span class="n">views</span> <span class="o">=</span> <span class="kt">Map</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">View</span><span class="p">&gt;();</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='is'>is</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">names</span> <span class="o">=</span> <span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;[];</span>
+  <span class="n">names</span><span class="o">.</span><span class="na">addAll</span><span class="p">([</span><span class="s">'Seth'</span><span class="p">,</span> <span class="s">'Kathy'</span><span class="p">,</span> <span class="s">'Lars'</span><span class="p">]);</span>
+  <span class="c1">// ignore: unnecessary_type_check</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">names</span> <span class="k">is</span> <span class="kt">List</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;);</span> <span class="c1">// true</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='method'>method</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">T</span> <span class="n">first</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="kt">List</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="n">ts</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Do some initial work or error checking, then...</span>
+  <span class="n">T</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">ts</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+  <span class="c1">// Do some additional checking or processing...</span>
+  <span class="k">return</span> <span class="n">tmp</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'first: </span><span class="si">${first&lt;int&gt;([1, 2, 3])}</span><span class="s">'</span><span class="p">);</span> <span class="c1">// 1</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='metadata'>Metadata</h1><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Todo</span> <span class="p">{</span>
   <span class="kd">final</span> <span class="kt">String</span> <span class="n">who</span><span class="p">;</span>
