@@ -122,6 +122,35 @@ void main() {
 }
 ```
 
+## is
+
+```dart
+void main() {
+  var names = <String>[];
+  names.addAll(['Seth', 'Kathy', 'Lars']);
+  // ignore: unnecessary_type_check
+  print(names is List<String>); // true
+}
+```
+
+## method
+
+```dart
+T first<T>(List<T> ts) {
+  // Do some initial work or error checking, then...
+  T tmp = ts[0];
+  // Do some additional checking or processing...
+  return tmp;
+}
+
+void main() {
+  print('first: ${first<int>([1, 2, 3])}'); // 1
+}
+```
+
+
+
+
 
 
 # Metadata
