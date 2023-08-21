@@ -327,6 +327,9 @@
                   <li>
                     <a href="#misc" class="toc-h2 toc-link" data-title="misc">misc</a>
                   </li>
+                  <li>
+                    <a href="#constructor" class="toc-h2 toc-link" data-title="constructor">constructor</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1029,6 +1032,16 @@
 <span class="c1">// non-nullable</span>
 <span class="kd">class</span> <span class="nc">Foo</span><span class="p">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="kt">Object</span><span class="p">&gt;</span> <span class="p">{</span>
   <span class="c1">// Any type provided to Foo for T must be non-nullable.</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='constructor'>constructor</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">View</span> <span class="p">{}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">names</span> <span class="o">=</span> <span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;[];</span>
+  <span class="n">names</span><span class="o">.</span><span class="na">addAll</span><span class="p">([</span><span class="s">'Seth'</span><span class="p">,</span> <span class="s">'Kathy'</span><span class="p">,</span> <span class="s">'Lars'</span><span class="p">]);</span>
+  <span class="kd">var</span> <span class="n">nameSet</span> <span class="o">=</span> <span class="kt">Set</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span><span class="o">.</span><span class="na">from</span><span class="p">(</span><span class="n">names</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">nameSet</span><span class="p">);</span> <span class="c1">// {Seth, Kathy, Lars}</span>
+
+  <span class="kd">var</span> <span class="n">views</span> <span class="o">=</span> <span class="kt">Map</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">View</span><span class="p">&gt;();</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='metadata'>Metadata</h1><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Todo</span> <span class="p">{</span>
   <span class="kd">final</span> <span class="kt">String</span> <span class="n">who</span><span class="p">;</span>
