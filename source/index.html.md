@@ -107,6 +107,21 @@ class Foo<T extends Object> {
 }
 ```
 
+## constructor
+
+```dart
+class View {}
+
+void main() {
+  var names = <String>[];
+  names.addAll(['Seth', 'Kathy', 'Lars']);
+  var nameSet = Set<String>.from(names);
+  print(nameSet); // {Seth, Kathy, Lars}
+  
+  var views = Map<int, View>();
+}
+```
+
 
 
 # Metadata
