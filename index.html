@@ -316,6 +316,14 @@
             <a href="#45fa4e00db" class="toc-h1 toc-link" data-title="介绍">介绍</a>
           </li>
           <li>
+            <a href="#generics" class="toc-h1 toc-link" data-title="Generics">Generics</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#base_class" class="toc-h2 toc-link" data-title="base_class">base_class</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#metadata" class="toc-h1 toc-link" data-title="Metadata">Metadata</a>
           </li>
           <li>
@@ -970,7 +978,26 @@
 <aside class="warning">
 这是一个 <code>Warning</code> 示例。
 </aside>
-<h1 id='metadata'>Metadata</h1><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Todo</span> <span class="p">{</span>
+<h1 id='generics'>Generics</h1><h2 id='base_class'>base_class</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">SomeBaseClass</span> <span class="p">{}</span>
+
+<span class="kd">class</span> <span class="nc">Foo</span><span class="p">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">SomeBaseClass</span><span class="p">&gt;</span> <span class="p">{</span>
+  <span class="c1">// Implementation goes here...</span>
+  <span class="kt">String</span> <span class="n">toString</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="s">"Instance of 'Foo&lt;</span><span class="si">$T</span><span class="s">&gt;'"</span><span class="p">;</span> <span class="c1">// ignore: annotate_overrides</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">Extender</span> <span class="kd">extends</span> <span class="n">SomeBaseClass</span> <span class="p">{}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">extenderFoo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">&lt;</span><span class="n">Extender</span><span class="p">&gt;();</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">extenderFoo</span><span class="p">);</span> <span class="c1">// Instance of 'Foo&lt;Extender&gt;'</span>
+
+  <span class="kd">var</span> <span class="n">someBaseClassFoo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">&lt;</span><span class="n">SomeBaseClass</span><span class="p">&gt;();</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">someBaseClassFoo</span><span class="p">);</span> <span class="c1">// Instance of 'Foo&lt;SomeBaseClass&gt;'</span>
+
+  <span class="kd">var</span> <span class="n">foo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">();</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">foo</span><span class="p">);</span> <span class="c1">// Instance of 'Foo&lt;SomeBaseClass&gt;'</span>
+<span class="p">}</span>
+</code></pre></div><h1 id='metadata'>Metadata</h1><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Todo</span> <span class="p">{</span>
   <span class="kd">final</span> <span class="kt">String</span> <span class="n">who</span><span class="p">;</span>
   <span class="kd">final</span> <span class="kt">String</span> <span class="n">what</span><span class="p">;</span>
 
