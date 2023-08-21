@@ -321,6 +321,9 @@
                   <li>
                     <a href="#base_class" class="toc-h2 toc-link" data-title="base_class">base_class</a>
                   </li>
+                  <li>
+                    <a href="#cache" class="toc-h2 toc-link" data-title="cache">cache</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -996,6 +999,20 @@
 
   <span class="kd">var</span> <span class="n">foo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">();</span>
   <span class="n">print</span><span class="p">(</span><span class="n">foo</span><span class="p">);</span> <span class="c1">// Instance of 'Foo&lt;SomeBaseClass&gt;'</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='cache'>cache</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">ObjectCache</span> <span class="p">{</span>
+  <span class="kt">Object</span> <span class="n">getByKey</span><span class="p">(</span><span class="kt">String</span> <span class="n">key</span><span class="p">);</span>
+  <span class="kt">void</span> <span class="n">setByKey</span><span class="p">(</span><span class="kt">String</span> <span class="n">key</span><span class="p">,</span> <span class="kt">Object</span> <span class="n">value</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">StringCache</span> <span class="p">{</span>
+  <span class="kt">String</span> <span class="n">getByKey</span><span class="p">(</span><span class="kt">String</span> <span class="n">key</span><span class="p">);</span>
+  <span class="kt">void</span> <span class="n">setByKey</span><span class="p">(</span><span class="kt">String</span> <span class="n">key</span><span class="p">,</span> <span class="kt">String</span> <span class="n">value</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Cache</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">{</span>
+  <span class="n">T</span> <span class="n">getByKey</span><span class="p">(</span><span class="kt">String</span> <span class="n">key</span><span class="p">);</span>
+  <span class="kt">void</span> <span class="n">setByKey</span><span class="p">(</span><span class="kt">String</span> <span class="n">key</span><span class="p">,</span> <span class="n">T</span> <span class="n">value</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='metadata'>Metadata</h1><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Todo</span> <span class="p">{</span>
   <span class="kd">final</span> <span class="kt">String</span> <span class="n">who</span><span class="p">;</span>
