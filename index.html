@@ -316,6 +316,9 @@
             <a href="#45fa4e00db" class="toc-h1 toc-link" data-title="介绍">介绍</a>
           </li>
           <li>
+            <a href="#metadata" class="toc-h1 toc-link" data-title="Metadata">Metadata</a>
+          </li>
+          <li>
             <a href="#class-modifiers" class="toc-h1 toc-link" data-title="Class Modifiers">Class Modifiers</a>
               <ul class="toc-list-h2">
                   <li>
@@ -967,7 +970,36 @@
 <aside class="warning">
 这是一个 <code>Warning</code> 示例。
 </aside>
-<h1 id='class-modifiers'>Class Modifiers</h1><h2 id='abstract-class'>abstract class</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Vehicle</span> <span class="p">{</span>
+<h1 id='metadata'>Metadata</h1><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Todo</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="kt">String</span> <span class="n">who</span><span class="p">;</span>
+  <span class="kd">final</span> <span class="kt">String</span> <span class="n">what</span><span class="p">;</span>
+
+  <span class="kd">const</span> <span class="n">Todo</span><span class="p">(</span><span class="k">this</span><span class="o">.</span><span class="na">who</span><span class="p">,</span> <span class="k">this</span><span class="o">.</span><span class="na">what</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nd">@Todo</span><span class="p">(</span><span class="s">'Dash'</span><span class="p">,</span> <span class="s">'Implement this function'</span><span class="p">)</span>
+<span class="kt">void</span> <span class="nf">doSomething</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'Do something'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">Television</span> <span class="p">{</span>
+  <span class="c1">/// Use [turnOn] to turn the power on instead.</span>
+  <span class="nd">@Deprecated</span><span class="p">(</span><span class="s">'Use turnOn instead'</span><span class="p">)</span>
+  <span class="kt">void</span> <span class="n">activate</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">turnOn</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="c1">/// Turns the TV's power on.</span>
+  <span class="kt">void</span> <span class="n">turnOn</span><span class="p">()</span> <span class="p">{}</span>
+
+  <span class="kd">set</span> <span class="n">contrast</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">SmartTelevision</span> <span class="kd">extends</span> <span class="n">Television</span> <span class="p">{</span>
+  <span class="nd">@override</span>
+  <span class="kd">set</span> <span class="n">contrast</span><span class="p">(</span><span class="kt">num</span> <span class="n">value</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></div><h1 id='class-modifiers'>Class Modifiers</h1><h2 id='abstract-class'>abstract class</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Vehicle</span> <span class="p">{</span>
   <span class="kt">void</span> <span class="n">moveForward</span><span class="p">(</span><span class="kt">int</span> <span class="n">meters</span><span class="p">);</span>
 <span class="p">}</span>
 
