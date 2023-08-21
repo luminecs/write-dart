@@ -43,6 +43,40 @@ void main() {
 这是一个 <code>Warning</code> 示例。
 </aside>
 
+# Metadata
+
+```dart
+class Todo {
+  final String who;
+  final String what;
+
+  const Todo(this.who, this.what);
+}
+
+@Todo('Dash', 'Implement this function')
+void doSomething() {
+  print('Do something');
+}
+
+class Television {
+  /// Use [turnOn] to turn the power on instead.
+  @Deprecated('Use turnOn instead')
+  void activate() {
+    turnOn();
+  }
+
+  /// Turns the TV's power on.
+  void turnOn() {}
+
+  set contrast(int value) {}
+}
+
+class SmartTelevision extends Television {
+  @override
+  set contrast(num value) {}
+}
+```
+
 # Class Modifiers
 
 ## abstract class
