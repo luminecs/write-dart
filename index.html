@@ -353,6 +353,9 @@
                   <li>
                     <a href="#initializer_lists" class="toc-h2 toc-link" data-title="initializer_lists">initializer_lists</a>
                   </li>
+                  <li>
+                    <a href="#named_constructor" class="toc-h2 toc-link" data-title="named_constructor">named_constructor</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1169,6 +1172,22 @@
     <span class="n">print</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
     <span class="c1">// Failed assertion: line 7 pos 16: 'y &gt;= 0': is not true.</span>
   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='named_constructor'>named_constructor</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Point</span> <span class="p">{</span>
+  <span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span>
+
+  <span class="n">Point</span><span class="p">(</span><span class="k">this</span><span class="o">.</span><span class="na">x</span><span class="p">,</span> <span class="k">this</span><span class="o">.</span><span class="na">y</span><span class="p">);</span>
+
+  <span class="n">Point</span><span class="o">.</span><span class="na">origin</span><span class="p">()</span>
+      <span class="o">:</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">point</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'</span><span class="si">${point.x}</span><span class="s">, </span><span class="si">${point.y}</span><span class="s">'</span><span class="p">);</span> <span class="c1">// 1.0, 2.0</span>
+  <span class="kd">final</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="o">.</span><span class="na">origin</span><span class="p">();</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'</span><span class="si">${p.x}</span><span class="s">, </span><span class="si">${p.y}</span><span class="s">'</span><span class="p">);</span> <span class="c1">// 0.0, 0.0</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='metadata'>Metadata</h1><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Todo</span> <span class="p">{</span>
   <span class="kd">final</span> <span class="kt">String</span> <span class="n">who</span><span class="p">;</span>
