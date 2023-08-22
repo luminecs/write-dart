@@ -337,10 +337,92 @@ void main() {
 ## redirecting-constructors
 
 ```dart
+class Automobile {
+  String make;
+  String model;
+  int mpg;
 
+  // The main constructor for this class.
+  Automobile(this.make, this.model, this.mpg);
+
+  // Delegates to the main constructor.
+  Automobile.hybrid(String make, String model) : this(make, model, 60);
+
+  // Delegates to a named constructor
+  Automobile.fancyHybrid() : this.hybrid('Futurecar', 'Mark 2');
+}
+
+void main() {
+  final hybrid = Automobile.hybrid('Dash', 'Null Safety');
+  final fancyHybrid = Automobile.fancyHybrid();
+}
 ```
 
+## const-constructors
 
+```dart
+class ImmutablePoint {
+  final int x;
+  final int y;
+
+  const ImmutablePoint(this.x, this.y);
+
+  static const ImmutablePoint origin = ImmutablePoint(0, 0);
+}
+```
+
+## required-positional
+
+```dart
+class MyColor {
+  int red;
+  int green;
+  int blue;
+
+  MyColor(this.red, this.green, this.blue);
+}
+
+void main() {
+  final color = MyColor(80, 80, 128);
+}
+```
+
+## required-named
+
+```dart
+class MyColorRN {
+  int red, green, blue;
+
+  MyColorRN({
+    required this.red,
+    required this.green,
+    required this.blue,
+  });
+}
+
+void main() {
+  final colorRN = MyColorRN(red: 80, green: 80, blue: 128);
+}
+```
+
+## defaulted
+
+```dart
+class MyColor0 {
+  int red, green, blue;
+
+  MyColor0.positional([this.red = 0, this.green = 0, this.blue = 0]);
+
+  MyColor0.name({this.red = 0, this.green = 0, this.blue = 0});
+}
+
+void main() {
+  final color1 = MyColor0.positional();
+  final color2 = MyColor0.positional(1, 2, 3);
+  final color3 = MyColor0.name();
+  final color4 = MyColor0.name(red: 4, green: 5, blue: 6);
+}
+```
 
 
 
