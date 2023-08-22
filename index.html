@@ -1212,7 +1212,34 @@
   <span class="n">printNameWithDefault</span><span class="p">(</span><span class="s">'Dash'</span><span class="p">,</span> <span class="s">'Dartisan'</span><span class="p">);</span>
   <span class="c1">// Dash  Dartisan</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='optional_positional_args'>optional_positional_args</h2><div class="highlight"><pre class="highlight dart tab-dart"><code>
+</code></pre></div><h2 id='optional_positional_args'>optional_positional_args</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">int</span> <span class="nf">sumUp</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">sumUpToFive</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="p">[</span><span class="kt">int</span><span class="o">?</span> <span class="n">b</span><span class="p">,</span> <span class="kt">int</span><span class="o">?</span> <span class="n">c</span><span class="p">,</span> <span class="kt">int</span><span class="o">?</span> <span class="n">d</span><span class="p">,</span> <span class="kt">int</span><span class="o">?</span> <span class="n">e</span><span class="p">])</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">b</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="n">sum</span> <span class="o">+=</span> <span class="n">b</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">c</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="n">sum</span> <span class="o">+=</span> <span class="n">c</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">d</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="n">sum</span> <span class="o">+=</span> <span class="n">d</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">e</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="n">sum</span> <span class="o">+=</span> <span class="n">e</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">sumUpToFive2</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="p">[</span><span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="kt">int</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="kt">int</span> <span class="n">e</span> <span class="o">=</span> <span class="mi">5</span><span class="p">])</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span> <span class="o">+</span> <span class="n">d</span> <span class="o">+</span> <span class="n">e</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">total1</span> <span class="o">=</span> <span class="n">sumUp</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="n">total2</span> <span class="o">=</span> <span class="n">sumUpToFive</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="n">total3</span> <span class="o">=</span> <span class="n">sumUpToFive</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">total1</span><span class="p">);</span> <span class="c1">// 6</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">total2</span><span class="p">);</span> <span class="c1">// 3</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">total3</span><span class="p">);</span> <span class="c1">// 15</span>
+
+  <span class="kt">int</span> <span class="n">total4</span> <span class="o">=</span> <span class="n">sumUpToFive2</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">total4</span><span class="p">);</span> <span class="c1">// 15</span>
+<span class="p">}</span>
 </code></pre></div><h1 id='metadata'>Metadata</h1><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Todo</span> <span class="p">{</span>
   <span class="kd">final</span> <span class="kt">String</span> <span class="n">who</span><span class="p">;</span>
   <span class="kd">final</span> <span class="kt">String</span> <span class="n">what</span><span class="p">;</span>
