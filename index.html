@@ -339,6 +339,14 @@
               </ul>
           </li>
           <li>
+            <a href="#class" class="toc-h1 toc-link" data-title="Class">Class</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#factory_constructors" class="toc-h2 toc-link" data-title="factory_constructors">factory_constructors</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#metadata" class="toc-h1 toc-link" data-title="Metadata">Metadata</a>
           </li>
           <li>
@@ -1064,6 +1072,28 @@
 
 <span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
   <span class="n">print</span><span class="p">(</span><span class="s">'first: </span><span class="si">${first&lt;int&gt;([1, 2, 3])}</span><span class="s">'</span><span class="p">);</span> <span class="c1">// 1</span>
+<span class="p">}</span>
+</code></pre></div><h1 id='class'>Class</h1><h2 id='factory_constructors'>factory_constructors</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Shape</span> <span class="p">{</span>
+  <span class="n">Shape</span><span class="p">();</span>
+
+  <span class="kd">factory</span> <span class="n">Shape</span><span class="o">.</span><span class="na">fromTypeName</span><span class="p">(</span><span class="kt">String</span> <span class="n">typeName</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">typeName</span> <span class="o">==</span> <span class="s">'square'</span><span class="p">)</span> <span class="k">return</span> <span class="n">Square</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">typeName</span> <span class="o">==</span> <span class="s">'circle'</span><span class="p">)</span> <span class="k">return</span> <span class="n">Circle</span><span class="p">();</span>
+    <span class="k">throw</span> <span class="n">ArgumentError</span><span class="p">(</span><span class="s">'Unrecognized </span><span class="si">$typeName</span><span class="s">'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">Square</span> <span class="kd">extends</span> <span class="n">Shape</span> <span class="p">{}</span>
+
+<span class="kd">class</span> <span class="nc">Circle</span> <span class="kd">extends</span> <span class="n">Shape</span> <span class="p">{}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">Shape</span><span class="p">()</span> <span class="k">is</span> <span class="n">Shape</span><span class="p">);</span> <span class="c1">// true</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">Shape</span><span class="o">.</span><span class="na">fromTypeName</span><span class="p">(</span><span class="s">'square'</span><span class="p">)</span> <span class="k">is</span> <span class="n">Square</span><span class="p">);</span> <span class="c1">// true</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">Shape</span><span class="o">.</span><span class="na">fromTypeName</span><span class="p">(</span><span class="s">'circle'</span><span class="p">)</span> <span class="k">is</span> <span class="n">Circle</span><span class="p">);</span> <span class="c1">// true</span>
+  <span class="n">Shape</span><span class="o">.</span><span class="na">fromTypeName</span><span class="p">(</span><span class="s">'trapezoid'</span><span class="p">);</span>
+  <span class="c1">// Unhandled exception:</span>
+  <span class="c1">// Invalid argument(s): Unrecognized typeName</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='metadata'>Metadata</h1><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Todo</span> <span class="p">{</span>
   <span class="kd">final</span> <span class="kt">String</span> <span class="n">who</span><span class="p">;</span>
