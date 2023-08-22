@@ -148,6 +148,37 @@ void main() {
 }
 ```
 
+# Class
+
+## factory_constructors
+
+```dart
+class Shape {
+  Shape();
+
+  factory Shape.fromTypeName(String typeName) {
+    if (typeName == 'square') return Square();
+    if (typeName == 'circle') return Circle();
+    throw ArgumentError('Unrecognized $typeName');
+  }
+}
+
+class Square extends Shape {}
+
+class Circle extends Shape {}
+
+void main() {
+  print(Shape() is Shape); // true
+  print(Shape.fromTypeName('square') is Square); // true
+  print(Shape.fromTypeName('circle') is Circle); // true
+  Shape.fromTypeName('trapezoid');
+  // Unhandled exception:
+  // Invalid argument(s): Unrecognized typeName
+}
+```
+
+
+
 
 
 
