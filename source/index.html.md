@@ -202,6 +202,30 @@ void main() {
 }
 ```
 
+## getters_setters
+
+```dart
+class MyClass {
+  int _aProperty = 0;
+
+  int get aProperty => _aProperty;
+
+  set aProperty(int value) {
+    if (value >= 0) {
+      _aProperty = value;
+    }
+  }
+}
+
+void main() {
+  MyClass clazz = MyClass();
+  clazz.aProperty = 5;
+  print(clazz.aProperty); // 5
+  clazz.aProperty = -10;
+  print(clazz.aProperty); // 5
+}
+```
+
 
 
 
