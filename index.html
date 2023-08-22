@@ -356,6 +356,12 @@
                   <li>
                     <a href="#named_constructor" class="toc-h2 toc-link" data-title="named_constructor">named_constructor</a>
                   </li>
+                  <li>
+                    <a href="#named_parameters" class="toc-h2 toc-link" data-title="named_parameters">named_parameters</a>
+                  </li>
+                  <li>
+                    <a href="#optional_positional_args" class="toc-h2 toc-link" data-title="optional_positional_args">optional_positional_args</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1189,6 +1195,24 @@
   <span class="kd">final</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="o">.</span><span class="na">origin</span><span class="p">();</span>
   <span class="n">print</span><span class="p">(</span><span class="s">'</span><span class="si">${p.x}</span><span class="s">, </span><span class="si">${p.y}</span><span class="s">'</span><span class="p">);</span> <span class="c1">// 0.0, 0.0</span>
 <span class="p">}</span>
+</code></pre></div><h2 id='named_parameters'>named_parameters</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">printName</span><span class="p">(</span><span class="kt">String</span> <span class="n">firstName</span><span class="p">,</span> <span class="kt">String</span> <span class="n">lastName</span><span class="p">,</span> <span class="p">{</span><span class="kt">String</span><span class="o">?</span> <span class="n">middleName</span><span class="p">})</span> <span class="p">{</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'</span><span class="si">$firstName</span><span class="s"> </span><span class="si">${middleName ?? ''}</span><span class="s"> </span><span class="si">$lastName</span><span class="s">'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">printNameWithDefault</span><span class="p">(</span><span class="kt">String</span> <span class="n">firstName</span><span class="p">,</span> <span class="kt">String</span> <span class="n">lastName</span><span class="p">,</span> <span class="p">{</span><span class="kt">String</span> <span class="n">middleName</span> <span class="o">=</span> <span class="s">''</span><span class="p">})</span> <span class="p">{</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'</span><span class="si">$firstName</span><span class="s"> </span><span class="si">$middleName</span><span class="s"> </span><span class="si">$lastName</span><span class="s">'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">printName</span><span class="p">(</span><span class="s">'Dash'</span><span class="p">,</span> <span class="s">'Dartisan'</span><span class="p">);</span> <span class="c1">// Dash  Dartisan</span>
+  <span class="n">printName</span><span class="p">(</span><span class="s">'John'</span><span class="p">,</span> <span class="s">'Smith'</span><span class="p">,</span> <span class="nl">middleName:</span> <span class="s">'Who'</span><span class="p">);</span> <span class="c1">// John Who Smith</span>
+  <span class="n">printName</span><span class="p">(</span><span class="s">'John'</span><span class="p">,</span> <span class="nl">middleName:</span> <span class="s">'Who'</span><span class="p">,</span> <span class="s">'Smith'</span><span class="p">);</span> <span class="c1">// John Who Smith</span>
+  <span class="n">printNameWithDefault</span><span class="p">(</span><span class="s">'Dash'</span><span class="p">,</span> <span class="s">'Dartisan'</span><span class="p">,</span> <span class="nl">middleName:</span> <span class="s">'Best'</span><span class="p">);</span>
+  <span class="c1">// Dash Best Dartisan</span>
+  <span class="n">printNameWithDefault</span><span class="p">(</span><span class="s">'Dash'</span><span class="p">,</span> <span class="s">'Dartisan'</span><span class="p">);</span>
+  <span class="c1">// Dash  Dartisan</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='optional_positional_args'>optional_positional_args</h2><div class="highlight"><pre class="highlight dart tab-dart"><code>
 </code></pre></div><h1 id='metadata'>Metadata</h1><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Todo</span> <span class="p">{</span>
   <span class="kd">final</span> <span class="kt">String</span> <span class="n">who</span><span class="p">;</span>
   <span class="kd">final</span> <span class="kt">String</span> <span class="n">what</span><span class="p">;</span>
