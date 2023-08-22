@@ -258,6 +258,32 @@ void main() {
 }
 ```
 
+## named_constructor
+
+```dart
+class Point {
+  double x, y;
+
+  Point(this.x, this.y);
+
+  Point.origin()
+      : x = 0,
+        y = 0;
+}
+
+void main() {
+  final point = Point(1, 2);
+  print('${point.x}, ${point.y}'); // 1.0, 2.0
+  final p = Point.origin();
+  print('${p.x}, ${p.y}'); // 0.0, 0.0
+}
+```
+
+
+
+
+
+
 
 
 
