@@ -226,6 +226,38 @@ void main() {
 }
 ```
 
+## initializer_lists
+
+```dart
+class NonNegativePoint {
+  final int x;
+  final int y;
+
+  NonNegativePoint(this.x, this.y)
+      : assert(x >= 0),
+        assert(y >= 0) {
+    print('I just made a NonNegativePoint: ($x, $y)');
+  }
+}
+
+void main() {
+  NonNegativePoint(100, 100);
+  // I just made a NonNegativePoint: (100, 100)
+  try {
+    NonNegativePoint(-50, 100);
+  } on AssertionError catch (e) {
+    print(e);
+    // Failed assertion: line 6 pos 16: 'x >= 0': is not true.
+  }
+  try {
+    NonNegativePoint(100, -50);
+  } on AssertionError catch (e) {
+    print(e);
+    // Failed assertion: line 7 pos 16: 'y >= 0': is not true.
+  }
+}
+```
+
 
 
 
