@@ -344,6 +344,12 @@
                   <li>
                     <a href="#factory_constructors" class="toc-h2 toc-link" data-title="factory_constructors">factory_constructors</a>
                   </li>
+                  <li>
+                    <a href="#getter_compute" class="toc-h2 toc-link" data-title="getter_compute">getter_compute</a>
+                  </li>
+                  <li>
+                    <a href="#getters_setters" class="toc-h2 toc-link" data-title="getters_setters">getters_setters</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1094,6 +1100,45 @@
   <span class="n">Shape</span><span class="o">.</span><span class="na">fromTypeName</span><span class="p">(</span><span class="s">'trapezoid'</span><span class="p">);</span>
   <span class="c1">// Unhandled exception:</span>
   <span class="c1">// Invalid argument(s): Unrecognized typeName</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='getter_compute'>getter_compute</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">MyClass</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="kt">List</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">_values</span> <span class="o">=</span> <span class="p">[];</span>
+
+  <span class="kt">void</span> <span class="n">addValue</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">_values</span><span class="o">.</span><span class="na">add</span><span class="p">(</span><span class="n">value</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="c1">// A computed property.</span>
+  <span class="kt">int</span> <span class="kd">get</span> <span class="n">count</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">_values</span><span class="o">.</span><span class="na">length</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">MyClass</span> <span class="n">clazz</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">();</span>
+  <span class="n">clazz</span><span class="o">.</span><span class="na">addValue</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">clazz</span><span class="o">.</span><span class="na">count</span><span class="p">);</span> <span class="c1">// 1</span>
+  <span class="n">clazz</span><span class="o">.</span><span class="na">addValue</span><span class="p">(</span><span class="mi">7</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">clazz</span><span class="o">.</span><span class="na">count</span><span class="p">);</span> <span class="c1">// 2</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='getters_setters'>getters_setters</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">MyClass</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">_aProperty</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="kt">int</span> <span class="kd">get</span> <span class="n">aProperty</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">_aProperty</span><span class="p">;</span>
+
+  <span class="kd">set</span> <span class="n">aProperty</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="p">&gt;</span><span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">_aProperty</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">MyClass</span> <span class="n">clazz</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">();</span>
+  <span class="n">clazz</span><span class="o">.</span><span class="na">aProperty</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">clazz</span><span class="o">.</span><span class="na">aProperty</span><span class="p">);</span> <span class="c1">// 5</span>
+  <span class="n">clazz</span><span class="o">.</span><span class="na">aProperty</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span><span class="p">;</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">clazz</span><span class="o">.</span><span class="na">aProperty</span><span class="p">);</span> <span class="c1">// 5</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='metadata'>Metadata</h1><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Todo</span> <span class="p">{</span>
   <span class="kd">final</span> <span class="kt">String</span> <span class="n">who</span><span class="p">;</span>
