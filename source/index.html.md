@@ -304,7 +304,34 @@ void main() {
 ## optional_positional_args
 
 ```dart
+int sumUp(int a, int b, int c) {
+  return a + b + c;
+}
 
+int sumUpToFive(int a, [int? b, int? c, int? d, int? e]) {
+  int sum = a;
+  if (b != null) sum += b;
+  if (c != null) sum += c;
+  if (d != null) sum += d;
+  if (e != null) sum += e;
+  return sum;
+}
+
+int sumUpToFive2(int a, [int b = 2, int c = 3, int d = 4, int e = 5]) {
+  return a + b + c + d + e;
+}
+
+void main() {
+  int total1 = sumUp(1, 2, 3);
+  int total2 = sumUpToFive(1, 2);
+  int total3 = sumUpToFive(1, 2, 3, 4, 5);
+  print(total1); // 6
+  print(total2); // 3
+  print(total3); // 15
+
+  int total4 = sumUpToFive2(1);
+  print(total4); // 15
+}
 ```
 
 
