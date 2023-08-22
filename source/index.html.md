@@ -279,6 +279,34 @@ void main() {
 }
 ```
 
+## named_parameters
+
+```dart
+void printName(String firstName, String lastName, {String? middleName}) {
+  print('$firstName ${middleName ?? ''} $lastName');
+}
+
+void printNameWithDefault(String firstName, String lastName, {String middleName = ''}) {
+  print('$firstName $middleName $lastName');
+}
+
+void main() {
+  printName('Dash', 'Dartisan'); // Dash  Dartisan
+  printName('John', 'Smith', middleName: 'Who'); // John Who Smith
+  printName('John', middleName: 'Who', 'Smith'); // John Who Smith
+  printNameWithDefault('Dash', 'Dartisan', middleName: 'Best');
+  // Dash Best Dartisan
+  printNameWithDefault('Dash', 'Dartisan');
+  // Dash  Dartisan
+}
+```
+
+## optional_positional_args
+
+```dart
+
+```
+
 
 
 
