@@ -177,6 +177,33 @@ void main() {
 }
 ```
 
+## getter_compute
+
+```dart
+class MyClass {
+  final List<int> _values = [];
+
+  void addValue(int value) {
+    _values.add(value);
+  }
+
+  // A computed property.
+  int get count {
+    return _values.length;
+  }
+}
+
+void main() {
+  MyClass clazz = MyClass();
+  clazz.addValue(5);
+  print(clazz.count); // 1
+  clazz.addValue(7);
+  print(clazz.count); // 2
+}
+```
+
+
+
 
 
 
