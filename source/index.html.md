@@ -538,6 +538,50 @@ enum Planet {
   bool get isGiant =>
       planetType == PlanetType.gas || planetType == PlanetType.ice;
 }
+
+void main() async {
+  var voyager = Spacecraft('Voyager I', DateTime(1977, 9, 5));
+  voyager.describe();
+  // Spacecraft: Voyager I
+  // Launched: 1977 (45 years ago)
+
+  var voyager3 = Spacecraft.unlaunched('Voyager III');
+  voyager3.describe();
+  // Spacecraft: Voyager III
+  // Unlaunched
+
+  final yourPlanet = Planet.earth;
+  if (!yourPlanet.isGiant) {
+    print('Your planet is not a "giant planet".');
+  } // Your planet is not a "giant planet".
+
+  final o = Orbiter('O', DateTime(1999), 42);
+  final p = PilotedCraft('shuttle', DateTime(1999));
+  print(p.astronauts); // 1
+
+  final m = MockSpaceship('Enterprise');
+  m.describe(); // Enterprise
+
+  // async*
+  var flybyObjects = ['Jupiter', 'Saturn', 'Uranus', 'Neptune'];
+  // oneSecond is shown in the code excerpts as 1 second,
+  // but we don't need to delay the actual test execution,
+  // so we set the delay to 0.
+  const oneSecond = Duration(seconds: 0);
+  Stream<String> report(Spacecraft craft, Iterable<String> objects) async* {
+    for (final object in objects) {
+      await Future.delayed(oneSecond);
+      yield '${craft.name} flies by $object';
+    }
+  }
+
+  final messages = await report(voyager, flybyObjects).toList();
+  print(messages);
+  // [Voyager I flies by Jupiter,
+  // Voyager I flies by Saturn,
+  // Voyager I flies by Uranus,
+  // Voyager I flies by Neptune]
+}
 ```
 
 
