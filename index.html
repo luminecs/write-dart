@@ -365,7 +365,22 @@
                   <li>
                     <a href="#redirecting-constructors" class="toc-h2 toc-link" data-title="redirecting-constructors">redirecting-constructors</a>
                   </li>
+                  <li>
+                    <a href="#const-constructors" class="toc-h2 toc-link" data-title="const-constructors">const-constructors</a>
+                  </li>
+                  <li>
+                    <a href="#required-positional" class="toc-h2 toc-link" data-title="required-positional">required-positional</a>
+                  </li>
+                  <li>
+                    <a href="#required-named" class="toc-h2 toc-link" data-title="required-named">required-named</a>
+                  </li>
+                  <li>
+                    <a href="#defaulted" class="toc-h2 toc-link" data-title="defaulted">defaulted</a>
+                  </li>
               </ul>
+          </li>
+          <li>
+            <a href="#spacecraft" class="toc-h1 toc-link" data-title="spacecraft">spacecraft</a>
           </li>
           <li>
             <a href="#metadata" class="toc-h1 toc-link" data-title="Metadata">Metadata</a>
@@ -1243,7 +1258,226 @@
   <span class="kt">int</span> <span class="n">total4</span> <span class="o">=</span> <span class="n">sumUpToFive2</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
   <span class="n">print</span><span class="p">(</span><span class="n">total4</span><span class="p">);</span> <span class="c1">// 15</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='redirecting-constructors'>redirecting-constructors</h2><div class="highlight"><pre class="highlight dart tab-dart"><code>
+</code></pre></div><h2 id='redirecting-constructors'>redirecting-constructors</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Automobile</span> <span class="p">{</span>
+  <span class="kt">String</span> <span class="n">make</span><span class="p">;</span>
+  <span class="kt">String</span> <span class="n">model</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">mpg</span><span class="p">;</span>
+
+  <span class="c1">// The main constructor for this class.</span>
+  <span class="n">Automobile</span><span class="p">(</span><span class="k">this</span><span class="o">.</span><span class="na">make</span><span class="p">,</span> <span class="k">this</span><span class="o">.</span><span class="na">model</span><span class="p">,</span> <span class="k">this</span><span class="o">.</span><span class="na">mpg</span><span class="p">);</span>
+
+  <span class="c1">// Delegates to the main constructor.</span>
+  <span class="n">Automobile</span><span class="o">.</span><span class="na">hybrid</span><span class="p">(</span><span class="kt">String</span> <span class="n">make</span><span class="p">,</span> <span class="kt">String</span> <span class="n">model</span><span class="p">)</span> <span class="o">:</span> <span class="k">this</span><span class="p">(</span><span class="n">make</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="mi">60</span><span class="p">);</span>
+
+  <span class="c1">// Delegates to a named constructor</span>
+  <span class="n">Automobile</span><span class="o">.</span><span class="na">fancyHybrid</span><span class="p">()</span> <span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="na">hybrid</span><span class="p">(</span><span class="s">'Futurecar'</span><span class="p">,</span> <span class="s">'Mark 2'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">hybrid</span> <span class="o">=</span> <span class="n">Automobile</span><span class="o">.</span><span class="na">hybrid</span><span class="p">(</span><span class="s">'Dash'</span><span class="p">,</span> <span class="s">'Null Safety'</span><span class="p">);</span>
+  <span class="kd">final</span> <span class="n">fancyHybrid</span> <span class="o">=</span> <span class="n">Automobile</span><span class="o">.</span><span class="na">fancyHybrid</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='const-constructors'>const-constructors</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">ImmutablePoint</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+  <span class="kd">final</span> <span class="kt">int</span> <span class="n">y</span><span class="p">;</span>
+
+  <span class="kd">const</span> <span class="n">ImmutablePoint</span><span class="p">(</span><span class="k">this</span><span class="o">.</span><span class="na">x</span><span class="p">,</span> <span class="k">this</span><span class="o">.</span><span class="na">y</span><span class="p">);</span>
+
+  <span class="kd">static</span> <span class="kd">const</span> <span class="n">ImmutablePoint</span> <span class="n">origin</span> <span class="o">=</span> <span class="n">ImmutablePoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='required-positional'>required-positional</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">MyColor</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">red</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">green</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">blue</span><span class="p">;</span>
+
+  <span class="n">MyColor</span><span class="p">(</span><span class="k">this</span><span class="o">.</span><span class="na">red</span><span class="p">,</span> <span class="k">this</span><span class="o">.</span><span class="na">green</span><span class="p">,</span> <span class="k">this</span><span class="o">.</span><span class="na">blue</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">color</span> <span class="o">=</span> <span class="n">MyColor</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">128</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='required-named'>required-named</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">MyColorRN</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="n">blue</span><span class="p">;</span>
+
+  <span class="n">MyColorRN</span><span class="p">({</span>
+    <span class="kd">required</span> <span class="k">this</span><span class="o">.</span><span class="na">red</span><span class="p">,</span>
+    <span class="kd">required</span> <span class="k">this</span><span class="o">.</span><span class="na">green</span><span class="p">,</span>
+    <span class="kd">required</span> <span class="k">this</span><span class="o">.</span><span class="na">blue</span><span class="p">,</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">colorRN</span> <span class="o">=</span> <span class="n">MyColorRN</span><span class="p">(</span><span class="nl">red:</span> <span class="mi">80</span><span class="p">,</span> <span class="nl">green:</span> <span class="mi">80</span><span class="p">,</span> <span class="nl">blue:</span> <span class="mi">128</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='defaulted'>defaulted</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">MyColor0</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="n">blue</span><span class="p">;</span>
+
+  <span class="n">MyColor0</span><span class="o">.</span><span class="na">positional</span><span class="p">([</span><span class="k">this</span><span class="o">.</span><span class="na">red</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="k">this</span><span class="o">.</span><span class="na">green</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="k">this</span><span class="o">.</span><span class="na">blue</span> <span class="o">=</span> <span class="mi">0</span><span class="p">]);</span>
+
+  <span class="n">MyColor0</span><span class="o">.</span><span class="na">name</span><span class="p">({</span><span class="k">this</span><span class="o">.</span><span class="na">red</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="k">this</span><span class="o">.</span><span class="na">green</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="k">this</span><span class="o">.</span><span class="na">blue</span> <span class="o">=</span> <span class="mi">0</span><span class="p">});</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">color1</span> <span class="o">=</span> <span class="n">MyColor0</span><span class="o">.</span><span class="na">positional</span><span class="p">();</span>
+  <span class="kd">final</span> <span class="n">color2</span> <span class="o">=</span> <span class="n">MyColor0</span><span class="o">.</span><span class="na">positional</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+  <span class="kd">final</span> <span class="n">color3</span> <span class="o">=</span> <span class="n">MyColor0</span><span class="o">.</span><span class="na">name</span><span class="p">();</span>
+  <span class="kd">final</span> <span class="n">color4</span> <span class="o">=</span> <span class="n">MyColor0</span><span class="o">.</span><span class="na">name</span><span class="p">(</span><span class="nl">red:</span> <span class="mi">4</span><span class="p">,</span> <span class="nl">green:</span> <span class="mi">5</span><span class="p">,</span> <span class="nl">blue:</span> <span class="mi">6</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h1 id='spacecraft'>spacecraft</h1><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Spacecraft</span> <span class="p">{</span>
+  <span class="kt">String</span> <span class="n">name</span><span class="p">;</span>
+  <span class="n">DateTime</span><span class="o">?</span> <span class="n">launchDate</span><span class="p">;</span>
+
+  <span class="c1">// Read-only non-final property</span>
+  <span class="kt">int</span><span class="o">?</span> <span class="kd">get</span> <span class="n">launchYear</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">launchDate</span><span class="o">?.</span><span class="na">year</span><span class="p">;</span>
+
+  <span class="c1">// Constructor, with syntactic sugar for assignment to members.</span>
+  <span class="n">Spacecraft</span><span class="p">(</span><span class="k">this</span><span class="o">.</span><span class="na">name</span><span class="p">,</span> <span class="k">this</span><span class="o">.</span><span class="na">launchDate</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Initialization code goes here.</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Named constructor that forwards to the default one.</span>
+  <span class="n">Spacecraft</span><span class="o">.</span><span class="na">unlaunched</span><span class="p">(</span><span class="kt">String</span> <span class="n">name</span><span class="p">)</span> <span class="o">:</span> <span class="k">this</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+
+  <span class="c1">// Method.</span>
+  <span class="kt">void</span> <span class="n">describe</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'Spacecraft: </span><span class="si">$name</span><span class="s">'</span><span class="p">);</span>
+    <span class="c1">// Type promotion doesn't work on getters.</span>
+    <span class="kd">var</span> <span class="n">launchDate</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">launchDate</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">launchDate</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kt">int</span> <span class="n">years</span> <span class="o">=</span> <span class="n">DateTime</span><span class="o">.</span><span class="na">now</span><span class="p">()</span><span class="o">.</span><span class="na">difference</span><span class="p">(</span><span class="n">launchDate</span><span class="p">)</span><span class="o">.</span><span class="na">inDays</span> <span class="o">~/</span> <span class="mi">365</span><span class="p">;</span>
+      <span class="n">print</span><span class="p">(</span><span class="s">'Launched: </span><span class="si">$launchYear</span><span class="s"> (</span><span class="si">$years</span><span class="s"> years ago)'</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">print</span><span class="p">(</span><span class="s">'Unlaunched'</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// extends</span>
+<span class="kd">class</span> <span class="nc">Orbiter</span> <span class="kd">extends</span> <span class="n">Spacecraft</span> <span class="p">{</span>
+  <span class="kt">double</span> <span class="n">altitude</span><span class="p">;</span>
+
+  <span class="c1">// 添加 DateTime 除去父类的 DateTime?</span>
+  <span class="n">Orbiter</span><span class="p">(</span><span class="k">super</span><span class="o">.</span><span class="na">name</span><span class="p">,</span> <span class="n">DateTime</span> <span class="k">super</span><span class="o">.</span><span class="na">launchDate</span><span class="p">,</span> <span class="k">this</span><span class="o">.</span><span class="na">altitude</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// mixin</span>
+<span class="kd">mixin</span> <span class="nc">Piloted</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">astronauts</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="kt">void</span> <span class="n">describeCrew</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'Number of astronauts: </span><span class="si">$astronauts</span><span class="s">'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// mixin-use</span>
+<span class="kd">class</span> <span class="nc">PilotedCraft</span> <span class="kd">extends</span> <span class="n">Spacecraft</span> <span class="k">with</span> <span class="n">Piloted</span> <span class="p">{</span>
+  <span class="n">PilotedCraft</span><span class="p">(</span><span class="k">super</span><span class="o">.</span><span class="na">name</span><span class="p">,</span> <span class="n">DateTime</span> <span class="k">super</span><span class="o">.</span><span class="na">launchDate</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// implements</span>
+<span class="kd">class</span> <span class="nc">MockSpaceship</span> <span class="kd">implements</span> <span class="n">Spacecraft</span> <span class="p">{</span>
+  <span class="n">MockSpaceship</span><span class="p">(</span><span class="k">this</span><span class="o">.</span><span class="na">name</span><span class="p">);</span>
+
+  <span class="nd">@override</span>
+  <span class="n">DateTime</span><span class="o">?</span> <span class="n">launchDate</span> <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="mi">1969</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
+
+  <span class="nd">@override</span>
+  <span class="kt">String</span> <span class="n">name</span><span class="p">;</span>
+
+  <span class="nd">@override</span>
+  <span class="kt">void</span> <span class="n">describe</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">print</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+
+  <span class="nd">@override</span>
+  <span class="kt">int</span><span class="o">?</span> <span class="kd">get</span> <span class="n">launchYear</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">launchDate</span><span class="o">?.</span><span class="na">year</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// abstract</span>
+<span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Describable</span> <span class="p">{</span>
+  <span class="kt">void</span> <span class="n">describe</span><span class="p">();</span>
+
+  <span class="kt">void</span> <span class="n">describeWithEmphasis</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'========='</span><span class="p">);</span>
+    <span class="n">describe</span><span class="p">();</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'========='</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// simple-enum</span>
+<span class="kt">enum</span> <span class="n">PlanetType</span> <span class="p">{</span> <span class="n">terrestrial</span><span class="p">,</span> <span class="n">gas</span><span class="p">,</span> <span class="n">ice</span> <span class="p">}</span>
+
+<span class="c1">// enhanced-enum</span>
+<span class="c1">/// Enum that enumerates the different planets</span>
+<span class="c1">/// in our solar system and some of their properties.</span>
+<span class="kt">enum</span> <span class="n">Planet</span> <span class="p">{</span>
+  <span class="n">mercury</span><span class="p">(</span><span class="nl">planetType:</span> <span class="n">PlanetType</span><span class="o">.</span><span class="na">terrestrial</span><span class="p">,</span> <span class="nl">moons:</span> <span class="mi">0</span><span class="p">,</span> <span class="nl">hasRings:</span> <span class="kc">false</span><span class="p">),</span>
+  <span class="n">venus</span><span class="p">(</span><span class="nl">planetType:</span> <span class="n">PlanetType</span><span class="o">.</span><span class="na">terrestrial</span><span class="p">,</span> <span class="nl">moons:</span> <span class="mi">0</span><span class="p">,</span> <span class="nl">hasRings:</span> <span class="kc">false</span><span class="p">),</span>
+  <span class="n">earth</span><span class="p">(</span><span class="nl">planetType:</span> <span class="n">PlanetType</span><span class="o">.</span><span class="na">terrestrial</span><span class="p">,</span> <span class="nl">moons:</span> <span class="mi">1</span><span class="p">,</span> <span class="nl">hasRings:</span> <span class="kc">false</span><span class="p">),</span>
+  <span class="n">mars</span><span class="p">(</span><span class="nl">planetType:</span> <span class="n">PlanetType</span><span class="o">.</span><span class="na">terrestrial</span><span class="p">,</span> <span class="nl">moons:</span> <span class="mi">2</span><span class="p">,</span> <span class="nl">hasRings:</span> <span class="kc">false</span><span class="p">),</span>
+  <span class="n">jupiter</span><span class="p">(</span><span class="nl">planetType:</span> <span class="n">PlanetType</span><span class="o">.</span><span class="na">gas</span><span class="p">,</span> <span class="nl">moons:</span> <span class="mi">80</span><span class="p">,</span> <span class="nl">hasRings:</span> <span class="kc">true</span><span class="p">),</span>
+  <span class="n">saturn</span><span class="p">(</span><span class="nl">planetType:</span> <span class="n">PlanetType</span><span class="o">.</span><span class="na">gas</span><span class="p">,</span> <span class="nl">moons:</span> <span class="mi">83</span><span class="p">,</span> <span class="nl">hasRings:</span> <span class="kc">true</span><span class="p">),</span>
+  <span class="n">uranus</span><span class="p">(</span><span class="nl">planetType:</span> <span class="n">PlanetType</span><span class="o">.</span><span class="na">ice</span><span class="p">,</span> <span class="nl">moons:</span> <span class="mi">27</span><span class="p">,</span> <span class="nl">hasRings:</span> <span class="kc">true</span><span class="p">),</span>
+  <span class="n">neptune</span><span class="p">(</span><span class="nl">planetType:</span> <span class="n">PlanetType</span><span class="o">.</span><span class="na">ice</span><span class="p">,</span> <span class="nl">moons:</span> <span class="mi">14</span><span class="p">,</span> <span class="nl">hasRings:</span> <span class="kc">true</span><span class="p">);</span>
+
+  <span class="c1">/// A constant generating constructor</span>
+  <span class="kd">const</span> <span class="n">Planet</span><span class="p">({</span>
+    <span class="kd">required</span> <span class="k">this</span><span class="o">.</span><span class="na">planetType</span><span class="p">,</span>
+    <span class="kd">required</span> <span class="k">this</span><span class="o">.</span><span class="na">moons</span><span class="p">,</span>
+    <span class="kd">required</span> <span class="k">this</span><span class="o">.</span><span class="na">hasRings</span><span class="p">,</span>
+  <span class="p">});</span>
+
+  <span class="c1">/// All instance variables are final</span>
+  <span class="kd">final</span> <span class="n">PlanetType</span> <span class="n">planetType</span><span class="p">;</span>
+  <span class="kd">final</span> <span class="kt">int</span> <span class="n">moons</span><span class="p">;</span>
+  <span class="kd">final</span> <span class="kt">bool</span> <span class="n">hasRings</span><span class="p">;</span>
+
+  <span class="c1">/// Enhanced enums support getters and other methods</span>
+  <span class="kt">bool</span> <span class="kd">get</span> <span class="n">isGiant</span> <span class="o">=</span><span class="p">&gt;</span>
+      <span class="n">planetType</span> <span class="o">==</span> <span class="n">PlanetType</span><span class="o">.</span><span class="na">gas</span> <span class="o">||</span> <span class="n">planetType</span> <span class="o">==</span> <span class="n">PlanetType</span><span class="o">.</span><span class="na">ice</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">voyager</span> <span class="o">=</span> <span class="n">Spacecraft</span><span class="p">(</span><span class="s">'Voyager I'</span><span class="p">,</span> <span class="n">DateTime</span><span class="p">(</span><span class="mi">1977</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">));</span>
+  <span class="n">voyager</span><span class="o">.</span><span class="na">describe</span><span class="p">();</span>
+  <span class="c1">// Spacecraft: Voyager I</span>
+  <span class="c1">// Launched: 1977 (45 years ago)</span>
+
+  <span class="kd">var</span> <span class="n">voyager3</span> <span class="o">=</span> <span class="n">Spacecraft</span><span class="o">.</span><span class="na">unlaunched</span><span class="p">(</span><span class="s">'Voyager III'</span><span class="p">);</span>
+  <span class="n">voyager3</span><span class="o">.</span><span class="na">describe</span><span class="p">();</span>
+  <span class="c1">// Spacecraft: Voyager III</span>
+  <span class="c1">// Unlaunched</span>
+
+  <span class="kd">final</span> <span class="n">yourPlanet</span> <span class="o">=</span> <span class="n">Planet</span><span class="o">.</span><span class="na">earth</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">yourPlanet</span><span class="o">.</span><span class="na">isGiant</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'Your planet is not a "giant planet".'</span><span class="p">);</span>
+  <span class="p">}</span> <span class="c1">// Your planet is not a "giant planet".</span>
+
+  <span class="kd">final</span> <span class="n">o</span> <span class="o">=</span> <span class="n">Orbiter</span><span class="p">(</span><span class="s">'O'</span><span class="p">,</span> <span class="n">DateTime</span><span class="p">(</span><span class="mi">1999</span><span class="p">),</span> <span class="mi">42</span><span class="p">);</span>
+  <span class="kd">final</span> <span class="n">p</span> <span class="o">=</span> <span class="n">PilotedCraft</span><span class="p">(</span><span class="s">'shuttle'</span><span class="p">,</span> <span class="n">DateTime</span><span class="p">(</span><span class="mi">1999</span><span class="p">));</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="na">astronauts</span><span class="p">);</span> <span class="c1">// 1</span>
+
+  <span class="kd">final</span> <span class="n">m</span> <span class="o">=</span> <span class="n">MockSpaceship</span><span class="p">(</span><span class="s">'Enterprise'</span><span class="p">);</span>
+  <span class="n">m</span><span class="o">.</span><span class="na">describe</span><span class="p">();</span> <span class="c1">// Enterprise</span>
+
+  <span class="c1">// async*</span>
+  <span class="kd">var</span> <span class="n">flybyObjects</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Jupiter'</span><span class="p">,</span> <span class="s">'Saturn'</span><span class="p">,</span> <span class="s">'Uranus'</span><span class="p">,</span> <span class="s">'Neptune'</span><span class="p">];</span>
+  <span class="c1">// oneSecond is shown in the code excerpts as 1 second,</span>
+  <span class="c1">// but we don't need to delay the actual test execution,</span>
+  <span class="c1">// so we set the delay to 0.</span>
+  <span class="kd">const</span> <span class="n">oneSecond</span> <span class="o">=</span> <span class="n">Duration</span><span class="p">(</span><span class="nl">seconds:</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">Stream</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">report</span><span class="p">(</span><span class="n">Spacecraft</span> <span class="n">craft</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">objects</span><span class="p">)</span> <span class="kd">async</span><span class="o">*</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">final</span> <span class="n">object</span> <span class="k">in</span> <span class="n">objects</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">await</span> <span class="n">Future</span><span class="o">.</span><span class="na">delayed</span><span class="p">(</span><span class="n">oneSecond</span><span class="p">);</span>
+      <span class="k">yield</span> <span class="s">'</span><span class="si">${craft.name}</span><span class="s"> flies by </span><span class="si">$object</span><span class="s">'</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kd">final</span> <span class="n">messages</span> <span class="o">=</span> <span class="k">await</span> <span class="n">report</span><span class="p">(</span><span class="n">voyager</span><span class="p">,</span> <span class="n">flybyObjects</span><span class="p">)</span><span class="o">.</span><span class="na">toList</span><span class="p">();</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">messages</span><span class="p">);</span>
+  <span class="c1">// [Voyager I flies by Jupiter,</span>
+  <span class="c1">// Voyager I flies by Saturn,</span>
+  <span class="c1">// Voyager I flies by Uranus,</span>
+  <span class="c1">// Voyager I flies by Neptune]</span>
+<span class="p">}</span>
 </code></pre></div><h1 id='metadata'>Metadata</h1><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Todo</span> <span class="p">{</span>
   <span class="kd">final</span> <span class="kt">String</span> <span class="n">who</span><span class="p">;</span>
   <span class="kd">final</span> <span class="kt">String</span> <span class="n">what</span><span class="p">;</span>
