@@ -1481,7 +1481,20 @@
   <span class="c1">// Voyager I flies by Uranus,</span>
   <span class="c1">// Voyager I flies by Neptune]</span>
 <span class="p">}</span>
-</code></pre></div><h1 id='typedef'>typedef</h1><div class="highlight"><pre class="highlight dart tab-dart"><code>
+</code></pre></div><h1 id='typedef'>typedef</h1><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">typedef</span> <span class="n">IntList</span> <span class="o">=</span> <span class="kt">List</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;;</span>
+<span class="n">IntList</span> <span class="n">il</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+
+<span class="kd">typedef</span> <span class="n">ListMapper</span><span class="p">&lt;</span><span class="n">X</span><span class="p">&gt;</span> <span class="o">=</span> <span class="kt">Map</span><span class="p">&lt;</span><span class="n">X</span><span class="p">,</span> <span class="kt">List</span><span class="p">&lt;</span><span class="n">X</span><span class="p">&gt;&gt;;</span>
+<span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">List</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;&gt;</span> <span class="n">m1</span> <span class="o">=</span> <span class="p">{};</span> <span class="c1">// Verbose.</span>
+<span class="n">ListMapper</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">m2</span> <span class="o">=</span> <span class="p">{};</span><span class="c1">// Same thing but shorter and clearer.</span>
+
+<span class="kd">typedef</span> <span class="n">Compare</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="o">=</span> <span class="kt">int</span> <span class="kt">Function</span><span class="p">(</span><span class="n">T</span> <span class="n">a</span><span class="p">,</span> <span class="n">T</span> <span class="n">b</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">sort</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">sort</span> <span class="k">is</span> <span class="n">Compare</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;);</span> <span class="c1">// true</span>
+<span class="p">}</span>
 </code></pre></div><h1 id='metadata'>Metadata</h1><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Todo</span> <span class="p">{</span>
   <span class="kd">final</span> <span class="kt">String</span> <span class="n">who</span><span class="p">;</span>
   <span class="kd">final</span> <span class="kt">String</span> <span class="n">what</span><span class="p">;</span>
