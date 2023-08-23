@@ -584,6 +584,13 @@ void main() async {
 }
 ```
 
+# typedef
+
+```dart
+
+```
+
+
 
 
 
