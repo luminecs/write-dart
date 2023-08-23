@@ -424,6 +424,122 @@ void main() {
 }
 ```
 
+# spacecraft
+
+```dart
+class Spacecraft {
+  String name;
+  DateTime? launchDate;
+
+  // Read-only non-final property
+  int? get launchYear => launchDate?.year;
+
+  // Constructor, with syntactic sugar for assignment to members.
+  Spacecraft(this.name, this.launchDate) {
+    // Initialization code goes here.
+  }
+
+  // Named constructor that forwards to the default one.
+  Spacecraft.unlaunched(String name) : this(name, null);
+
+  // Method.
+  void describe() {
+    print('Spacecraft: $name');
+    // Type promotion doesn't work on getters.
+    var launchDate = this.launchDate;
+    if (launchDate != null) {
+      int years = DateTime.now().difference(launchDate).inDays ~/ 365;
+      print('Launched: $launchYear ($years years ago)');
+    } else {
+      print('Unlaunched');
+    }
+  }
+}
+
+// extends
+class Orbiter extends Spacecraft {
+  double altitude;
+
+  // 添加 DateTime 除去父类的 DateTime?
+  Orbiter(super.name, DateTime super.launchDate, this.altitude);
+}
+
+// mixin
+mixin Piloted {
+  int astronauts = 1;
+
+  void describeCrew() {
+    print('Number of astronauts: $astronauts');
+  }
+}
+
+// mixin-use
+class PilotedCraft extends Spacecraft with Piloted {
+  PilotedCraft(super.name, DateTime super.launchDate);
+}
+
+// implements
+class MockSpaceship implements Spacecraft {
+  MockSpaceship(this.name);
+
+  @override
+  DateTime? launchDate = DateTime(1969, 7, 16);
+
+  @override
+  String name;
+
+  @override
+  void describe() => print(name);
+
+  @override
+  int? get launchYear => launchDate?.year;
+}
+
+// abstract
+abstract class Describable {
+  void describe();
+
+  void describeWithEmphasis() {
+    print('=========');
+    describe();
+    print('=========');
+  }
+}
+
+// simple-enum
+enum PlanetType { terrestrial, gas, ice }
+
+// enhanced-enum
+/// Enum that enumerates the different planets
+/// in our solar system and some of their properties.
+enum Planet {
+  mercury(planetType: PlanetType.terrestrial, moons: 0, hasRings: false),
+  venus(planetType: PlanetType.terrestrial, moons: 0, hasRings: false),
+  earth(planetType: PlanetType.terrestrial, moons: 1, hasRings: false),
+  mars(planetType: PlanetType.terrestrial, moons: 2, hasRings: false),
+  jupiter(planetType: PlanetType.gas, moons: 80, hasRings: true),
+  saturn(planetType: PlanetType.gas, moons: 83, hasRings: true),
+  uranus(planetType: PlanetType.ice, moons: 27, hasRings: true),
+  neptune(planetType: PlanetType.ice, moons: 14, hasRings: true);
+
+  /// A constant generating constructor
+  const Planet({
+    required this.planetType,
+    required this.moons,
+    required this.hasRings,
+  });
+
+  /// All instance variables are final
+  final PlanetType planetType;
+  final int moons;
+  final bool hasRings;
+
+  /// Enhanced enums support getters and other methods
+  bool get isGiant =>
+      planetType == PlanetType.gas || planetType == PlanetType.ice;
+}
+```
+
 
 
 
