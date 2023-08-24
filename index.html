@@ -339,6 +339,9 @@
                   <li>
                     <a href="#raw-strings" class="toc-h2 toc-link" data-title="raw-strings">raw-strings</a>
                   </li>
+                  <li>
+                    <a href="#string-literals" class="toc-h2 toc-link" data-title="string-literals">string-literals</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1100,6 +1103,22 @@
   <span class="kd">var</span> <span class="n">s</span> <span class="o">=</span> <span class="sx">r'In a raw string, not even \n gets special treatment.'</span><span class="p">;</span>
   <span class="n">print</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
   <span class="c1">// In a raw string, not even \n gets special treatment.</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='string-literals'>string-literals</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// These work in a const string.</span>
+  <span class="kd">const</span> <span class="n">aConstNum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="n">aConstBool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="n">aConstString</span> <span class="o">=</span> <span class="s">'a constant string'</span><span class="p">;</span>
+
+  <span class="c1">// These do NOT work in a const string.</span>
+  <span class="kd">var</span> <span class="n">aNum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="n">aBool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="n">aString</span> <span class="o">=</span> <span class="s">'a string'</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="n">aConstList</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+
+  <span class="kd">const</span> <span class="n">validConstString</span> <span class="o">=</span> <span class="s">'</span><span class="si">$aConstNum</span><span class="s"> </span><span class="si">$aConstBool</span><span class="s"> </span><span class="si">$aConstString</span><span class="s">'</span><span class="p">;</span>
+  <span class="c1">// const invalidConstString = '$aNum $aBool $aString $aConstList';</span>
+  <span class="c1">// Const variables must be initialized with a constant value.</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='generics'>Generics</h1><h2 id='base_class'>base_class</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">SomeBaseClass</span> <span class="p">{}</span>
 
