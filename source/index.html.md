@@ -4042,6 +4042,65 @@ void main() async {
 }
 ```
 
+## async
+
+```dart
+// sync
+String lookUpVersionSync() => '1.0.0';
+
+Future<String> lookUpVersion() async => '1.0.0';
+
+Future<void> checkVersion() async {
+  var version = await lookUpVersion();
+}
+
+Future<void> tryCatch() async {
+  String version;
+  try {
+    version = await lookUpVersion();
+  } catch (e) {
+    // React to inability to look up the version
+  }
+}
+
+Future<void> repeatedAwait() async {
+  Future<dynamic> findEntryPoint() async => Never;
+  Future<dynamic> flushThenExit(_) async => Never;
+  Future<dynamic> runExecutable(_, dynamic) async => Never;
+  dynamic args;
+  var entrypoint = await findEntryPoint();
+  var exitCode = await runExecutable(entrypoint, args);
+  await flushThenExit(exitCode);
+}
+
+Future<void> check() async {}
+
+void main() async {
+  check();
+  print('In main: version is ${await lookUpVersion()}');
+}
+
+Stream<dynamic> requestServer = Stream.empty();
+Future<dynamic> handleRequest(_) async => Never;
+
+void numberThinker() async {
+  // ...
+  await for (final request in requestServer) {
+    handleRequest(request);
+  }
+  // ...
+}
+
+Future<void> awaitFor() async {
+  <varOrType>(Stream<varOrType> expression) async {
+    // ignore: prefer_final_in_for_each
+    await for (varOrType identifier in expression) {
+      // Executes each time the stream emits a value.
+    }
+  };
+}
+```
+
 ## futures_intro
 
 ```dart
