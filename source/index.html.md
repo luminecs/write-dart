@@ -43,6 +43,76 @@ void main() {
 这是一个 <code>Warning</code> 示例。
 </aside>
 
+# built_in_types
+
+## integer-literals
+
+```dart
+void main() {
+  var x = 1;
+  var hex = 0xDEADBEEF;
+}
+```
+
+## double-literals
+
+```dart
+void main() {
+  var y = 1.1;
+  var exponents = 1.42e5;
+}
+```
+
+## declare-num
+
+```dart
+void main() {
+  num nx = 1; // nx can have both int and double values
+  nx += 2.5;
+  print(nx); // 3.5
+}
+```
+
+## int-to-double
+
+```dart
+void main() {
+  double z = 1; // Equivalent to double z = 1.0.
+}
+```
+
+## const-num
+
+```dart
+void main() {
+  const msPerSecond = 1000;
+  const secondsUntilRetry = 5;
+  const msUntilRetry = secondsUntilRetry * msPerSecond;
+}
+```
+
+## quoting
+
+```dart
+void main() {
+  var s1 = 'Single quotes work well for string literals.';
+  var s2 = "Double quotes work just as well.";
+  var s3 = 'It\'s easy to escape the string delimiter.';
+  var s4 = "It's even easier to use the other delimiter.";
+}
+```
+
+## raw-strings
+
+```dart
+void main() {
+  var s = r'In a raw string, not even \n gets special treatment.';
+  print(s);
+  // In a raw string, not even \n gets special treatment.
+}
+```
+
+
 
 # Generics
 
