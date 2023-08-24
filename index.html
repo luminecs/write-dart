@@ -964,6 +964,9 @@
                     <a href="#async_example" class="toc-h2 toc-link" data-title="async_example">async_example</a>
                   </li>
                   <li>
+                    <a href="#async-2" class="toc-h2 toc-link" data-title="async">async</a>
+                  </li>
+                  <li>
                     <a href="#futures_intro" class="toc-h2 toc-link" data-title="futures_intro">futures_intro</a>
                   </li>
                   <li>
@@ -3925,6 +3928,60 @@
   <span class="c1">// 3</span>
   <span class="c1">// 4</span>
   <span class="c1">// Your order is: Large Latte</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='async-2'>async</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="c1">// sync</span>
+<span class="kt">String</span> <span class="nf">lookUpVersionSync</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="s">'1.0.0'</span><span class="p">;</span>
+
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">lookUpVersion</span><span class="p">()</span> <span class="kd">async</span> <span class="o">=</span><span class="p">&gt;</span> <span class="s">'1.0.0'</span><span class="p">;</span>
+
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">void</span><span class="p">&gt;</span> <span class="n">checkVersion</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">version</span> <span class="o">=</span> <span class="k">await</span> <span class="n">lookUpVersion</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">void</span><span class="p">&gt;</span> <span class="n">tryCatch</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="kt">String</span> <span class="n">version</span><span class="p">;</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="k">await</span> <span class="n">lookUpVersion</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// React to inability to look up the version</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">void</span><span class="p">&gt;</span> <span class="n">repeatedAwait</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="n">Future</span><span class="p">&lt;</span><span class="kd">dynamic</span><span class="p">&gt;</span> <span class="n">findEntryPoint</span><span class="p">()</span> <span class="kd">async</span> <span class="o">=</span><span class="p">&gt;</span> <span class="kt">Never</span><span class="p">;</span>
+  <span class="n">Future</span><span class="p">&lt;</span><span class="kd">dynamic</span><span class="p">&gt;</span> <span class="n">flushThenExit</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="kd">async</span> <span class="o">=</span><span class="p">&gt;</span> <span class="kt">Never</span><span class="p">;</span>
+  <span class="n">Future</span><span class="p">&lt;</span><span class="kd">dynamic</span><span class="p">&gt;</span> <span class="n">runExecutable</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="kd">dynamic</span><span class="p">)</span> <span class="kd">async</span> <span class="o">=</span><span class="p">&gt;</span> <span class="kt">Never</span><span class="p">;</span>
+  <span class="kd">dynamic</span> <span class="n">args</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="n">entrypoint</span> <span class="o">=</span> <span class="k">await</span> <span class="n">findEntryPoint</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="n">exitCode</span> <span class="o">=</span> <span class="k">await</span> <span class="n">runExecutable</span><span class="p">(</span><span class="n">entrypoint</span><span class="p">,</span> <span class="n">args</span><span class="p">);</span>
+  <span class="k">await</span> <span class="n">flushThenExit</span><span class="p">(</span><span class="n">exitCode</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">void</span><span class="p">&gt;</span> <span class="n">check</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="n">check</span><span class="p">();</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'In main: version is </span><span class="si">${await lookUpVersion()}</span><span class="s">'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">Stream</span><span class="p">&lt;</span><span class="kd">dynamic</span><span class="p">&gt;</span> <span class="n">requestServer</span> <span class="o">=</span> <span class="n">Stream</span><span class="o">.</span><span class="na">empty</span><span class="p">();</span>
+<span class="n">Future</span><span class="p">&lt;</span><span class="kd">dynamic</span><span class="p">&gt;</span> <span class="n">handleRequest</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="kd">async</span> <span class="o">=</span><span class="p">&gt;</span> <span class="kt">Never</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">numberThinker</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="c1">// ...</span>
+  <span class="k">await</span> <span class="k">for</span> <span class="p">(</span><span class="kd">final</span> <span class="n">request</span> <span class="k">in</span> <span class="n">requestServer</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">handleRequest</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span>
+
+<span class="n">Future</span><span class="p">&lt;</span><span class="kt">void</span><span class="p">&gt;</span> <span class="n">awaitFor</span><span class="p">()</span> <span class="kd">async</span> <span class="p">{</span>
+  <span class="p">&lt;</span><span class="n">varOrType</span><span class="p">&gt;(</span><span class="n">Stream</span><span class="p">&lt;</span><span class="n">varOrType</span><span class="p">&gt;</span> <span class="n">expression</span><span class="p">)</span> <span class="kd">async</span> <span class="p">{</span>
+    <span class="c1">// ignore: prefer_final_in_for_each</span>
+    <span class="k">await</span> <span class="k">for</span> <span class="p">(</span><span class="n">varOrType</span> <span class="n">identifier</span> <span class="k">in</span> <span class="n">expression</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// Executes each time the stream emits a value.</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
 <span class="p">}</span>
 </code></pre></div><h2 id='futures_intro'>futures_intro</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="n">Future</span><span class="p">&lt;</span><span class="kt">void</span><span class="p">&gt;</span> <span class="n">fetchUserOrder</span><span class="p">()</span> <span class="p">{</span>
   <span class="c1">// Imagine that this function is fetching</span>
