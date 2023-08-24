@@ -316,6 +316,32 @@
             <a href="#45fa4e00db" class="toc-h1 toc-link" data-title="介绍">介绍</a>
           </li>
           <li>
+            <a href="#built_in_types" class="toc-h1 toc-link" data-title="built_in_types">built_in_types</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#integer-literals" class="toc-h2 toc-link" data-title="integer-literals">integer-literals</a>
+                  </li>
+                  <li>
+                    <a href="#double-literals" class="toc-h2 toc-link" data-title="double-literals">double-literals</a>
+                  </li>
+                  <li>
+                    <a href="#declare-num" class="toc-h2 toc-link" data-title="declare-num">declare-num</a>
+                  </li>
+                  <li>
+                    <a href="#int-to-double" class="toc-h2 toc-link" data-title="int-to-double">int-to-double</a>
+                  </li>
+                  <li>
+                    <a href="#const-num" class="toc-h2 toc-link" data-title="const-num">const-num</a>
+                  </li>
+                  <li>
+                    <a href="#quoting" class="toc-h2 toc-link" data-title="quoting">quoting</a>
+                  </li>
+                  <li>
+                    <a href="#raw-strings" class="toc-h2 toc-link" data-title="raw-strings">raw-strings</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#generics" class="toc-h1 toc-link" data-title="Generics">Generics</a>
               <ul class="toc-list-h2">
                   <li>
@@ -1043,7 +1069,39 @@
 <aside class="warning">
 这是一个 <code>Warning</code> 示例。
 </aside>
-<h1 id='generics'>Generics</h1><h2 id='base_class'>base_class</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">SomeBaseClass</span> <span class="p">{}</span>
+<h1 id='built_in_types'>built_in_types</h1><h2 id='integer-literals'>integer-literals</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="n">hex</span> <span class="o">=</span> <span class="mh">0xDEADBEEF</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='double-literals'>double-literals</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">1.1</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="n">exponents</span> <span class="o">=</span> <span class="mf">1.42e5</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='declare-num'>declare-num</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">num</span> <span class="n">nx</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// nx can have both int and double values</span>
+  <span class="n">nx</span> <span class="o">+=</span> <span class="mf">2.5</span><span class="p">;</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">nx</span><span class="p">);</span> <span class="c1">// 3.5</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='int-to-double'>int-to-double</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">double</span> <span class="n">z</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// Equivalent to double z = 1.0.</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='const-num'>const-num</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="n">msPerSecond</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="n">secondsUntilRetry</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="n">msUntilRetry</span> <span class="o">=</span> <span class="n">secondsUntilRetry</span> <span class="o">*</span> <span class="n">msPerSecond</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='quoting'>quoting</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">s1</span> <span class="o">=</span> <span class="s">'Single quotes work well for string literals.'</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="n">s2</span> <span class="o">=</span> <span class="s">"Double quotes work just as well."</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="n">s3</span> <span class="o">=</span> <span class="s">'It</span><span class="se">\'</span><span class="s">s easy to escape the string delimiter.'</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="n">s4</span> <span class="o">=</span> <span class="s">"It's even easier to use the other delimiter."</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='raw-strings'>raw-strings</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">s</span> <span class="o">=</span> <span class="sx">r'In a raw string, not even \n gets special treatment.'</span><span class="p">;</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+  <span class="c1">// In a raw string, not even \n gets special treatment.</span>
+<span class="p">}</span>
+</code></pre></div><h1 id='generics'>Generics</h1><h2 id='base_class'>base_class</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">SomeBaseClass</span> <span class="p">{}</span>
 
 <span class="kd">class</span> <span class="nc">Foo</span><span class="p">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">SomeBaseClass</span><span class="p">&gt;</span> <span class="p">{</span>
   <span class="c1">// Implementation goes here...</span>
