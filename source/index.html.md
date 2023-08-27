@@ -45,6 +45,97 @@ void main() {
 这是一个 <code>Warning</code> 示例。
 </aside>
 
+# built_in_types
+
+## integer-literals
+
+```dart
+void main() {
+  var x = 1;
+  var hex = 0xDEADBEEF;
+}
+```
+
+## double-literals
+
+```dart
+void main() {
+  var y = 1.1;
+  var exponents = 1.42e5;
+}
+```
+
+## declare-num
+
+```dart
+void main() {
+  num nx = 1; // nx can have both int and double values
+  nx += 2.5;
+  print(nx); // 3.5
+}
+```
+
+## int-to-double
+
+```dart
+void main() {
+  double z = 1; // Equivalent to double z = 1.0.
+}
+```
+
+## const-num
+
+```dart
+void main() {
+  const msPerSecond = 1000;
+  const secondsUntilRetry = 5;
+  const msUntilRetry = secondsUntilRetry * msPerSecond;
+}
+```
+
+## quoting
+
+```dart
+void main() {
+  var s1 = 'Single quotes work well for string literals.';
+  var s2 = "Double quotes work just as well.";
+  var s3 = 'It\'s easy to escape the string delimiter.';
+  var s4 = "It's even easier to use the other delimiter.";
+}
+```
+
+## raw-strings
+
+```dart
+void main() {
+  var s = r'In a raw string, not even \n gets special treatment.';
+  print(s);
+  // In a raw string, not even \n gets special treatment.
+}
+```
+
+## string-literals
+
+```dart
+void main() {
+  // These work in a const string.
+  const aConstNum = 0;
+  const aConstBool = true;
+  const aConstString = 'a constant string';
+
+  // These do NOT work in a const string.
+  var aNum = 0;
+  var aBool = true;
+  var aString = 'a string';
+  const aConstList = [1, 2, 3];
+
+  const validConstString = '$aConstNum $aConstBool $aConstString';
+  // const invalidConstString = '$aNum $aBool $aString $aConstList';
+  // Const variables must be initialized with a constant value.
+}
+```
+
+
 
 # Generics
 
@@ -585,6 +676,26 @@ void main() async {
   // Voyager I flies by Neptune]
 }
 ```
+
+# typedef
+
+```dart
+typedef IntList = List<int>;
+IntList il = [1, 2, 3];
+
+typedef ListMapper<X> = Map<X, List<X>>;
+Map<String, List<String>> m1 = {}; // Verbose.
+ListMapper<String> m2 = {};// Same thing but shorter and clearer.
+
+typedef Compare<T> = int Function(T a, T b);
+
+int sort(int a, int b) => a - b;
+
+void main() {
+  print(sort is Compare<int>); // true
+}
+```
+
 
 
 
@@ -4021,6 +4132,65 @@ void main() async {
   // 3
   // 4
   // Your order is: Large Latte
+}
+```
+
+## async
+
+```dart
+// sync
+String lookUpVersionSync() => '1.0.0';
+
+Future<String> lookUpVersion() async => '1.0.0';
+
+Future<void> checkVersion() async {
+  var version = await lookUpVersion();
+}
+
+Future<void> tryCatch() async {
+  String version;
+  try {
+    version = await lookUpVersion();
+  } catch (e) {
+    // React to inability to look up the version
+  }
+}
+
+Future<void> repeatedAwait() async {
+  Future<dynamic> findEntryPoint() async => Never;
+  Future<dynamic> flushThenExit(_) async => Never;
+  Future<dynamic> runExecutable(_, dynamic) async => Never;
+  dynamic args;
+  var entrypoint = await findEntryPoint();
+  var exitCode = await runExecutable(entrypoint, args);
+  await flushThenExit(exitCode);
+}
+
+Future<void> check() async {}
+
+void main() async {
+  check();
+  print('In main: version is ${await lookUpVersion()}');
+}
+
+Stream<dynamic> requestServer = Stream.empty();
+Future<dynamic> handleRequest(_) async => Never;
+
+void numberThinker() async {
+  // ...
+  await for (final request in requestServer) {
+    handleRequest(request);
+  }
+  // ...
+}
+
+Future<void> awaitFor() async {
+  <varOrType>(Stream<varOrType> expression) async {
+    // ignore: prefer_final_in_for_each
+    await for (varOrType identifier in expression) {
+      // Executes each time the stream emits a value.
+    }
+  };
 }
 ```
 
