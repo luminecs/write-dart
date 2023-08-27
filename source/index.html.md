@@ -23,6 +23,8 @@ meta:
 
 此页面用以记录 Dart 学习过程中的代码片段和概念。
 
+你好中国
+
 > Dart 打印 `Hello world!`。
 
 ```dart
