@@ -441,6 +441,12 @@
                   <li>
                     <a href="#defaulted" class="toc-h2 toc-link" data-title="defaulted">defaulted</a>
                   </li>
+                  <li>
+                    <a href="#doer" class="toc-h2 toc-link" data-title="doer">doer</a>
+                  </li>
+                  <li>
+                    <a href="#employee" class="toc-h2 toc-link" data-title="employee">employee</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1534,6 +1540,18 @@ multi-line strings like this one.
   <span class="kd">final</span> <span class="n">color3</span> <span class="o">=</span> <span class="n">MyColor0</span><span class="o">.</span><span class="na">name</span><span class="p">();</span>
   <span class="kd">final</span> <span class="n">color4</span> <span class="o">=</span> <span class="n">MyColor0</span><span class="o">.</span><span class="na">name</span><span class="p">(</span><span class="nl">red:</span> <span class="mi">4</span><span class="p">,</span> <span class="nl">green:</span> <span class="mi">5</span><span class="p">,</span> <span class="nl">blue:</span> <span class="mi">6</span><span class="p">);</span>
 <span class="p">}</span>
+</code></pre></div><h2 id='doer'>doer</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Doer</span> <span class="p">{</span>
+  <span class="c1">// Define instance variables and methods...</span>
+  <span class="kt">void</span> <span class="n">doSomething</span><span class="p">();</span> <span class="c1">// Define an abstract method.</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">EffectiveDoer</span> <span class="kd">extends</span> <span class="n">Doer</span> <span class="p">{</span>
+  <span class="kt">void</span> <span class="n">doSomething</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Provide an implementation,</span>
+    <span class="c1">// so the method is not abstract here...</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='employee'>employee</h2><div class="highlight"><pre class="highlight dart tab-dart"><code>
 </code></pre></div><h1 id='spacecraft'>spacecraft</h1><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Spacecraft</span> <span class="p">{</span>
   <span class="kt">String</span> <span class="n">name</span><span class="p">;</span>
   <span class="n">DateTime</span><span class="o">?</span> <span class="n">launchDate</span><span class="p">;</span>
