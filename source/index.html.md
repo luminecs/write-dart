@@ -133,6 +133,135 @@ void main() {
 }
 ```
 
+## const-list
+
+```dart
+void main() {
+  var constantList = const [1, 2, 3];
+  constantList[1] = 1; // This line will cause an error.
+}
+```
+
+## set-literal
+
+```dart
+void main() {
+  var halogens = {'fluorine', 'chlorine', 'bromine', 'iodine', 'astatine'};
+
+  // set-vs-map
+  var names = <String>{};
+  Set<String> names1 = {}; // This works, too.
+  var names2 = {}; // Creates a map, not a set.
+
+  // set-add-items
+  var elements = <String>{};
+  elements.add('fluorine');
+  elements.addAll(halogens);
+}
+```
+
+## const-set
+
+```dart
+void main() {
+  final constantSet = const {
+    'fluorine',
+    'chlorine',
+    'bromine',
+    'iodine',
+    'astatine',
+  };
+  constantSet.add('helium'); // This line will cause an error.
+}
+```
+
+## map-literal
+
+```dart
+void main() {
+  var gifts = {
+    // Key:    Value
+    'first': 'partridge',
+    'second': 'turtledoves',
+    'fifth': 'golden rings'
+  };
+
+  var nobleGases = {
+    2: 'helium',
+    10: 'neon',
+    18: 'argon',
+  };
+}
+```
+
+## map-constructor
+
+```dart
+void main() {
+  var gifts = Map<String, String>();
+  gifts['first'] = 'partridge';
+  gifts['second'] = 'turtledoves';
+  gifts['fifth'] = 'golden rings';
+
+  var nobleGases = Map<int, String>();
+  nobleGases[2] = 'helium';
+  nobleGases[10] = 'neon';
+  nobleGases[18] = 'argon';
+}
+```
+
+## map-add-item
+
+```dart
+void main() {
+  var gifts = {'first': 'partridge'};
+  gifts['fourth'] = 'calling birds'; // Add a key-value pair
+}
+```
+
+## const-map
+
+```dart
+void main() {
+  final constantMap = const {
+    2: 'helium',
+    10: 'neon',
+    18: 'argon',
+  };
+
+  constantMap[2] = 'Helium'; // This line will cause an error.
+}
+```
+
+## triple-quotes
+
+```dart
+void main() {
+  var s1 = '''
+  You can create
+multi-line strings like this one.
+  ''';
+  var s2 = """This is also a
+  multi-line string.""";
+  print(s1);
+  //   You can create
+  // multi-line strings like this one.
+  print(s2);
+  // This is also a
+  //   multi-line string.
+}
+```
+
+## symbols
+
+```dart
+void main() {
+  var a1 = Function.apply(int.parse, ['11']);
+  print(a1); // 11
+  var a2 = Function.apply(int.parse, ['11'], {#radix: 16});
+  print(a2); // 17
+}
+```
 
 
 # Generics
