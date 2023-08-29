@@ -342,6 +342,33 @@
                   <li>
                     <a href="#string-literals" class="toc-h2 toc-link" data-title="string-literals">string-literals</a>
                   </li>
+                  <li>
+                    <a href="#const-list" class="toc-h2 toc-link" data-title="const-list">const-list</a>
+                  </li>
+                  <li>
+                    <a href="#set-literal" class="toc-h2 toc-link" data-title="set-literal">set-literal</a>
+                  </li>
+                  <li>
+                    <a href="#const-set" class="toc-h2 toc-link" data-title="const-set">const-set</a>
+                  </li>
+                  <li>
+                    <a href="#map-literal" class="toc-h2 toc-link" data-title="map-literal">map-literal</a>
+                  </li>
+                  <li>
+                    <a href="#map-constructor" class="toc-h2 toc-link" data-title="map-constructor">map-constructor</a>
+                  </li>
+                  <li>
+                    <a href="#map-add-item" class="toc-h2 toc-link" data-title="map-add-item">map-add-item</a>
+                  </li>
+                  <li>
+                    <a href="#const-map" class="toc-h2 toc-link" data-title="const-map">const-map</a>
+                  </li>
+                  <li>
+                    <a href="#triple-quotes" class="toc-h2 toc-link" data-title="triple-quotes">triple-quotes</a>
+                  </li>
+                  <li>
+                    <a href="#symbols" class="toc-h2 toc-link" data-title="symbols">symbols</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1119,6 +1146,91 @@
   <span class="kd">const</span> <span class="n">validConstString</span> <span class="o">=</span> <span class="s">'</span><span class="si">$aConstNum</span><span class="s"> </span><span class="si">$aConstBool</span><span class="s"> </span><span class="si">$aConstString</span><span class="s">'</span><span class="p">;</span>
   <span class="c1">// const invalidConstString = '$aNum $aBool $aString $aConstList';</span>
   <span class="c1">// Const variables must be initialized with a constant value.</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='const-list'>const-list</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">constantList</span> <span class="o">=</span> <span class="kd">const</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+  <span class="n">constantList</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// This line will cause an error.</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='set-literal'>set-literal</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">halogens</span> <span class="o">=</span> <span class="p">{</span><span class="s">'fluorine'</span><span class="p">,</span> <span class="s">'chlorine'</span><span class="p">,</span> <span class="s">'bromine'</span><span class="p">,</span> <span class="s">'iodine'</span><span class="p">,</span> <span class="s">'astatine'</span><span class="p">};</span>
+
+  <span class="c1">// set-vs-map</span>
+  <span class="kd">var</span> <span class="n">names</span> <span class="o">=</span> <span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;{};</span>
+  <span class="kt">Set</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;</span> <span class="n">names1</span> <span class="o">=</span> <span class="p">{};</span> <span class="c1">// This works, too.</span>
+  <span class="kd">var</span> <span class="n">names2</span> <span class="o">=</span> <span class="p">{};</span> <span class="c1">// Creates a map, not a set.</span>
+
+  <span class="c1">// set-add-items</span>
+  <span class="kd">var</span> <span class="n">elements</span> <span class="o">=</span> <span class="p">&lt;</span><span class="kt">String</span><span class="p">&gt;{};</span>
+  <span class="n">elements</span><span class="o">.</span><span class="na">add</span><span class="p">(</span><span class="s">'fluorine'</span><span class="p">);</span>
+  <span class="n">elements</span><span class="o">.</span><span class="na">addAll</span><span class="p">(</span><span class="n">halogens</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='const-set'>const-set</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">constantSet</span> <span class="o">=</span> <span class="kd">const</span> <span class="p">{</span>
+    <span class="s">'fluorine'</span><span class="p">,</span>
+    <span class="s">'chlorine'</span><span class="p">,</span>
+    <span class="s">'bromine'</span><span class="p">,</span>
+    <span class="s">'iodine'</span><span class="p">,</span>
+    <span class="s">'astatine'</span><span class="p">,</span>
+  <span class="p">};</span>
+  <span class="n">constantSet</span><span class="o">.</span><span class="na">add</span><span class="p">(</span><span class="s">'helium'</span><span class="p">);</span> <span class="c1">// This line will cause an error.</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='map-literal'>map-literal</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">gifts</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1">// Key:    Value</span>
+    <span class="s">'first'</span><span class="o">:</span> <span class="s">'partridge'</span><span class="p">,</span>
+    <span class="s">'second'</span><span class="o">:</span> <span class="s">'turtledoves'</span><span class="p">,</span>
+    <span class="s">'fifth'</span><span class="o">:</span> <span class="s">'golden rings'</span>
+  <span class="p">};</span>
+
+  <span class="kd">var</span> <span class="n">nobleGases</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">2</span><span class="o">:</span> <span class="s">'helium'</span><span class="p">,</span>
+    <span class="mi">10</span><span class="o">:</span> <span class="s">'neon'</span><span class="p">,</span>
+    <span class="mi">18</span><span class="o">:</span> <span class="s">'argon'</span><span class="p">,</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='map-constructor'>map-constructor</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">gifts</span> <span class="o">=</span> <span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">String</span><span class="p">&gt;();</span>
+  <span class="n">gifts</span><span class="p">[</span><span class="s">'first'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'partridge'</span><span class="p">;</span>
+  <span class="n">gifts</span><span class="p">[</span><span class="s">'second'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'turtledoves'</span><span class="p">;</span>
+  <span class="n">gifts</span><span class="p">[</span><span class="s">'fifth'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'golden rings'</span><span class="p">;</span>
+
+  <span class="kd">var</span> <span class="n">nobleGases</span> <span class="o">=</span> <span class="kt">Map</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">String</span><span class="p">&gt;();</span>
+  <span class="n">nobleGases</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">'helium'</span><span class="p">;</span>
+  <span class="n">nobleGases</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">=</span> <span class="s">'neon'</span><span class="p">;</span>
+  <span class="n">nobleGases</span><span class="p">[</span><span class="mi">18</span><span class="p">]</span> <span class="o">=</span> <span class="s">'argon'</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='map-add-item'>map-add-item</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">gifts</span> <span class="o">=</span> <span class="p">{</span><span class="s">'first'</span><span class="o">:</span> <span class="s">'partridge'</span><span class="p">};</span>
+  <span class="n">gifts</span><span class="p">[</span><span class="s">'fourth'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'calling birds'</span><span class="p">;</span> <span class="c1">// Add a key-value pair</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='const-map'>const-map</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">constantMap</span> <span class="o">=</span> <span class="kd">const</span> <span class="p">{</span>
+    <span class="mi">2</span><span class="o">:</span> <span class="s">'helium'</span><span class="p">,</span>
+    <span class="mi">10</span><span class="o">:</span> <span class="s">'neon'</span><span class="p">,</span>
+    <span class="mi">18</span><span class="o">:</span> <span class="s">'argon'</span><span class="p">,</span>
+  <span class="p">};</span>
+
+  <span class="n">constantMap</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">'Helium'</span><span class="p">;</span> <span class="c1">// This line will cause an error.</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='triple-quotes'>triple-quotes</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">s1</span> <span class="o">=</span> <span class="s">'''
+  You can create
+multi-line strings like this one.
+  '''</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="n">s2</span> <span class="o">=</span> <span class="s">"""This is also a
+  multi-line string."""</span><span class="p">;</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">s1</span><span class="p">);</span>
+  <span class="c1">//   You can create</span>
+  <span class="c1">// multi-line strings like this one.</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">s2</span><span class="p">);</span>
+  <span class="c1">// This is also a</span>
+  <span class="c1">//   multi-line string.</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='symbols'>symbols</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">a1</span> <span class="o">=</span> <span class="kt">Function</span><span class="o">.</span><span class="na">apply</span><span class="p">(</span><span class="kt">int</span><span class="o">.</span><span class="na">parse</span><span class="p">,</span> <span class="p">[</span><span class="s">'11'</span><span class="p">]);</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">a1</span><span class="p">);</span> <span class="c1">// 11</span>
+  <span class="kd">var</span> <span class="n">a2</span> <span class="o">=</span> <span class="kt">Function</span><span class="o">.</span><span class="na">apply</span><span class="p">(</span><span class="kt">int</span><span class="o">.</span><span class="na">parse</span><span class="p">,</span> <span class="p">[</span><span class="s">'11'</span><span class="p">],</span> <span class="p">{</span><span class="ss">#radix</span><span class="o">:</span> <span class="mi">16</span><span class="p">});</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">a2</span><span class="p">);</span> <span class="c1">// 17</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='generics'>Generics</h1><h2 id='base_class'>base_class</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">SomeBaseClass</span> <span class="p">{}</span>
 
