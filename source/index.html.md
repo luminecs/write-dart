@@ -43,6 +43,21 @@ void main() {
 这是一个 <code>Warning</code> 示例。
 </aside>
 
+# language_tour
+
+## callable_objects
+
+```dart
+class WannabeFunction {
+  String call(String a, String b, String c) => '$a $b $c!';
+}
+
+var wf = WannabeFunction();
+var out = wf('Hi', 'there', 'gang');
+
+void main() => print(out);
+```
+
 # built_in_types
 
 ## integer-literals
