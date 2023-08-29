@@ -316,6 +316,14 @@
             <a href="#45fa4e00db" class="toc-h1 toc-link" data-title="介绍">介绍</a>
           </li>
           <li>
+            <a href="#language_tour" class="toc-h1 toc-link" data-title="language_tour">language_tour</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#callable_objects" class="toc-h2 toc-link" data-title="callable_objects">callable_objects</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#built_in_types" class="toc-h1 toc-link" data-title="built_in_types">built_in_types</a>
               <ul class="toc-list-h2">
                   <li>
@@ -1099,7 +1107,15 @@
 <aside class="warning">
 这是一个 <code>Warning</code> 示例。
 </aside>
-<h1 id='built_in_types'>built_in_types</h1><h2 id='integer-literals'>integer-literals</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<h1 id='language_tour'>language_tour</h1><h2 id='callable_objects'>callable_objects</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">WannabeFunction</span> <span class="p">{</span>
+  <span class="kt">String</span> <span class="n">call</span><span class="p">(</span><span class="kt">String</span> <span class="n">a</span><span class="p">,</span> <span class="kt">String</span> <span class="n">b</span><span class="p">,</span> <span class="kt">String</span> <span class="n">c</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="s">'</span><span class="si">$a</span><span class="s"> </span><span class="si">$b</span><span class="s"> </span><span class="si">$c</span><span class="s">!'</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="n">wf</span> <span class="o">=</span> <span class="n">WannabeFunction</span><span class="p">();</span>
+<span class="kd">var</span> <span class="n">out</span> <span class="o">=</span> <span class="n">wf</span><span class="p">(</span><span class="s">'Hi'</span><span class="p">,</span> <span class="s">'there'</span><span class="p">,</span> <span class="s">'gang'</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">print</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
+</code></pre></div><h1 id='built_in_types'>built_in_types</h1><h2 id='integer-literals'>integer-literals</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
   <span class="kd">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="kd">var</span> <span class="n">hex</span> <span class="o">=</span> <span class="mh">0xDEADBEEF</span><span class="p">;</span>
 <span class="p">}</span>
