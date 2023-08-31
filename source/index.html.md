@@ -883,6 +883,63 @@ void main() {
 }
 ```
 
+## logger
+
+```dart
+class Logger {
+  final String name;
+  bool mute = false;
+
+  Logger._internal(this.name);
+
+  // _cache is library-private, thanks to
+  // the _ in front of its name.
+  static final Map<String, Logger> _cache = <String, Logger>{};
+
+  factory Logger(String name) {
+    return _cache.putIfAbsent(name, () => Logger._internal(name));
+  }
+
+  factory Logger.fromJson(Map<String, Object> json) {
+    return Logger(json['name'].toString());
+  }
+
+  void log(String msg) {
+    if (!mute) print(msg);
+  }
+}
+
+void main() {
+  var logger = Logger('UI');
+  logger.log('Button clicked');
+
+  var logMap = {'name': 'UI'};
+  var loggerJson = Logger.fromJson(logMap);
+
+  var l1 = Logger('log1');
+  var l2 = Logger('log1');
+  var l3 = Logger('log2');
+
+  print(l1 == l2); // true
+  print(l1 != l3); // true
+
+  l1.log('${l1.name}: This is l1.');
+  l2.log('${l2.name}: This is l1_2.');
+  l3.log('${l3.name}: This is l2.');
+  logger.log('${logger.name}: This is logger.');
+  loggerJson.log('${loggerJson.name}: This is loggerJson.');
+  // log1: This is l1.
+  // log1: This is l1_2.
+  // log2: This is l2.
+  // UI: This is logger.
+  // UI: This is loggerJson.
+}
+```
+
+
+
+
+
 
 
 
