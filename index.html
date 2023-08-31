@@ -453,6 +453,12 @@
                   <li>
                     <a href="#extends" class="toc-h2 toc-link" data-title="extends">extends</a>
                   </li>
+                  <li>
+                    <a href="#immutable_point" class="toc-h2 toc-link" data-title="immutable_point">immutable_point</a>
+                  </li>
+                  <li>
+                    <a href="#impostor" class="toc-h2 toc-link" data-title="impostor">impostor</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1650,8 +1656,7 @@ multi-line strings like this one.
   <span class="c1">// method-call</span>
   <span class="n">print</span><span class="p">(</span><span class="n">Vehicle</span><span class="o">.</span><span class="na">car</span><span class="o">.</span><span class="na">carbonFootprint</span><span class="p">);</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='extends'>extends</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="c1">// annotate_overrides</span>
-<span class="kd">class</span> <span class="nc">Television</span> <span class="p">{</span>
+</code></pre></div><h2 id='extends'>extends</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Television</span> <span class="p">{</span>
   <span class="kt">void</span> <span class="n">turnOn</span><span class="p">()</span> <span class="p">{</span>
     <span class="n">_illuminateDisplay</span><span class="p">();</span>
     <span class="n">_activateIrSensor</span><span class="p">();</span>
@@ -1672,6 +1677,74 @@ multi-line strings like this one.
   <span class="kt">void</span> <span class="n">_bootNetworkInterface</span><span class="p">()</span> <span class="p">{}</span>
   <span class="kt">void</span> <span class="n">_initializeMemory</span><span class="p">()</span> <span class="p">{}</span>
   <span class="kt">void</span> <span class="n">_upgradeApps</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='immutable_point'>immutable_point</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">ImmutablePoint</span> <span class="p">{</span>
+  <span class="kd">static</span> <span class="kd">const</span> <span class="n">ImmutablePoint</span> <span class="n">origin</span> <span class="o">=</span> <span class="n">ImmutablePoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+  <span class="kd">final</span> <span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span>
+
+  <span class="kd">const</span> <span class="n">ImmutablePoint</span><span class="p">(</span><span class="k">this</span><span class="o">.</span><span class="na">x</span><span class="p">,</span> <span class="k">this</span><span class="o">.</span><span class="na">y</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// const</span>
+  <span class="kd">var</span> <span class="n">p</span> <span class="o">=</span> <span class="kd">const</span> <span class="n">ImmutablePoint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+  <span class="c1">// identical</span>
+  <span class="kd">var</span> <span class="n">a</span> <span class="o">=</span> <span class="kd">const</span> <span class="n">ImmutablePoint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="n">b</span> <span class="o">=</span> <span class="kd">const</span> <span class="n">ImmutablePoint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">);</span> <span class="c1">// true</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">ImmutablePoint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="n">ImmutablePoint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span> <span class="c1">// false</span>
+  <span class="c1">// runtimeType</span>
+  <span class="n">print</span><span class="p">(</span><span class="s">'The type of a is </span><span class="si">${a.runtimeType}</span><span class="s">'</span><span class="p">);</span>
+  <span class="c1">// The type of a is ImmutablePoint</span>
+
+  <span class="c1">// const-context-withconst</span>
+  <span class="c1">// Lots of const keywords here.</span>
+  <span class="kd">const</span> <span class="n">pointAndLine1</span> <span class="o">=</span> <span class="kd">const</span> <span class="p">{</span>
+    <span class="s">'point'</span><span class="o">:</span> <span class="kd">const</span> <span class="p">[</span><span class="kd">const</span> <span class="n">ImmutablePoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span>
+    <span class="s">'line'</span><span class="o">:</span> <span class="kd">const</span> <span class="p">[</span><span class="kd">const</span> <span class="n">ImmutablePoint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="kd">const</span> <span class="n">ImmutablePoint</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">)],</span>
+  <span class="p">};</span>
+
+  <span class="c1">// const-context-noconst</span>
+  <span class="kd">const</span> <span class="n">pointAndLine2</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'point'</span><span class="o">:</span> <span class="p">[</span><span class="n">ImmutablePoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span>
+    <span class="s">'line'</span><span class="o">:</span> <span class="p">[</span><span class="n">ImmutablePoint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">ImmutablePoint</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">)],</span>
+  <span class="p">};</span>
+  <span class="kd">var</span> <span class="n">pointAndLine3</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'point'</span><span class="o">:</span> <span class="p">[</span><span class="n">ImmutablePoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span>
+    <span class="s">'line'</span><span class="o">:</span> <span class="p">[</span><span class="n">ImmutablePoint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">ImmutablePoint</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">)],</span>
+  <span class="p">};</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">pointAndLine1</span> <span class="o">==</span> <span class="n">pointAndLine2</span><span class="p">);</span> <span class="c1">// true</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">pointAndLine1</span> <span class="o">==</span> <span class="n">pointAndLine3</span><span class="p">);</span> <span class="c1">// false</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='impostor'>impostor</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="c1">// A person. The implicit interface contains greet().</span>
+<span class="kd">class</span> <span class="nc">Person</span> <span class="p">{</span>
+  <span class="c1">// In the interface, but visible only in this library.</span>
+  <span class="kd">final</span> <span class="kt">String</span> <span class="n">_name</span><span class="p">;</span>
+
+  <span class="c1">// Not in the interface, since this is a constructor.</span>
+  <span class="n">Person</span><span class="p">(</span><span class="k">this</span><span class="o">.</span><span class="na">_name</span><span class="p">);</span>
+
+  <span class="c1">// In the interface.</span>
+  <span class="kt">String</span> <span class="n">greet</span><span class="p">(</span><span class="kt">String</span> <span class="n">who</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="s">'Hello, </span><span class="si">$who</span><span class="s">. I am </span><span class="si">$_name</span><span class="s">.'</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// An implementation of the Person interface.</span>
+<span class="kd">class</span> <span class="nc">Impostor</span> <span class="kd">implements</span> <span class="n">Person</span> <span class="p">{</span>
+  <span class="nd">@override</span>
+  <span class="kt">String</span> <span class="kd">get</span> <span class="n">_name</span> <span class="o">=</span><span class="p">&gt;</span> <span class="s">''</span><span class="p">;</span>
+
+  <span class="nd">@override</span>
+  <span class="kt">String</span> <span class="n">greet</span><span class="p">(</span><span class="kt">String</span> <span class="n">who</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="s">'Hi </span><span class="si">$who</span><span class="s">. Do you know who I am?'</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">String</span> <span class="nf">greetBob</span><span class="p">(</span><span class="n">Person</span> <span class="n">person</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">person</span><span class="o">.</span><span class="na">greet</span><span class="p">(</span><span class="s">'Bob'</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">greetBob</span><span class="p">(</span><span class="n">Person</span><span class="p">(</span><span class="s">'Kathy'</span><span class="p">)));</span>
+  <span class="c1">// Hello, Bob. I am Kathy.</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">greetBob</span><span class="p">(</span><span class="n">Impostor</span><span class="p">()));</span>
+  <span class="c1">// Hi Bob. Do you know who I am?</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='spacecraft'>spacecraft</h1><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Spacecraft</span> <span class="p">{</span>
   <span class="kt">String</span> <span class="n">name</span><span class="p">;</span>
