@@ -447,6 +447,9 @@
                   <li>
                     <a href="#employee" class="toc-h2 toc-link" data-title="employee">employee</a>
                   </li>
+                  <li>
+                    <a href="#enum" class="toc-h2 toc-link" data-title="enum">enum</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1551,7 +1554,99 @@ multi-line strings like this one.
     <span class="c1">// so the method is not abstract here...</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='employee'>employee</h2><div class="highlight"><pre class="highlight dart tab-dart"><code>
+</code></pre></div><h2 id='employee'>employee</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">Map</span> <span class="nf">fetchDefaultData</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="p">{};</span> <span class="c1">// stub</span>
+
+<span class="c1">// super</span>
+<span class="kd">class</span> <span class="nc">Person</span> <span class="p">{</span>
+  <span class="kt">String</span><span class="o">?</span> <span class="n">firstName</span><span class="p">;</span>
+
+  <span class="n">Person</span><span class="o">.</span><span class="na">fromJson</span><span class="p">(</span><span class="kt">Map</span> <span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'in Person'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// method-then-constructor</span>
+<span class="kd">class</span> <span class="nc">Employee</span> <span class="kd">extends</span> <span class="n">Person</span> <span class="p">{</span>
+  <span class="c1">// super</span>
+  <span class="n">Employee</span><span class="p">()</span> <span class="o">:</span> <span class="k">super</span><span class="o">.</span><span class="na">fromJson</span><span class="p">(</span><span class="n">fetchDefaultData</span><span class="p">());</span>
+  <span class="c1">// Person does not have a default constructor;</span>
+  <span class="c1">// you must call super.fromJson().</span>
+  <span class="n">Employee</span><span class="o">.</span><span class="na">fromJson</span><span class="p">(</span><span class="k">super</span><span class="o">.</span><span class="na">data</span><span class="p">)</span> <span class="o">:</span> <span class="k">super</span><span class="o">.</span><span class="na">fromJson</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'in Employee'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">employee</span> <span class="o">=</span> <span class="n">Employee</span><span class="o">.</span><span class="na">fromJson</span><span class="p">({});</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">employee</span><span class="p">);</span>
+  <span class="c1">// Prints:</span>
+  <span class="c1">// in Person</span>
+  <span class="c1">// in Employee</span>
+  <span class="c1">// Instance of 'Employee'</span>
+  <span class="c1">// ignore: unnecessary_type_check</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">employee</span> <span class="k">is</span> <span class="n">Person</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Type check</span>
+    <span class="n">employee</span><span class="o">.</span><span class="na">firstName</span> <span class="o">=</span> <span class="s">'Bob'</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="p">(</span><span class="n">employee</span> <span class="k">as</span> <span class="n">Person</span><span class="p">)</span><span class="o">.</span><span class="na">firstName</span> <span class="o">=</span> <span class="s">'Bob'</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='enum'>enum</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kt">enum</span> <span class="n">Color</span> <span class="p">{</span> <span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="n">blue</span> <span class="p">}</span>
+
+<span class="kt">enum</span> <span class="n">Vehicle</span> <span class="kd">implements</span> <span class="kt">Comparable</span><span class="p">&lt;</span><span class="n">Vehicle</span><span class="p">&gt;</span> <span class="p">{</span>
+  <span class="n">car</span><span class="p">(</span><span class="nl">tires:</span> <span class="mi">4</span><span class="p">,</span> <span class="nl">passengers:</span> <span class="mi">5</span><span class="p">,</span> <span class="nl">carbonPerKilometer:</span> <span class="mi">400</span><span class="p">),</span>
+  <span class="n">bus</span><span class="p">(</span><span class="nl">tires:</span> <span class="mi">6</span><span class="p">,</span> <span class="nl">passengers:</span> <span class="mi">50</span><span class="p">,</span> <span class="nl">carbonPerKilometer:</span> <span class="mi">800</span><span class="p">),</span>
+  <span class="n">bicycle</span><span class="p">(</span><span class="nl">tires:</span> <span class="mi">2</span><span class="p">,</span> <span class="nl">passengers:</span> <span class="mi">1</span><span class="p">,</span> <span class="nl">carbonPerKilometer:</span> <span class="mi">0</span><span class="p">);</span>
+
+  <span class="kd">const</span> <span class="n">Vehicle</span><span class="p">({</span>
+    <span class="kd">required</span> <span class="k">this</span><span class="o">.</span><span class="na">tires</span><span class="p">,</span>
+    <span class="kd">required</span> <span class="k">this</span><span class="o">.</span><span class="na">passengers</span><span class="p">,</span>
+    <span class="kd">required</span> <span class="k">this</span><span class="o">.</span><span class="na">carbonPerKilometer</span><span class="p">,</span>
+  <span class="p">});</span>
+
+  <span class="kd">final</span> <span class="kt">int</span> <span class="n">tires</span><span class="p">;</span>
+  <span class="kd">final</span> <span class="kt">int</span> <span class="n">passengers</span><span class="p">;</span>
+  <span class="kd">final</span> <span class="kt">int</span> <span class="n">carbonPerKilometer</span><span class="p">;</span>
+
+  <span class="kt">int</span> <span class="kd">get</span> <span class="n">carbonFootprint</span> <span class="o">=</span><span class="p">&gt;</span> <span class="p">(</span><span class="n">carbonPerKilometer</span> <span class="o">/</span> <span class="n">passengers</span><span class="p">)</span><span class="o">.</span><span class="na">round</span><span class="p">();</span>
+
+  <span class="kt">bool</span> <span class="kd">get</span> <span class="n">isTwoWheeled</span> <span class="o">=</span><span class="p">&gt;</span> <span class="k">this</span> <span class="o">==</span> <span class="n">Vehicle</span><span class="o">.</span><span class="na">bicycle</span><span class="p">;</span>
+
+  <span class="nd">@override</span>
+  <span class="kt">int</span> <span class="n">compareTo</span><span class="p">(</span><span class="n">Vehicle</span> <span class="n">other</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">carbonFootprint</span> <span class="o">-</span> <span class="n">other</span><span class="o">.</span><span class="na">carbonFootprint</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="n">favoriteColor</span> <span class="o">=</span> <span class="n">Color</span><span class="o">.</span><span class="na">blue</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">favoriteColor</span> <span class="o">==</span> <span class="n">Color</span><span class="o">.</span><span class="na">blue</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'Your favorite color is blue!'</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="c1">// index</span>
+  <span class="k">assert</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="na">red</span><span class="o">.</span><span class="na">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="k">assert</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="na">green</span><span class="o">.</span><span class="na">index</span> <span class="o">==</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="k">assert</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="na">blue</span><span class="o">.</span><span class="na">index</span> <span class="o">==</span> <span class="mi">2</span><span class="p">);</span>
+  <span class="k">assert</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="na">blue</span><span class="o">.</span><span class="na">toString</span><span class="p">()</span> <span class="o">==</span> <span class="s">'Color.blue'</span><span class="p">);</span>
+
+  <span class="c1">// values</span>
+  <span class="kt">List</span><span class="p">&lt;</span><span class="n">Color</span><span class="p">&gt;</span> <span class="n">colors</span> <span class="o">=</span> <span class="n">Color</span><span class="o">.</span><span class="na">values</span><span class="p">;</span>
+  <span class="k">assert</span><span class="p">(</span><span class="n">colors</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">Color</span><span class="o">.</span><span class="na">blue</span><span class="p">);</span>
+
+  <span class="kd">var</span> <span class="n">aColor</span> <span class="o">=</span> <span class="n">Color</span><span class="o">.</span><span class="na">blue</span><span class="p">;</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">aColor</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">Color</span><span class="o">.</span><span class="na">red</span><span class="o">:</span>
+      <span class="n">print</span><span class="p">(</span><span class="s">'Red as roses!'</span><span class="p">);</span>
+    <span class="k">case</span> <span class="n">Color</span><span class="o">.</span><span class="na">green</span><span class="o">:</span>
+      <span class="n">print</span><span class="p">(</span><span class="s">'Green as grass!'</span><span class="p">);</span>
+    <span class="k">default</span><span class="o">:</span> <span class="c1">// Without this, you see a WARNING.</span>
+      <span class="n">print</span><span class="p">(</span><span class="n">aColor</span><span class="p">);</span> <span class="c1">// 'Color.blue'</span>
+  <span class="p">}</span>
+
+  <span class="c1">// name</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">Color</span><span class="o">.</span><span class="na">blue</span><span class="o">.</span><span class="na">name</span><span class="p">);</span> <span class="c1">// blue</span>
+
+  <span class="c1">// method-call</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">Vehicle</span><span class="o">.</span><span class="na">car</span><span class="o">.</span><span class="na">carbonFootprint</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div><h1 id='spacecraft'>spacecraft</h1><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Spacecraft</span> <span class="p">{</span>
   <span class="kt">String</span> <span class="n">name</span><span class="p">;</span>
   <span class="n">DateTime</span><span class="o">?</span> <span class="n">launchDate</span><span class="p">;</span>
