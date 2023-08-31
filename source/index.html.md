@@ -781,7 +781,6 @@ void main() {
 ## extends
 
 ```dart
-// annotate_overrides
 class Television {
   void turnOn() {
     _illuminateDisplay();
@@ -806,7 +805,83 @@ class SmartTelevision extends Television {
 }
 ```
 
-## 
+## immutable_point
+
+```dart
+class ImmutablePoint {
+  static const ImmutablePoint origin = ImmutablePoint(0, 0);
+
+  final double x, y;
+
+  const ImmutablePoint(this.x, this.y);
+}
+
+void main() {
+  // const
+  var p = const ImmutablePoint(2, 2);
+  // identical
+  var a = const ImmutablePoint(1, 1);
+  var b = const ImmutablePoint(1, 1);
+  print(a == b); // true
+  print(ImmutablePoint(1, 1) == ImmutablePoint(1, 1)); // false
+  // runtimeType
+  print('The type of a is ${a.runtimeType}');
+  // The type of a is ImmutablePoint
+
+  // const-context-withconst
+  // Lots of const keywords here.
+  const pointAndLine1 = const {
+    'point': const [const ImmutablePoint(0, 0)],
+    'line': const [const ImmutablePoint(1, 10), const ImmutablePoint(-2, 11)],
+  };
+
+  // const-context-noconst
+  const pointAndLine2 = {
+    'point': [ImmutablePoint(0, 0)],
+    'line': [ImmutablePoint(1, 10), ImmutablePoint(-2, 11)],
+  };
+  var pointAndLine3 = {
+    'point': [ImmutablePoint(0, 0)],
+    'line': [ImmutablePoint(1, 10), ImmutablePoint(-2, 11)],
+  };
+  print(pointAndLine1 == pointAndLine2); // true
+  print(pointAndLine1 == pointAndLine3); // false
+}
+```
+
+## impostor
+
+```dart
+// A person. The implicit interface contains greet().
+class Person {
+  // In the interface, but visible only in this library.
+  final String _name;
+
+  // Not in the interface, since this is a constructor.
+  Person(this._name);
+
+  // In the interface.
+  String greet(String who) => 'Hello, $who. I am $_name.';
+}
+
+// An implementation of the Person interface.
+class Impostor implements Person {
+  @override
+  String get _name => '';
+
+  @override
+  String greet(String who) => 'Hi $who. Do you know who I am?';
+}
+
+String greetBob(Person person) => person.greet('Bob');
+
+void main() {
+  print(greetBob(Person('Kathy')));
+  // Hello, Bob. I am Kathy.
+  print(greetBob(Impostor()));
+  // Hi Bob. Do you know who I am?
+}
+```
 
 
 
