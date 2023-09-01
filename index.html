@@ -459,6 +459,21 @@
                   <li>
                     <a href="#impostor" class="toc-h2 toc-link" data-title="impostor">impostor</a>
                   </li>
+                  <li>
+                    <a href="#logger" class="toc-h2 toc-link" data-title="logger">logger</a>
+                  </li>
+                  <li>
+                    <a href="#misc-2" class="toc-h2 toc-link" data-title="misc">misc</a>
+                  </li>
+                  <li>
+                    <a href="#no_such_method" class="toc-h2 toc-link" data-title="no_such_method">no_such_method</a>
+                  </li>
+                  <li>
+                    <a href="#orchestra" class="toc-h2 toc-link" data-title="orchestra">orchestra</a>
+                  </li>
+                  <li>
+                    <a href="#point" class="toc-h2 toc-link" data-title="point">point</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1745,6 +1760,217 @@ multi-line strings like this one.
   <span class="c1">// Hello, Bob. I am Kathy.</span>
   <span class="n">print</span><span class="p">(</span><span class="n">greetBob</span><span class="p">(</span><span class="n">Impostor</span><span class="p">()));</span>
   <span class="c1">// Hi Bob. Do you know who I am?</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='logger'>logger</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Logger</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="kt">String</span> <span class="n">name</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">mute</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+
+  <span class="n">Logger</span><span class="o">.</span><span class="na">_internal</span><span class="p">(</span><span class="k">this</span><span class="o">.</span><span class="na">name</span><span class="p">);</span>
+
+  <span class="c1">// _cache is library-private, thanks to</span>
+  <span class="c1">// the _ in front of its name.</span>
+  <span class="kd">static</span> <span class="kd">final</span> <span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="n">Logger</span><span class="p">&gt;</span> <span class="n">_cache</span> <span class="o">=</span> <span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="n">Logger</span><span class="p">&gt;{};</span>
+
+  <span class="kd">factory</span> <span class="n">Logger</span><span class="p">(</span><span class="kt">String</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">_cache</span><span class="o">.</span><span class="na">putIfAbsent</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Logger</span><span class="o">.</span><span class="na">_internal</span><span class="p">(</span><span class="n">name</span><span class="p">));</span>
+  <span class="p">}</span>
+
+  <span class="kd">factory</span> <span class="n">Logger</span><span class="o">.</span><span class="na">fromJson</span><span class="p">(</span><span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">Object</span><span class="p">&gt;</span> <span class="n">json</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">Logger</span><span class="p">(</span><span class="n">json</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span><span class="o">.</span><span class="na">toString</span><span class="p">());</span>
+  <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">log</span><span class="p">(</span><span class="kt">String</span> <span class="n">msg</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">mute</span><span class="p">)</span> <span class="n">print</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">(</span><span class="s">'UI'</span><span class="p">);</span>
+  <span class="n">logger</span><span class="o">.</span><span class="na">log</span><span class="p">(</span><span class="s">'Button clicked'</span><span class="p">);</span>
+
+  <span class="kd">var</span> <span class="n">logMap</span> <span class="o">=</span> <span class="p">{</span><span class="s">'name'</span><span class="o">:</span> <span class="s">'UI'</span><span class="p">};</span>
+  <span class="kd">var</span> <span class="n">loggerJson</span> <span class="o">=</span> <span class="n">Logger</span><span class="o">.</span><span class="na">fromJson</span><span class="p">(</span><span class="n">logMap</span><span class="p">);</span>
+
+  <span class="kd">var</span> <span class="n">l1</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">(</span><span class="s">'log1'</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="n">l2</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">(</span><span class="s">'log1'</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="n">l3</span> <span class="o">=</span> <span class="n">Logger</span><span class="p">(</span><span class="s">'log2'</span><span class="p">);</span>
+
+  <span class="n">print</span><span class="p">(</span><span class="n">l1</span> <span class="o">==</span> <span class="n">l2</span><span class="p">);</span> <span class="c1">// true</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">l1</span> <span class="o">!=</span> <span class="n">l3</span><span class="p">);</span> <span class="c1">// true</span>
+
+  <span class="n">l1</span><span class="o">.</span><span class="na">log</span><span class="p">(</span><span class="s">'</span><span class="si">${l1.name}</span><span class="s">: This is l1.'</span><span class="p">);</span>
+  <span class="n">l2</span><span class="o">.</span><span class="na">log</span><span class="p">(</span><span class="s">'</span><span class="si">${l2.name}</span><span class="s">: This is l1_2.'</span><span class="p">);</span>
+  <span class="n">l3</span><span class="o">.</span><span class="na">log</span><span class="p">(</span><span class="s">'</span><span class="si">${l3.name}</span><span class="s">: This is l2.'</span><span class="p">);</span>
+  <span class="n">logger</span><span class="o">.</span><span class="na">log</span><span class="p">(</span><span class="s">'</span><span class="si">${logger.name}</span><span class="s">: This is logger.'</span><span class="p">);</span>
+  <span class="n">loggerJson</span><span class="o">.</span><span class="na">log</span><span class="p">(</span><span class="s">'</span><span class="si">${loggerJson.name}</span><span class="s">: This is loggerJson.'</span><span class="p">);</span>
+  <span class="c1">// log1: This is l1.</span>
+  <span class="c1">// log1: This is l1_2.</span>
+  <span class="c1">// log2: This is l2.</span>
+  <span class="c1">// UI: This is logger.</span>
+  <span class="c1">// UI: This is loggerJson.</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='misc-2'>misc</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="c1">// abstract</span>
+<span class="c1">// This class is declared abstract and thus</span>
+<span class="c1">// can't be instantiated.</span>
+<span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">AbstractContainer</span> <span class="p">{</span>
+  <span class="c1">// Define constructors, fields, methods...</span>
+  <span class="kt">void</span> <span class="n">updateChildren</span><span class="p">();</span> <span class="c1">// Abstract method.</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">Comparable</span> <span class="p">{}</span>
+
+<span class="kd">class</span> <span class="nc">Location</span> <span class="p">{}</span>
+
+<span class="c1">// point_interfaces</span>
+<span class="kd">class</span> <span class="nc">Point</span> <span class="kd">implements</span> <span class="kt">Comparable</span><span class="p">,</span> <span class="n">Location</span> <span class="p">{}</span>
+
+<span class="c1">// static-field</span>
+<span class="kd">class</span> <span class="nc">Queue</span> <span class="p">{</span>
+  <span class="kd">static</span> <span class="kd">const</span> <span class="n">initialCapacity</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">Queue</span><span class="o">.</span><span class="na">initialCapacity</span> <span class="o">==</span> <span class="mi">16</span><span class="p">);</span> <span class="c1">// true</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='no_such_method'>no_such_method</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">A</span> <span class="p">{</span>
+  <span class="c1">// Unless you override noSuchMethod, using a</span>
+  <span class="c1">// non-existent member results in a NoSuchMethodError.</span>
+
+  <span class="nd">@override</span>
+  <span class="kd">dynamic</span> <span class="n">noSuchMethod</span><span class="p">(</span><span class="n">Invocation</span> <span class="n">invocation</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">print</span><span class="p">(</span><span class="s">'You tried to use a non-existent member: '</span>
+        <span class="s">'</span><span class="si">${invocation.memberName}</span><span class="s">'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">dynamic</span> <span class="n">a</span> <span class="o">=</span> <span class="n">A</span><span class="p">();</span>
+  <span class="n">a</span><span class="o">.</span><span class="na">foo</span><span class="p">();</span>
+  <span class="c1">// You tried to use a non-existent member: Symbol("foo")</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='orchestra'>orchestra</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">mixin</span> <span class="nc">Musical</span> <span class="p">{</span>
+  <span class="kt">bool</span> <span class="n">canPlayPiano</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">canCompose</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">canConduct</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+
+  <span class="kt">void</span> <span class="n">entertainMe</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">canPlayPiano</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">print</span><span class="p">(</span><span class="s">'Playing piano'</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">canConduct</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">print</span><span class="p">(</span><span class="s">'Waving hands'</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">print</span><span class="p">(</span><span class="s">'Humming to self'</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">mixin</span> <span class="nc">Aggressive</span> <span class="p">{</span>
+  <span class="kt">bool</span> <span class="n">passive</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">mixin</span> <span class="nc">Demented</span> <span class="p">{</span>
+  <span class="kt">bool</span> <span class="n">dangerous</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">Person</span> <span class="p">{</span>
+  <span class="kt">String</span><span class="o">?</span> <span class="n">name</span><span class="p">;</span>
+  <span class="n">Person</span><span class="p">();</span>
+  <span class="n">Person</span><span class="o">.</span><span class="na">withName</span><span class="p">(</span><span class="k">this</span><span class="o">.</span><span class="na">name</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Performer</span> <span class="p">{</span>
+  <span class="n">Performer</span><span class="p">(</span><span class="kt">String</span> <span class="n">name</span><span class="p">);</span>
+  <span class="kt">String</span><span class="o">?</span> <span class="n">name</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">Musician</span> <span class="kd">extends</span> <span class="n">Performer</span> <span class="k">with</span> <span class="n">Musical</span> <span class="p">{</span>
+  <span class="n">Musician</span><span class="p">(</span><span class="k">super</span><span class="o">.</span><span class="na">name</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">Maestro</span> <span class="kd">extends</span> <span class="n">Person</span> <span class="k">with</span> <span class="n">Musical</span><span class="p">,</span> <span class="n">Aggressive</span><span class="p">,</span> <span class="n">Demented</span> <span class="p">{</span>
+  <span class="n">Maestro</span><span class="p">(</span><span class="kt">String</span> <span class="n">maestroName</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">maestroName</span><span class="p">;</span>
+    <span class="n">canConduct</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Musician2 was a workaround for https://github.com/dart-lang/sdk/issues/35011,</span>
+<span class="c1">// which has been marked as fixed.</span>
+<span class="kd">class</span> <span class="nc">Musician2</span> <span class="kd">extends</span> <span class="n">Performer</span> <span class="k">with</span> <span class="n">Musical</span> <span class="p">{</span>
+  <span class="n">Musician2</span><span class="p">()</span> <span class="o">:</span> <span class="k">super</span><span class="p">(</span><span class="s">'Anonymous'</span><span class="p">);</span>
+  <span class="n">Musician2</span><span class="o">.</span><span class="na">withName</span><span class="p">(</span><span class="k">super</span><span class="o">.</span><span class="na">name</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Simple version of Musician for the mixin example.</span>
+<span class="c1">// mixin-on</span>
+<span class="kd">mixin</span> <span class="nc">MusicalPerformer</span> <span class="kd">on</span> <span class="n">Musician2</span> <span class="p">{</span>
+  <span class="kt">bool</span> <span class="n">canDance</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+  <span class="kt">void</span> <span class="n">dance</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">print</span><span class="p">(</span><span class="s">'Dancing'</span><span class="p">);</span>
+
+  <span class="nd">@override</span>
+  <span class="kt">void</span> <span class="n">entertainMe</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">canDance</span> <span class="o">?</span> <span class="n">dance</span><span class="p">()</span> <span class="o">:</span> <span class="k">super</span><span class="o">.</span><span class="na">entertainMe</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nc">SingerDancer</span> <span class="kd">extends</span> <span class="n">Musician2</span> <span class="k">with</span> <span class="n">MusicalPerformer</span> <span class="p">{</span>
+  <span class="n">SingerDancer</span><span class="p">(</span><span class="k">super</span><span class="o">.</span><span class="na">name</span><span class="p">)</span> <span class="o">:</span> <span class="k">super</span><span class="o">.</span><span class="na">withName</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">director</span> <span class="o">=</span> <span class="n">Maestro</span><span class="p">(</span><span class="s">'Allen'</span><span class="p">);</span>
+  <span class="n">director</span><span class="o">.</span><span class="na">entertainMe</span><span class="p">();</span> <span class="c1">// Waving hands</span>
+
+  <span class="kd">var</span> <span class="n">musician</span> <span class="o">=</span> <span class="n">Musician</span><span class="p">(</span><span class="s">'Kathy'</span><span class="p">);</span>
+  <span class="n">musician</span><span class="o">.</span><span class="na">canPlayPiano</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="n">musician</span><span class="o">.</span><span class="na">entertainMe</span><span class="p">();</span> <span class="c1">// Playing piano</span>
+
+  <span class="kd">var</span> <span class="n">singerDancer</span> <span class="o">=</span> <span class="n">SingerDancer</span><span class="p">(</span><span class="s">'Todd'</span><span class="p">);</span>
+  <span class="n">singerDancer</span><span class="o">.</span><span class="na">entertainMe</span><span class="p">();</span> <span class="c1">// Dancing</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='point'>point</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'dart:math'</span><span class="o">;</span>
+
+<span class="kd">const</span> <span class="kt">double</span> <span class="n">xOrigin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">const</span> <span class="kt">double</span> <span class="n">yOrigin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">Point</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="kt">double</span> <span class="n">x</span><span class="p">;</span>
+  <span class="kd">final</span> <span class="kt">double</span> <span class="n">y</span><span class="p">;</span>
+
+  <span class="c1">// Sets the x and y instance variables</span>
+  <span class="c1">// before the constructor body runs.</span>
+  <span class="n">Point</span><span class="p">(</span><span class="k">this</span><span class="o">.</span><span class="na">x</span><span class="p">,</span> <span class="k">this</span><span class="o">.</span><span class="na">y</span><span class="p">);</span>
+
+  <span class="n">Point</span><span class="o">.</span><span class="na">origin</span><span class="p">()</span>
+      <span class="o">:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">xOrigin</span><span class="p">,</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">yOrigin</span><span class="p">;</span>
+
+  <span class="c1">// Initializer list sets instance variables before</span>
+  <span class="c1">// the constructor body runs.</span>
+  <span class="n">Point</span><span class="o">.</span><span class="na">fromJson</span><span class="p">(</span><span class="kt">Map</span><span class="p">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">double</span><span class="p">&gt;</span> <span class="n">json</span><span class="p">)</span>
+      <span class="o">:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">json</span><span class="p">[</span><span class="s">'x'</span><span class="p">]</span><span class="o">!</span><span class="p">,</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">json</span><span class="p">[</span><span class="s">'y'</span><span class="p">]</span><span class="o">!</span><span class="p">;</span>
+
+  <span class="kt">double</span> <span class="n">distanceTo</span><span class="p">(</span><span class="n">Point</span> <span class="n">other</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="n">dx</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">other</span><span class="o">.</span><span class="na">x</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">other</span><span class="o">.</span><span class="na">y</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">dx</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">+</span> <span class="n">dy</span> <span class="o">*</span> <span class="n">dy</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">Point</span><span class="o">.</span><span class="na">fromJson</span><span class="p">({</span><span class="s">'x'</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'y'</span><span class="o">:</span> <span class="mi">2</span><span class="p">});</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">p1</span><span class="o">.</span><span class="na">y</span> <span class="o">==</span> <span class="n">p2</span><span class="o">.</span><span class="na">y</span><span class="p">);</span> <span class="c1">// true</span>
+
+  <span class="kt">double</span> <span class="n">distance</span> <span class="o">=</span> <span class="n">p1</span><span class="o">.</span><span class="na">distanceTo</span><span class="p">(</span><span class="n">Point</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">));</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">distance</span><span class="p">);</span> <span class="c1">// 2.8284271247461903</span>
+
+  <span class="c1">// Trick to make p nullable</span>
+  <span class="n">Point</span><span class="o">?</span> <span class="n">f</span><span class="p">()</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+  <span class="n">Point</span><span class="o">?</span> <span class="n">p</span> <span class="o">=</span> <span class="n">f</span><span class="p">();</span>
+  <span class="c1">// If p is non-null, set a variable equal to its y value.</span>
+  <span class="kd">var</span> <span class="n">a</span> <span class="o">=</span> <span class="n">p</span><span class="o">?.</span><span class="na">y</span><span class="p">;</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">a</span><span class="p">);</span> <span class="c1">// 2.0</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='spacecraft'>spacecraft</h1><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Spacecraft</span> <span class="p">{</span>
   <span class="kt">String</span> <span class="n">name</span><span class="p">;</span>
