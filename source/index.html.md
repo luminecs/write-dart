@@ -936,6 +936,188 @@ void main() {
 }
 ```
 
+## misc
+
+```dart
+// abstract
+// This class is declared abstract and thus
+// can't be instantiated.
+abstract class AbstractContainer {
+  // Define constructors, fields, methods...
+  void updateChildren(); // Abstract method.
+}
+
+class Comparable {}
+
+class Location {}
+
+// point_interfaces
+class Point implements Comparable, Location {}
+
+// static-field
+class Queue {
+  static const initialCapacity = 16;
+}
+
+void main() {
+  print(Queue.initialCapacity == 16); // true
+}
+```
+
+## no_such_method
+
+```dart
+class A {
+  // Unless you override noSuchMethod, using a
+  // non-existent member results in a NoSuchMethodError.
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) {
+    print('You tried to use a non-existent member: '
+        '${invocation.memberName}');
+  }
+}
+
+void main() {
+  dynamic a = A();
+  a.foo();
+  // You tried to use a non-existent member: Symbol("foo")
+}
+```
+
+## orchestra
+
+```dart
+mixin Musical {
+  bool canPlayPiano = false;
+  bool canCompose = false;
+  bool canConduct = false;
+
+  void entertainMe() {
+    if (canPlayPiano) {
+      print('Playing piano');
+    } else if (canConduct) {
+      print('Waving hands');
+    } else {
+      print('Humming to self');
+    }
+  }
+}
+
+mixin Aggressive {
+  bool passive = false;
+}
+
+mixin Demented {
+  bool dangerous = false;
+}
+
+class Person {
+  String? name;
+  Person();
+  Person.withName(this.name);
+}
+
+abstract class Performer {
+  Performer(String name);
+  String? name;
+}
+
+class Musician extends Performer with Musical {
+  Musician(super.name);
+}
+
+class Maestro extends Person with Musical, Aggressive, Demented {
+  Maestro(String maestroName) {
+    name = maestroName;
+    canConduct = true;
+  }
+}
+
+// Musician2 was a workaround for https://github.com/dart-lang/sdk/issues/35011,
+// which has been marked as fixed.
+class Musician2 extends Performer with Musical {
+  Musician2() : super('Anonymous');
+  Musician2.withName(super.name);
+}
+
+// Simple version of Musician for the mixin example.
+// mixin-on
+mixin MusicalPerformer on Musician2 {
+  bool canDance = true;
+
+  void dance() => print('Dancing');
+
+  @override
+  void entertainMe() => canDance ? dance() : super.entertainMe();
+}
+
+class SingerDancer extends Musician2 with MusicalPerformer {
+  SingerDancer(super.name) : super.withName();
+}
+
+void main() {
+  var director = Maestro('Allen');
+  director.entertainMe(); // Waving hands
+
+  var musician = Musician('Kathy');
+  musician.canPlayPiano = true;
+  musician.entertainMe(); // Playing piano
+
+  var singerDancer = SingerDancer('Todd');
+  singerDancer.entertainMe(); // Dancing
+}
+```
+
+## point
+
+```dart
+import 'dart:math';
+
+const double xOrigin = 0;
+const double yOrigin = 0;
+
+class Point {
+  final double x;
+  final double y;
+
+  // Sets the x and y instance variables
+  // before the constructor body runs.
+  Point(this.x, this.y);
+
+  Point.origin()
+      : x = xOrigin,
+        y = yOrigin;
+
+  // Initializer list sets instance variables before
+  // the constructor body runs.
+  Point.fromJson(Map<String, double> json)
+      : x = json['x']!,
+        y = json['y']!;
+
+  double distanceTo(Point other) {
+    var dx = x - other.x;
+    var dy = y - other.y;
+    return sqrt(dx * dx + dy * dy);
+  }
+}
+
+void main() {
+  var p1 = Point(2, 2);
+  var p2 = Point.fromJson({'x': 1, 'y': 2});
+  print(p1.y == p2.y); // true
+
+  double distance = p1.distanceTo(Point(4,4));
+  print(distance); // 2.8284271247461903
+
+  // Trick to make p nullable
+  Point? f() => Point(2,2);
+  Point? p = f();
+  // If p is non-null, set a variable equal to its y value.
+  var a = p?.y;
+  print(a); // 2.0
+}
+```
 
 
 
