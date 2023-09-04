@@ -1173,6 +1173,97 @@ void main() {
 }
 ```
 
+## point_with_distance_field
+
+```dart
+import 'dart:math';
+
+class Point {
+  final double x;
+  final double y;
+  final double distanceFromOrigin;
+
+  Point(double x, double y)
+      : x = x,
+        y = y,
+        distanceFromOrigin = sqrt(x * x + y * y);
+}
+
+void main() {
+  var p = Point(2, 3);
+  print(p.distanceFromOrigin); // 3.605551275463989
+}
+```
+
+## point_with_distance_method
+
+```dart
+import 'dart:math';
+
+class Point {
+  double x, y;
+
+  Point(this.x, this.y);
+
+  static double distanceBetween(Point a, Point b) {
+    var dx = a.x - b.x;
+    var dy = a.y - b.y;
+    return sqrt(dx * dx + dy * dy);
+  }
+}
+
+void main() {
+  var a = Point(2, 2);
+  var b = Point(4, 4);
+  var distance = Point.distanceBetween(a, b);
+  assert(2.8 < distance && distance < 2.9);
+  print(distance); // 2.8284271247461903
+}
+```
+
+## point_with_main
+
+```dart
+import 'dart:math';
+
+class Point {
+  double? x; // Declare instance variable x, initially null.
+  double? y; // Declare y, initially null.
+  double z = 0; // Declare z, initially 0.
+}
+
+void main() {
+  var point = Point();
+  point.x = 4; // Use the setter method for x.
+  assert(point.x == 4); // Use the getter method for x.
+  assert(point.y == null); // Values default to null.
+}
+```
+
+## rectangle
+
+```dart
+class Rectangle {
+  double left, top, width, height;
+
+  Rectangle(this.left, this.top, this.width, this.height);
+
+  // Define two calculated properties: right and bottom.
+  double get right => left + width;
+  set right(double value) => left = value - width;
+  double get bottom => top + height;
+  set bottom(double value) => top = value - height;
+}
+
+void main() {
+  var rect = Rectangle(3, 4, 20, 15);
+  assert(rect.left == 3);
+  rect.right = 12;
+  assert(rect.left == -8);
+}
+```
+
+
 
 
 
