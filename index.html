@@ -480,6 +480,18 @@
                   <li>
                     <a href="#point_redirecting" class="toc-h2 toc-link" data-title="point_redirecting">point_redirecting</a>
                   </li>
+                  <li>
+                    <a href="#point_with_distance_field" class="toc-h2 toc-link" data-title="point_with_distance_field">point_with_distance_field</a>
+                  </li>
+                  <li>
+                    <a href="#point_with_distance_method" class="toc-h2 toc-link" data-title="point_with_distance_method">point_with_distance_method</a>
+                  </li>
+                  <li>
+                    <a href="#point_with_main" class="toc-h2 toc-link" data-title="point_with_main">point_with_main</a>
+                  </li>
+                  <li>
+                    <a href="#rectangle" class="toc-h2 toc-link" data-title="rectangle">rectangle</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -2021,6 +2033,76 @@ multi-line strings like this one.
 <span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
   <span class="kd">var</span> <span class="n">point</span> <span class="o">=</span> <span class="n">Point</span><span class="o">.</span><span class="na">alongXAxis</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
   <span class="n">print</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="na">x</span><span class="p">);</span> <span class="c1">// 42.0</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='point_with_distance_field'>point_with_distance_field</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'dart:math'</span><span class="o">;</span>
+
+<span class="kd">class</span> <span class="nc">Point</span> <span class="p">{</span>
+  <span class="kd">final</span> <span class="kt">double</span> <span class="n">x</span><span class="p">;</span>
+  <span class="kd">final</span> <span class="kt">double</span> <span class="n">y</span><span class="p">;</span>
+  <span class="kd">final</span> <span class="kt">double</span> <span class="n">distanceFromOrigin</span><span class="p">;</span>
+
+  <span class="n">Point</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="kt">double</span> <span class="n">y</span><span class="p">)</span>
+      <span class="o">:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span>
+        <span class="n">distanceFromOrigin</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">y</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="na">distanceFromOrigin</span><span class="p">);</span> <span class="c1">// 3.605551275463989</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='point_with_distance_method'>point_with_distance_method</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'dart:math'</span><span class="o">;</span>
+
+<span class="kd">class</span> <span class="nc">Point</span> <span class="p">{</span>
+  <span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span>
+
+  <span class="n">Point</span><span class="p">(</span><span class="k">this</span><span class="o">.</span><span class="na">x</span><span class="p">,</span> <span class="k">this</span><span class="o">.</span><span class="na">y</span><span class="p">);</span>
+
+  <span class="kd">static</span> <span class="kt">double</span> <span class="n">distanceBetween</span><span class="p">(</span><span class="n">Point</span> <span class="n">a</span><span class="p">,</span> <span class="n">Point</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="n">dx</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="na">x</span> <span class="o">-</span> <span class="n">b</span><span class="o">.</span><span class="na">x</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="na">y</span> <span class="o">-</span> <span class="n">b</span><span class="o">.</span><span class="na">y</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">dx</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">+</span> <span class="n">dy</span> <span class="o">*</span> <span class="n">dy</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="n">b</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="n">distance</span> <span class="o">=</span> <span class="n">Point</span><span class="o">.</span><span class="na">distanceBetween</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+  <span class="k">assert</span><span class="p">(</span><span class="mf">2.8</span> <span class="p">&lt;</span> <span class="n">distance</span> <span class="o">&amp;&amp;</span> <span class="n">distance</span> <span class="p">&lt;</span> <span class="mf">2.9</span><span class="p">);</span>
+  <span class="n">print</span><span class="p">(</span><span class="n">distance</span><span class="p">);</span> <span class="c1">// 2.8284271247461903</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='point_with_main'>point_with_main</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kn">import</span> <span class="s">'dart:math'</span><span class="o">;</span>
+
+<span class="kd">class</span> <span class="nc">Point</span> <span class="p">{</span>
+  <span class="kt">double</span><span class="o">?</span> <span class="n">x</span><span class="p">;</span> <span class="c1">// Declare instance variable x, initially null.</span>
+  <span class="kt">double</span><span class="o">?</span> <span class="n">y</span><span class="p">;</span> <span class="c1">// Declare y, initially null.</span>
+  <span class="kt">double</span> <span class="n">z</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// Declare z, initially 0.</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">point</span> <span class="o">=</span> <span class="n">Point</span><span class="p">();</span>
+  <span class="n">point</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="c1">// Use the setter method for x.</span>
+  <span class="k">assert</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="na">x</span> <span class="o">==</span> <span class="mi">4</span><span class="p">);</span> <span class="c1">// Use the getter method for x.</span>
+  <span class="k">assert</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="na">y</span> <span class="o">==</span> <span class="kc">null</span><span class="p">);</span> <span class="c1">// Values default to null.</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='rectangle'>rectangle</h2><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Rectangle</span> <span class="p">{</span>
+  <span class="kt">double</span> <span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">;</span>
+
+  <span class="n">Rectangle</span><span class="p">(</span><span class="k">this</span><span class="o">.</span><span class="na">left</span><span class="p">,</span> <span class="k">this</span><span class="o">.</span><span class="na">top</span><span class="p">,</span> <span class="k">this</span><span class="o">.</span><span class="na">width</span><span class="p">,</span> <span class="k">this</span><span class="o">.</span><span class="na">height</span><span class="p">);</span>
+
+  <span class="c1">// Define two calculated properties: right and bottom.</span>
+  <span class="kt">double</span> <span class="kd">get</span> <span class="n">right</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">left</span> <span class="o">+</span> <span class="n">width</span><span class="p">;</span>
+  <span class="kd">set</span> <span class="n">right</span><span class="p">(</span><span class="kt">double</span> <span class="n">value</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">left</span> <span class="o">=</span> <span class="n">value</span> <span class="o">-</span> <span class="n">width</span><span class="p">;</span>
+  <span class="kt">double</span> <span class="kd">get</span> <span class="n">bottom</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">top</span> <span class="o">+</span> <span class="n">height</span><span class="p">;</span>
+  <span class="kd">set</span> <span class="n">bottom</span><span class="p">(</span><span class="kt">double</span> <span class="n">value</span><span class="p">)</span> <span class="o">=</span><span class="p">&gt;</span> <span class="n">top</span> <span class="o">=</span> <span class="n">value</span> <span class="o">-</span> <span class="n">height</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="n">rect</span> <span class="o">=</span> <span class="n">Rectangle</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">15</span><span class="p">);</span>
+  <span class="k">assert</span><span class="p">(</span><span class="n">rect</span><span class="o">.</span><span class="na">left</span> <span class="o">==</span> <span class="mi">3</span><span class="p">);</span>
+  <span class="n">rect</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
+  <span class="k">assert</span><span class="p">(</span><span class="n">rect</span><span class="o">.</span><span class="na">left</span> <span class="o">==</span> <span class="o">-</span><span class="mi">8</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='spacecraft'>spacecraft</h1><div class="highlight"><pre class="highlight dart tab-dart"><code><span class="kd">class</span> <span class="nc">Spacecraft</span> <span class="p">{</span>
   <span class="kt">String</span> <span class="n">name</span><span class="p">;</span>
