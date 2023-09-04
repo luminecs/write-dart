@@ -1119,6 +1119,41 @@ void main() {
 }
 ```
 
+## point_alt
+
+```dart
+/// Example of:
+///
+/// - A constructor initializing fields in the body "the long way"
+/// - A named constructor with initializers, and a print statement in the body.
+class Point {
+  double x = 0;
+  double y = 0;
+
+  // constructor-long-way
+  Point(double x, double y) {
+    // See initializing formal parameters for a better way
+    // to initialize instance variables.
+    this.x = x;
+    this.y = y;
+  }
+
+  // initializer-list
+  // Initializer list sets instance variables before
+  // the constructor body runs.
+  Point.fromJson(Map<String, double> json)
+      : x = json['x']!,
+        y = json['y']! {
+    print('In Point.fromJson(): ($x, $y)');
+  }
+  
+  // initializer-list-with-assert
+  Point.withAssert(this.x, this.y) : assert(x >= 0) {
+    print('In Point.withAssert(): ($x, $y)');
+  }
+}
+```
+
 
 
 
